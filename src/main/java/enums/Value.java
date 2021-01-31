@@ -40,7 +40,6 @@ public enum Value {
         return Value.UNRECOGNIZED;
     }
 
-
     public String getDescription() {
         return description;
     }

@@ -21,6 +21,7 @@ public final class Input {
     public String getString(String askForString) {
         System.out.println(askForString);
         String input = scanner.next();
+        scanner.nextLine(); //clear bad input data from keyboard
         return input;
     }
 
@@ -29,7 +30,7 @@ public final class Input {
         while (!scanner.hasNextInt()) {
             System.out.println("Number is required input");
             System.out.println(askForInt);
-            scanner.nextLine(); //clear bad inout data from keyboard
+            scanner.nextLine(); //clear bad input data from keyboard
         }
         return scanner.nextInt();
     }

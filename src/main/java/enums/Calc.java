@@ -22,7 +22,6 @@ public enum Calc {
     MATRIX_SUB_MATRIX("Subtract matrix from matrix"),
     MATRIX_MULTI_NUM("Multiple matrix by number");
 
-
     String description;
 
     Calc(String description) {
