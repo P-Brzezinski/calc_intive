@@ -17,4 +17,12 @@ public final class Input {
         }
         return input;
     }
+
+    public String getString(String askForString){
+        System.out.println(askForString);
+        scanner.useDelimiter("\r\n");
+        String input = scanner.next();
+        scanner.reset();
+        return input;
+    }
 }
