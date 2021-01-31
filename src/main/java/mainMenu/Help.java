@@ -6,5 +6,6 @@ public class Help {
         System.out.println("Please enter value without white spaces.");
         System.out.println("Correct values: 1, 2.3, 5111");
         System.out.println("Incorrect values:  1, 2. 3, 5 111");
+        System.out.println("For floating point use '.' not ','");
     }
 }
