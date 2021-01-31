@@ -11,16 +11,26 @@ public final class Input {
         scanner = new Scanner(System.in);
     }
 
-    public static Input getInstance(){
-        if (input == null){
+    public static Input getInstance() {
+        if (input == null) {
             input = new Input();
         }
         return input;
     }
 
-    public String getString(String askForString){
+    public String getString(String askForString) {
         System.out.println(askForString);
         String input = scanner.next();
         return input;
+    }
+
+    public int getInt(String askForInt) {
+        System.out.println(askForInt);
+        while (!scanner.hasNextInt()) {
+            System.out.println("Number is required input");
+            System.out.println(askForInt);
+            scanner.nextLine(); //clear bad inout data from keyboard
+        }
+        return scanner.nextInt();
     }
 }

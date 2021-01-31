@@ -23,7 +23,7 @@ public enum Value {
         this.possibleCalcs = possibleCalcs;
     }
 
-    public static void showPossibleActions(Value value) {
+    public static void showPossibleCalcs(Value value) {
         Calc[] possibleCalcs = value.getPossibleCalcs();
         for (int i = 0; i < possibleCalcs.length; i++) {
             System.out.println(i + 1 + " - " + possibleCalcs[i].getDescription());
