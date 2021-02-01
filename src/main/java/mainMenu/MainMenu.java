@@ -8,8 +8,6 @@ import static enums.Value.*;
 
 public class MainMenu {
 
-    public static final int MAX_VECTOR_LENGTH = 4;
-
     Input input = Input.getInstance();
     String value1;
     String value2;
