@@ -6,12 +6,16 @@ public enum Value {
 
     NUMBER("Number", "^[+-]?([0-9]*[.])?[0-9]+$",
             new Calc[]{NUM_ADD_NUM, NUM_SUB_NUM, NUM_MULTI_NUM, NUM_DIV_NUM, NUM_POWER_TO_NUM, NUM_RADICAL, NUM_MULTI_VECTOR, NUM_MULTI_MATRIX}),
-    VECTOR("Vector", "TODO",
+    VECTOR("Vector", String.format("^\\[{1}[[+-]?([0-9]*[.])?[0-9]+,?]{0,%d}\\]{1}$", Value.MAX_VECTOR_LENGTH + 2), //TODO fix comma error
             new Calc[]{VECTOR_ADD_VECTOR, VECTOR_SUB_VECTOR, VECTOR_MULTI_NUM}),
     MATRIX("Matrix", "TODO",
             new Calc[]{MATRIX_ADD_MATRIX, MATRIX_SUB_MATRIX, MATRIX_MULTI_NUM}),
-    UNRECOGNIZED("Wrong value", "NULL",
+    UNRECOGNIZED("Unrecognized value", "NULL",
+            new Calc[0]),
+    WRONG_VALUE("Wrong value", "NULL",
             new Calc[0]);
+
+    private static final int MAX_VECTOR_LENGTH = 4;
 
     String description;
     String pattern;
@@ -43,6 +47,10 @@ public enum Value {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getPattern() {
+        return pattern;
     }
 
     public Calc[] getPossibleCalcs() {

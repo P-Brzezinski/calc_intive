@@ -8,6 +8,8 @@ import static enums.Value.*;
 
 public class MainMenu {
 
+    public static final int MAX_VECTOR_LENGTH = 4;
+
     Input input = Input.getInstance();
     String value1;
     String value2;
@@ -19,6 +21,7 @@ public class MainMenu {
             do {
                 value1 = input.getString("Enter first value:");
                 valueFromString = getValueFromString(value1);
+                System.out.println(valueFromString.getDescription());
             } while (valueFromString.equals(UNRECOGNIZED));
 
             showPossibleCalcs(valueFromString);
@@ -27,6 +30,7 @@ public class MainMenu {
             do {
                 value2 = input.getString("Enter second value:");
                 valueFromString = getValueFromString(value2);
+                System.out.println(valueFromString.getDescription());
             } while (valueFromString.equals(UNRECOGNIZED));
 
             System.out.println(value1 + ", " + value2 + ", " + calc.getDescription());
