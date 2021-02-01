@@ -32,7 +32,16 @@ public class MainMenu {
     }
 
     private Calc getAction(Value value) {
-        int pickOption = input.getInt("Choose calculation:");
+        boolean flag = true;
+        int pickOption = 0;
+        while (flag){
+             pickOption = input.getInt("Choose calculation:");
+             if (pickOption <= value.getPossibleCalcs().length){
+                 flag = false;
+             }else {
+                 System.out.println("Wrong calculation number, try again.");
+             }
+        }
         return value.getPossibleCalcs()[pickOption - 1];
     }
 }

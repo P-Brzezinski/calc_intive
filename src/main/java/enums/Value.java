@@ -4,7 +4,7 @@ import static enums.Calc.*;
 
 public enum Value {
 
-    NUMBER("Number", "\\d+",
+    NUMBER("Number", "^[+-]?([0-9]*[.])?[0-9]+$",
             new Calc[]{NUM_ADD_NUM, NUM_SUB_NUM, NUM_MULTI_NUM, NUM_DIV_NUM, NUM_POWER_TO_NUM, NUM_RADICAL, NUM_MULTI_VECTOR, NUM_MULTI_MATRIX}),
     VECTOR("Vector", "TODO",
             new Calc[]{VECTOR_ADD_VECTOR, VECTOR_SUB_VECTOR, VECTOR_MULTI_NUM}),
@@ -37,6 +37,7 @@ public enum Value {
                 return value;
             }
         }
+        System.out.println(UNRECOGNIZED.getDescription());
         return Value.UNRECOGNIZED;
     }
 
