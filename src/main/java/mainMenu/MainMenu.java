@@ -28,7 +28,10 @@ public class MainMenu {
             do {
                 value2 = input.getString("Enter second value:");
                 valueFromString = getValueFromString(value2);
-                System.out.println(valueFromString.getDescription());
+                if (!valueFromString.getDescription().equals(calc.getValue2())){
+                    System.out.println("Wrong value, should be of type " + calc.getValue2());
+                    valueFromString = UNRECOGNIZED;
+                }
             } while (valueFromString.equals(UNRECOGNIZED));
 
             System.out.println(value1 + ", " + value2 + ", " + calc.getDescription());
