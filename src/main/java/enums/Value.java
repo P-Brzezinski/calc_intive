@@ -5,7 +5,7 @@ import static enums.Calc.*;
 public enum Value {
 
     NUMBER("Number", "^[+-]?([0-9]*[.])?[0-9]+$",
-            new Calc[]{NUM_ADD_NUM, NUM_SUB_NUM, NUM_MULTI_NUM, NUM_DIV_NUM, NUM_POWER_TO_NUM, NUM_RADICAL, NUM_MULTI_VECTOR, NUM_MULTI_MATRIX}),
+            new Calc[]{NUM_ADD_NUM, NUM_SUB_NUM, NUM_MULTI_NUM, NUM_DIV_NUM, NUM_POWER_TO_NUM, NUM_SQUARE, NUM_MULTI_VECTOR, NUM_MULTI_MATRIX}),
     VECTOR("Vector", String.format("^\\[{1}[[+-]?([0-9]*[.])?[0-9]+,?]{0,%d}[[+-]?([0-9]*[.])?[0-9]+]{1}\\]{1}$", Value.MAX_VECTOR_LENGTH + 2),
             new Calc[]{VECTOR_ADD_VECTOR, VECTOR_SUB_VECTOR, VECTOR_MULTI_NUM}),
     MATRIX("Matrix", "TODO",

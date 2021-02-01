@@ -1,4 +1,3 @@
-import input.Input;
 import mainMenu.MainMenu;
 
 public class Main {
