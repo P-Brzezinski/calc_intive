@@ -21,12 +21,28 @@ public class VectorCalculations implements Calculations {
         }
     }
 
+    //TODO vectors must have same length
     private String add(String a, String b) {
-        return null;
+        int[] vector1 = Calculations.super.getArrayFromString(a);
+        int[] vector2 = Calculations.super.getArrayFromString(b);
+        int[] result = new int[vector1.length];
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = vector1[i] + vector2[i];
+        }
+        return Arrays.toString(result);
     }
 
+    //TODO vectors must have same length
     private String sub(String a, String b) {
-        return null;
+        int[] vector1 = Calculations.super.getArrayFromString(a);
+        int[] vector2 = Calculations.super.getArrayFromString(b);
+        int[] result = new int[vector1.length];
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = vector1[i] - vector2[i];
+        }
+        return Arrays.toString(result);
     }
 
     private String multi(String a, String b) {
