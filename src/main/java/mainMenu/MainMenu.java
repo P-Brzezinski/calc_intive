@@ -3,11 +3,11 @@ package mainMenu;
 import calculations.MatrixCalculations;
 import calculations.NumberCalculations;
 import calculations.VectorCalculations;
+import config.Configuration;
 import enums.Calc;
 import input.Input;
 import enums.Value;
 
-import static enums.Calc.NUM_ADD_NUM;
 import static enums.Value.*;
 
 public class MainMenu {
@@ -18,6 +18,7 @@ public class MainMenu {
     Calc calc;
 
     public void init() {
+        Configuration configuration = new Configuration();
         Value valueFromString;
         do { //TODO loop always for testing - to be replaced by interface
             // Step 1. take first value and check if valid

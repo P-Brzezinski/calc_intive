@@ -1,5 +1,6 @@
 package mainMenu;
 
+import config.Configuration;
 import enums.Value;
 
 public class Help {
@@ -11,6 +12,6 @@ public class Help {
         System.out.println("For floating point use '.' not ','");
         System.out.println("Correct values for vectors: [1], [1,2], [1,2,3]");
         System.out.println("Incorrect values: [], [1,]");
-        System.out.println("Maximum numbers in vector is: " + Value.MAX_VECTOR_LENGTH);
+        System.out.println("Maximum numbers in vector is: " + Configuration.MAX_VECTOR_LENGTH);
     }
 }

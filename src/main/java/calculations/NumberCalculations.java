@@ -57,16 +57,16 @@ public class NumberCalculations implements Calculations {
         return Math.sqrt(Double.parseDouble(a));
     }
 
+    //TODO empty array as input
     private String multiVector(String a, String b) {
         b = b.substring(1, b.length() - 1);
-        b = b.replaceAll(",", "");
-        char[] chars = b.toCharArray();
-        int[] newArray = new int[chars.length];
-        for (int i = 0; i < chars.length; i++) {
-            int integer = Integer.parseInt(String.valueOf(chars[i]));
-            newArray[i] = integer * Integer.parseInt(a);
+        String[] split = b.split(",");
+        int[] intArray = new int[split.length];
+        for (int i = 0; i < intArray.length; i++) {
+            int integer = Integer.parseInt(String.valueOf(split[i]));
+            intArray[i] = integer * Integer.parseInt(a);
         }
-        return Arrays.toString(newArray);
+        return Arrays.toString(intArray);
     }
 
     //TODO NUM_MULTI_MATRIX

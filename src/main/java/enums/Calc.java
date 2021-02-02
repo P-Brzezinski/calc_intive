@@ -9,8 +9,8 @@ public enum Calc {
     NUM_DIV_NUM("Divide number by number", "Number", "Number"),
     NUM_POWER_TO_NUM("Raise number to power", "Number", "Number"),
     NUM_SQUARE("Radical of number", "Number", "Number"),  //TODO check translation
-    NUM_MULTI_VECTOR("Multiply vector by number", "Number", "Vector"),
-    NUM_MULTI_MATRIX("Multiply matrix by number", "Number", "Matrix"),
+    NUM_MULTI_VECTOR("Multiply number by vector", "Number", "Vector"),
+    NUM_MULTI_MATRIX("Multiply number by matrix", "Number", "Matrix"),
 
     //    Possible calculations for vector
     VECTOR_ADD_VECTOR("Add vector to vector", "Vector", "Vector"),
