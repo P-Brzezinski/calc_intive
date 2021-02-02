@@ -2,11 +2,20 @@ package config;
 
 public class Configuration {
 
-    private static String NUMBER_PATTERN = "^[+-]?([0-9]*[.])?[0-9]+$";
+    private static final String NUMBER_PATTERN = "^[+-]?([0-9]*[.])?[0-9]+$";
     private static String VECTOR_PATTERN = "";
     private static final int MAX_VECTOR_LENGTH = 4;
 
-    {
+    public void initConfig(){
+        createVectorPattern();
+        createMatrixPattern();
+    }
+
+    private void createMatrixPattern() {
+        //TODO
+    }
+
+    private void createVectorPattern() {
         String pattern = "";
         String openParentheses = "\\[";
         String singleDigit = "\\d+?";

@@ -59,14 +59,11 @@ public class NumberCalculations implements Calculations {
 
     //TODO empty array as input
     private String multiVector(String a, String b) {
-        b = b.substring(1, b.length() - 1);
-        String[] split = b.split(",");
-        int[] intArray = new int[split.length];
-        for (int i = 0; i < intArray.length; i++) {
-            int integer = Integer.parseInt(String.valueOf(split[i]));
-            intArray[i] = integer * Integer.parseInt(a);
+        int[] arrayFromString = Calculations.super.getArrayFromString(b);
+        for (int i = 0; i < arrayFromString.length; i++) {
+            arrayFromString[i] = arrayFromString[i] * Integer.parseInt(a);
         }
-        return Arrays.toString(intArray);
+        return Arrays.toString(arrayFromString);
     }
 
     //TODO NUM_MULTI_MATRIX

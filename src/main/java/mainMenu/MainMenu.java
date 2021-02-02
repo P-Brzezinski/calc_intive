@@ -18,7 +18,6 @@ public class MainMenu {
     Calc calc;
 
     public void init() {
-        Configuration configuration = new Configuration();
         Value valueFromString;
         do { //TODO loop always for testing - to be replaced by interface
             // Step 1. take first value and check if valid
@@ -48,21 +47,7 @@ public class MainMenu {
             } while (valueFromString.equals(UNRECOGNIZED));
 
             System.out.println(value1 + " " + calc.getDescription() + " " + value2);
-
-            switch (calc.getValue1()){
-                case "Number":
-                    NumberCalculations nc = new NumberCalculations();
-                    nc.doCalc(calc, value1, value2);
-                    break;
-                case "Vector":
-                    VectorCalculations vc = new VectorCalculations();
-                    vc.doCalc(calc, value1, value2);
-                    break;
-                case "Matrix":
-                    MatrixCalculations mc = new MatrixCalculations();
-                    mc.doCalc(calc, value1, value2);
-                    break;
-            }
+            doMatch(calc, value1, value2);
 
         } while (true);
     }
@@ -70,5 +55,22 @@ public class MainMenu {
     private Calc getAction(Value value) {
         int pickOption = input.getInt("Choose calculation", 1, value.getPossibleCalcs().length);
         return value.getPossibleCalcs()[pickOption - 1];
+    }
+
+    private void doMatch(Calc calc, String value1, String value2) {
+        switch (calc.getValue1()){
+            case "Number":
+                NumberCalculations nc = new NumberCalculations();
+                nc.doCalc(calc, value1, value2);
+                break;
+            case "Vector":
+                VectorCalculations vc = new VectorCalculations();
+                vc.doCalc(calc, value1, value2);
+                break;
+            case "Matrix":
+                MatrixCalculations mc = new MatrixCalculations();
+                mc.doCalc(calc, value1, value2);
+                break;
+        }
     }
 }
