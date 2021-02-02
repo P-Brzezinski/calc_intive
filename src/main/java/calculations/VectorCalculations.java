@@ -2,6 +2,8 @@ package calculations;
 
 import enums.Calc;
 
+import java.util.Arrays;
+
 public class VectorCalculations implements Calculations {
 
     @Override
@@ -13,7 +15,7 @@ public class VectorCalculations implements Calculations {
             case VECTOR_SUB_VECTOR:
                 System.out.println(sub(a, b));
                 break;
-            case NUM_MULTI_VECTOR:
+            case VECTOR_MULTI_NUM:
                 System.out.println(multi(a, b));
                 break;
         }
@@ -28,6 +30,10 @@ public class VectorCalculations implements Calculations {
     }
 
     private String multi(String a, String b) {
-        return null;
+        int[] arrayFromString = Calculations.super.getArrayFromString(a);
+        for (int i = 0; i < arrayFromString.length; i++) {
+            arrayFromString[i] = arrayFromString[i] * Integer.parseInt(b);
+        }
+        return Arrays.toString(arrayFromString);
     }
 }
