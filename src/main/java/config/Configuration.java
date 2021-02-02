@@ -2,8 +2,9 @@ package config;
 
 public class Configuration {
 
-    public static String VECTOR_PATTERN = "";
-    public static final int MAX_VECTOR_LENGTH = 4;
+    private static String NUMBER_PATTERN = "^[+-]?([0-9]*[.])?[0-9]+$";
+    private static String VECTOR_PATTERN = "";
+    private static final int MAX_VECTOR_LENGTH = 4;
 
     {
         String pattern = "";
@@ -18,7 +19,7 @@ public class Configuration {
 
         for (int j = 0; j < MAX_VECTOR_LENGTH; j++) {
             buildPattern.append(singleDigit);
-            if ((j + 1) < MAX_VECTOR_LENGTH){
+            if ((j + 1) < MAX_VECTOR_LENGTH) {
                 buildPattern.append(coma);
             }
         }
@@ -26,5 +27,17 @@ public class Configuration {
         buildPattern.append(closeParentheses);
 
         VECTOR_PATTERN = buildPattern.toString();
+    }
+
+    public static String getNumberPattern() {
+        return NUMBER_PATTERN;
+    }
+
+    public static String getVectorPattern() {
+        return VECTOR_PATTERN;
+    }
+
+    public static int getMaxVectorLength() {
+        return MAX_VECTOR_LENGTH;
     }
 }

@@ -6,9 +6,9 @@ import static enums.Calc.*;
 
 public enum Value {
 
-    NUMBER("Number", "^[+-]?([0-9]*[.])?[0-9]+$",
+    NUMBER("Number", Configuration.getNumberPattern(),
             new Calc[]{NUM_ADD_NUM, NUM_SUB_NUM, NUM_MULTI_NUM, NUM_DIV_NUM, NUM_POWER_TO_NUM, NUM_SQUARE, NUM_MULTI_VECTOR, NUM_MULTI_MATRIX}),
-    VECTOR("Vector", Configuration.VECTOR_PATTERN,
+    VECTOR("Vector", Configuration.getVectorPattern(),
             new Calc[]{VECTOR_ADD_VECTOR, VECTOR_SUB_VECTOR, VECTOR_MULTI_NUM}),
     MATRIX("Matrix", "TODO",
             new Calc[]{MATRIX_ADD_MATRIX, MATRIX_SUB_MATRIX, MATRIX_MULTI_NUM}),
