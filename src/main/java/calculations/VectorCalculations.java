@@ -21,7 +21,6 @@ public class VectorCalculations implements Calculations {
         }
     }
 
-    //TODO vectors must have same length
     private String add(String a, String b) {
         int[] vector1 = Calculations.super.getArrayFromString(a);
         int[] vector2 = Calculations.super.getArrayFromString(b);
@@ -33,7 +32,6 @@ public class VectorCalculations implements Calculations {
         return Arrays.toString(result);
     }
 
-    //TODO vectors must have same length
     private String sub(String a, String b) {
         int[] vector1 = Calculations.super.getArrayFromString(a);
         int[] vector2 = Calculations.super.getArrayFromString(b);

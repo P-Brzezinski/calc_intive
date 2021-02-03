@@ -1,6 +1,7 @@
 package calculations;
 
 import enums.Calc;
+import exceptions.DivideByZeroException;
 
 import java.util.Arrays;
 
@@ -44,8 +45,14 @@ public class NumberCalculations implements Calculations {
         return Integer.parseInt(a) * Integer.parseInt(b);
     }
 
-    private double div(String a, String b) {
-        return Double.parseDouble(a) / Double.parseDouble(b);
+    private int div(String a, String b) {
+        int result = 0;
+        try {
+            result = Integer.parseInt(a) / Integer.parseInt(b);
+        } catch (ArithmeticException e) {
+            System.out.println("Divide by zero operation is not possible");
+        }
+        return result;
     }
 
     private double power(String a, String b) {

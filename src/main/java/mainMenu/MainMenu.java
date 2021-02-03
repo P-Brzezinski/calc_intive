@@ -3,7 +3,6 @@ package mainMenu;
 import calculations.MatrixCalculations;
 import calculations.NumberCalculations;
 import calculations.VectorCalculations;
-import config.Configuration;
 import enums.Calc;
 import input.Input;
 import enums.Value;
@@ -37,6 +36,7 @@ public class MainMenu {
                 // Step 4. check if second value matches second value needed for calculation
                 if (!valueFromString.getDescription().equals(calc.getValue2())){
                     // if not, loop
+                    //TODO vectors must have same length
                     //TODO check if 0 with div method
                     //TODO take only one var if Square operation
                     //TODO potęgowanie - zakres akceptowanego wykładnika zawiera się w przedziale 1-128
