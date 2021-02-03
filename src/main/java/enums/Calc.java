@@ -10,6 +10,7 @@ public enum Calc {
     NUM_POWER_TO_NUM("Raise number to power", "Number", "Number"),
     NUM_SQUARE("Radical of number", "Number", "Number"),  //TODO check translation
     NUM_MULTI_VECTOR("Multiply number by vector", "Number", "Vector"),
+    //    Not done
     NUM_MULTI_MATRIX("Multiply number by matrix", "Number", "Matrix"),
 
     //    Possible calculations for vector
@@ -18,6 +19,7 @@ public enum Calc {
     VECTOR_MULTI_NUM("Multiply vector by number", "Vector", "Number"),
 
     //    Possible calculations for matrix
+    //not done
     MATRIX_ADD_MATRIX("Add matrix to matrix", "Matrix", "Matrix"),
     MATRIX_SUB_MATRIX("Subtract matrix from matrix", "Matrix", "Matrix"),
     MATRIX_MULTI_NUM("Multiple matrix by number", "Matrix", "Number");

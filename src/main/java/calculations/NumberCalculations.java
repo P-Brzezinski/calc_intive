@@ -4,6 +4,7 @@ import config.Configuration;
 import enums.Calc;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 
 public class NumberCalculations implements Calculations {
@@ -60,7 +61,7 @@ public class NumberCalculations implements Calculations {
         BigDecimal y = new BigDecimal(b);
         BigDecimal result = new BigDecimal(0);
         try {
-            result = x.divide(y);
+            result = x.divide(y, RoundingMode.CEILING);
         } catch (ArithmeticException e) {
             System.out.println("Divide by zero operation is not possible");
         }
@@ -77,6 +78,7 @@ public class NumberCalculations implements Calculations {
     }
 
     private double square(String a, String b) {
+        System.out.println("Value " + b + " is ignored here.");
         return Math.sqrt(Double.parseDouble(a));
     }
 
