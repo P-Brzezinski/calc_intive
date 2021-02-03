@@ -37,7 +37,6 @@ public class MainMenu {
                 if (!valueFromString.getDescription().equals(calc.getValue2())){
                     // if not, loop
                     //TODO take only one var if Square operation
-                    //TODO potęgowanie - zakres akceptowanego wykładnika zawiera się w przedziale 1-128
                     //TODO pierwiastkowanie - stopien 2
                     System.out.println("Wrong value, should be of type " + calc.getValue2());
                     valueFromString = UNRECOGNIZED;

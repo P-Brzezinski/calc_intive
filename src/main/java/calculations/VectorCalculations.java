@@ -26,7 +26,7 @@ public class VectorCalculations implements Calculations {
         double[] vector2 = Calculations.super.getArrayFromString(b);
         double[] result;
 
-        if (sameLength(vector1, vector2) && !emptyVector(vector1, vector2)) {
+        if (sameLength(vector1, vector2) && noEmptyVector(vector1, vector2)) {
             result = new double[vector1.length];
             for (int i = 0; i < result.length; i++) {
                 result[i] = vector1[i] + vector2[i];
@@ -42,7 +42,7 @@ public class VectorCalculations implements Calculations {
         double[] vector2 = Calculations.super.getArrayFromString(b);
         double[] result;
 
-        if (sameLength(vector1, vector2) && !emptyVector(vector1, vector2)) {
+        if (sameLength(vector1, vector2) && noEmptyVector(vector1, vector2)) {
             result = new double[vector1.length];
             for (int i = 0; i < result.length; i++) {
                 result[i] = vector1[i] - vector2[i];
@@ -65,7 +65,7 @@ public class VectorCalculations implements Calculations {
         return vector1.length == vector2.length;
     }
 
-    private boolean emptyVector(double[] vector1, double[] vector2) {
-        return vector1.length == 0 || vector2.length == 0;
+    private boolean noEmptyVector(double[] vector1, double[] vector2) {
+        return vector1.length != 0 && vector2.length != 0;
     }
 }

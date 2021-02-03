@@ -5,6 +5,7 @@ public class Configuration {
     private static final String NUMBER_PATTERN = "^[+-]?([0-9]*[.])?[0-9]+$";
     private static String VECTOR_PATTERN = "";
     private static final int MAX_VECTOR_LENGTH = 4;
+    private static final int MAX_POWER = 128;
 
     public void initConfig(){
         createVectorPattern();
@@ -48,5 +49,9 @@ public class Configuration {
 
     public static int getMaxVectorLength() {
         return MAX_VECTOR_LENGTH;
+    }
+
+    public static int getMaxPower() {
+        return MAX_POWER;
     }
 }

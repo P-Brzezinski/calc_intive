@@ -1,7 +1,9 @@
 package calculations;
 
+import config.Configuration;
 import enums.Calc;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 public class NumberCalculations implements Calculations {
@@ -32,31 +34,46 @@ public class NumberCalculations implements Calculations {
         }
     }
 
-    public int add(String a, String b) {
-        return Integer.parseInt(a) + Integer.parseInt(b);
+    public double add(String a, String b) {
+        BigDecimal x = new BigDecimal(a);
+        BigDecimal y = new BigDecimal(b);
+        BigDecimal result = x.add(y);
+        return result.doubleValue();
     }
 
-    public int sub(String a, String b) {
-        return Integer.parseInt(a) - Integer.parseInt(b);
+    public double sub(String a, String b) {
+        BigDecimal x = new BigDecimal(a);
+        BigDecimal y = new BigDecimal(b);
+        BigDecimal result = x.subtract(y);
+        return result.doubleValue();
     }
 
-    private int multi(String a, String b) {
-        return Integer.parseInt(a) * Integer.parseInt(b);
+    private double multi(String a, String b) {
+        BigDecimal x = new BigDecimal(a);
+        BigDecimal y = new BigDecimal(b);
+        BigDecimal result = x.multiply(y);
+        return result.doubleValue();
     }
 
-    private int div(String a, String b) {
-        int result = 0;
+    private double div(String a, String b) {
+        BigDecimal x = new BigDecimal(a);
+        BigDecimal y = new BigDecimal(b);
+        BigDecimal result = new BigDecimal(0);
         try {
-            result = Integer.parseInt(a) / Integer.parseInt(b);
+            result = x.divide(y);
         } catch (ArithmeticException e) {
             System.out.println("Divide by zero operation is not possible");
         }
-        return result;
+        return result.doubleValue();
     }
 
     private double power(String a, String b) {
-        return Math.pow(Double.parseDouble(a), Double.parseDouble(b));
-
+        if (Integer.parseInt(b) > Configuration.getMaxPower()) {
+            System.out.println("Power cannot not be higher than " + Configuration.getMaxPower());
+            return 0;
+        } else {
+            return Math.pow(Double.parseDouble(a), Double.parseDouble(b));
+        }
     }
 
     private double square(String a, String b) {
