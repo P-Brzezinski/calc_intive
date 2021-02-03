@@ -1,7 +1,6 @@
 package calculations;
 
 import enums.Calc;
-import exceptions.DivideByZeroException;
 
 import java.util.Arrays;
 

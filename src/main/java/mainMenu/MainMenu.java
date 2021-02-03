@@ -37,7 +37,6 @@ public class MainMenu {
                 if (!valueFromString.getDescription().equals(calc.getValue2())){
                     // if not, loop
                     //TODO vectors must have same length
-                    //TODO check if 0 with div method
                     //TODO take only one var if Square operation
                     //TODO potęgowanie - zakres akceptowanego wykładnika zawiera się w przedziale 1-128
                     //TODO pierwiastkowanie - stopien 2

@@ -24,23 +24,33 @@ public class VectorCalculations implements Calculations {
     private String add(String a, String b) {
         int[] vector1 = Calculations.super.getArrayFromString(a);
         int[] vector2 = Calculations.super.getArrayFromString(b);
-        int[] result = new int[vector1.length];
+        int[] result;
 
-        for (int i = 0; i < result.length; i++) {
-            result[i] = vector1[i] + vector2[i];
+        if (sameLength(vector1, vector2)) {
+            result = new int[vector1.length];
+            for (int i = 0; i < result.length; i++) {
+                result[i] = vector1[i] + vector2[i];
+            }
+            return Arrays.toString(result);
+        } else {
+            return String.format("Vectors must have same length if you want to add them! Your vectors lengths are: %d and %d", vector1.length, vector2.length);
         }
-        return Arrays.toString(result);
     }
 
     private String sub(String a, String b) {
         int[] vector1 = Calculations.super.getArrayFromString(a);
         int[] vector2 = Calculations.super.getArrayFromString(b);
-        int[] result = new int[vector1.length];
+        int[] result;
 
-        for (int i = 0; i < result.length; i++) {
-            result[i] = vector1[i] - vector2[i];
+        if (sameLength(vector1, vector2)) {
+            result = new int[vector1.length];
+            for (int i = 0; i < result.length; i++) {
+                result[i] = vector1[i] - vector2[i];
+            }
+            return Arrays.toString(result);
+        } else {
+            return String.format("Vectors must have same length if you want to subtract them! Your vectors lengths are: %d and %d", vector1.length, vector2.length);
         }
-        return Arrays.toString(result);
     }
 
     private String multi(String a, String b) {
@@ -49,5 +59,9 @@ public class VectorCalculations implements Calculations {
             arrayFromString[i] = arrayFromString[i] * Integer.parseInt(b);
         }
         return Arrays.toString(arrayFromString);
+    }
+
+    private boolean sameLength(int[] vector1, int[] vector2) {
+        return vector1.length == vector2.length;
     }
 }
