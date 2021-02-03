@@ -1,21 +1,29 @@
-package config;
+import input.Input;
 
-public class Configuration {
+public class TestClass {
 
-    private static final String NUMBER_PATTERN = "^[+-]?([0-9]*[.])?[0-9]+$";
+    private static final int MAX_VECTOR_LENGTH = 1;
     private static String VECTOR_PATTERN = "";
-    private static final int MAX_VECTOR_LENGTH = 4;
 
-    public void initConfig(){
+    static Input input = Input.getInstance();
+
+    public static void main(String[] args) {
+
         createVectorPattern();
-        createMatrixPattern();
+        double text = Double.parseDouble(".4");
+        System.out.println(text);
+        System.out.println(VECTOR_PATTERN);
+        while (true) {
+            String userInput = input.getString("Enter:");
+            if (userInput.matches(VECTOR_PATTERN)) {
+                System.out.println("Matches");
+            } else {
+                System.out.println("not matches");
+            }
+        }
     }
 
-    private void createMatrixPattern() {
-        //TODO
-    }
-
-    private void createVectorPattern() {
+    private static void createVectorPattern() {
         String pattern = "";
         String openParentheses = "\\[";
         String singleDigit = "[+-]?\\d*(\\.\\d*)?";
@@ -32,21 +40,8 @@ public class Configuration {
                 buildPattern.append(coma);
             }
         }
-
         buildPattern.append(closeParentheses);
-
         VECTOR_PATTERN = buildPattern.toString();
     }
 
-    public static String getNumberPattern() {
-        return NUMBER_PATTERN;
-    }
-
-    public static String getVectorPattern() {
-        return VECTOR_PATTERN;
-    }
-
-    public static int getMaxVectorLength() {
-        return MAX_VECTOR_LENGTH;
-    }
 }
