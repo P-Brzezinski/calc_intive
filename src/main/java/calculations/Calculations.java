@@ -6,14 +6,19 @@ public interface Calculations {
 
     void doCalc(Calc calc, String value1, String value2);
 
-    default int[] getArrayFromString(String stringArray){
+    default double[] getArrayFromString(String stringArray) {
+        //take out square brackets
         stringArray = stringArray.substring(1, stringArray.length() - 1);
-        String[] split = stringArray.split(",");
-        int[] intArray = new int[split.length];
-        for (int i = 0; i < intArray.length; i++) {
-            int integer = Integer.parseInt(String.valueOf(split[i]));
-            intArray[i] = integer;
+        if (stringArray.isEmpty()) {
+            return new double[0];
+        } else {
+            String[] split = stringArray.split(",");
+            double[] newArray = new double[split.length];
+            for (int i = 0; i < newArray.length; i++) {
+                double x = Double.parseDouble(String.valueOf(split[i]));
+                newArray[i] = x;
+            }
+            return newArray;
         }
-        return intArray;
     }
 }

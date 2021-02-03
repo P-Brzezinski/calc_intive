@@ -65,7 +65,7 @@ public class NumberCalculations implements Calculations {
 
     //TODO empty array as input
     private String multiVector(String a, String b) {
-        int[] arrayFromString = Calculations.super.getArrayFromString(b);
+        double[] arrayFromString = Calculations.super.getArrayFromString(b);
         for (int i = 0; i < arrayFromString.length; i++) {
             arrayFromString[i] = arrayFromString[i] * Integer.parseInt(a);
         }
