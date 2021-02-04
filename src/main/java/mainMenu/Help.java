@@ -12,5 +12,6 @@ public class Help {
         System.out.println("Correct values for vectors: [1], [1,2], [1,2,3]");
         System.out.println("Incorrect values: [], [1,]");
         System.out.println("Maximum numbers in vector is: " + Configuration.getMaxVectorLength());
+        System.out.println();
     }
 }

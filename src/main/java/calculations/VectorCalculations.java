@@ -2,6 +2,7 @@ package calculations;
 
 import enums.Calc;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 public class VectorCalculations implements Calculations {
@@ -45,7 +46,8 @@ public class VectorCalculations implements Calculations {
         if (sameLength(vector1, vector2) && noEmptyVector(vector1, vector2)) {
             result = new double[vector1.length];
             for (int i = 0; i < result.length; i++) {
-                result[i] = vector1[i] - vector2[i];
+                BigDecimal x = BigDecimal.valueOf(vector1[i]).subtract(BigDecimal.valueOf(vector2[i]));
+                result[i] = x.doubleValue();
             }
             return Arrays.toString(result);
         } else {

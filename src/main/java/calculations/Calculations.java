@@ -2,6 +2,8 @@ package calculations;
 
 import enums.Calc;
 
+import java.math.BigDecimal;
+
 public interface Calculations {
 
     void doCalc(Calc calc, String value1, String value2);
@@ -15,8 +17,8 @@ public interface Calculations {
             String[] split = stringArray.split(",");
             double[] newArray = new double[split.length];
             for (int i = 0; i < newArray.length; i++) {
-                double x = Double.parseDouble(String.valueOf(split[i]));
-                newArray[i] = x;
+                BigDecimal x = BigDecimal.valueOf(Double.parseDouble(String.valueOf(split[i])));
+                newArray[i] = x.doubleValue();
             }
             return newArray;
         }

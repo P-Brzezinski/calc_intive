@@ -6,6 +6,7 @@ public class Main {
 
         Configuration configuration = new Configuration();
         configuration.initConfig();
+
         MainMenu mainMenu = new MainMenu();
         mainMenu.init();
     }
