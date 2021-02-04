@@ -8,6 +8,6 @@ public class Main {
         configuration.initConfig();
 
         MainMenu mainMenu = new MainMenu();
-        mainMenu.init();
+        mainMenu.initMenu();
     }
 }

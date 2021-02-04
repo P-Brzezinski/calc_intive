@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public interface Calculations {
 
-    void doCalc(Calculation calc, String value1, String value2);
+    String doCalc(Calculation calc, String value1, String value2);
 
     default double[] getArrayFromString(String stringArray) {
         //take out square brackets

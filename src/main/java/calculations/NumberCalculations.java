@@ -7,84 +7,72 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
 
-public class NumberCalculations implements calculations.Calculations {
+public class NumberCalculations implements Calculations {
 
     @Override
-    public void doCalc(Calculation calc, String a, String b) {
+    public String doCalc(Calculation calc, String a, String b) {
         switch (calc) {
             case NUM_ADD_NUM:
-                System.out.println(add(a, b));
-                break;
+                return add(a, b);
             case NUM_SUB_NUM:
-                System.out.println(sub(a, b));
-                break;
+                return sub(a, b);
             case NUM_MULTI_NUM:
-                System.out.println(multi(a, b));
-                break;
+                return multi(a, b);
             case NUM_DIV_NUM:
-                System.out.println(div(a, b));
-                break;
+                return div(a, b);
             case NUM_POWER_TO_NUM:
-                System.out.println(power(a, b));
-                break;
+                return power(a, b);
             case NUM_SQUARE:
-                System.out.println(square(a, b));
-                break;
+                return square(a, b);
             case NUM_MULTI_VECTOR:
-                System.out.println(multiVector(a, b));
+                return multiVector(a, b);
         }
+        return "No suitable operation found.";
     }
 
-    public double add(String a, String b) {
-        BigDecimal x = new BigDecimal(a);
-        BigDecimal y = new BigDecimal(b);
-        BigDecimal result = x.add(y);
-        return result.doubleValue();
+    public String add(String a, String b) {
+        BigDecimal result = BigDecimal.valueOf(Double.parseDouble(a)).add(BigDecimal.valueOf(Double.parseDouble(b)));
+        return result.toString();
     }
 
-    public double sub(String a, String b) {
-        BigDecimal x = new BigDecimal(a);
-        BigDecimal y = new BigDecimal(b);
-        BigDecimal result = x.subtract(y);
-        return result.doubleValue();
+    public String sub(String a, String b) {
+        BigDecimal result = BigDecimal.valueOf(Double.parseDouble(a)).subtract(BigDecimal.valueOf(Double.parseDouble(b)));
+        return result.toString();
     }
 
-    private double multi(String a, String b) {
-        BigDecimal x = new BigDecimal(a);
-        BigDecimal y = new BigDecimal(b);
-        BigDecimal result = x.multiply(y);
-        return result.doubleValue();
+    private String multi(String a, String b) {
+        BigDecimal result = BigDecimal.valueOf(Double.parseDouble(a)).multiply(BigDecimal.valueOf(Double.parseDouble(b)));
+        return result.toString();
     }
 
-    private double div(String a, String b) {
-        BigDecimal x = new BigDecimal(a);
-        BigDecimal y = new BigDecimal(b);
-        BigDecimal result = new BigDecimal(0);
+    private String div(String a, String b) {
+        String result;
         try {
-            result = x.divide(y, RoundingMode.CEILING);
+            BigDecimal divide = BigDecimal.valueOf(Double.parseDouble(a)).divide(BigDecimal.valueOf(Double.parseDouble(b)), RoundingMode.CEILING);
+            result = divide.toString();
         } catch (ArithmeticException e) {
+            result = "Not possible";
             System.out.println("Divide by zero operation is not possible");
         }
-        return result.doubleValue();
+        return result;
     }
 
-    private double power(String a, String b) {
-        if (Integer.parseInt(b) > Configuration.getMaxPower()) {
-            System.out.println("Power cannot not be higher than " + Configuration.getMaxPower());
-            return 0;
+    private String power(String a, String b) {
+        if (Double.parseDouble(b) > Configuration.getMaxPower()) {
+            return "Power cannot not be higher than " + Configuration.getMaxPower();
         } else {
-            return Math.pow(Double.parseDouble(a), Double.parseDouble(b));
+            return String.valueOf(Math.pow(Double.parseDouble(a), Double.parseDouble(b)));
         }
     }
 
-    private double square(String a, String b) {
+    private String square(String a, String b) {
         System.out.println("Value " + b + " is ignored here.");
-        return Math.sqrt(Double.parseDouble(a));
+        return String.valueOf(Math.sqrt(Double.parseDouble(a)));
     }
 
     //TODO empty array as input
     private String multiVector(String a, String b) {
-        double[] arrayFromString = calculations.Calculations.super.getArrayFromString(b);
+        double[] arrayFromString = Calculations.super.getArrayFromString(b);
         for (int i = 0; i < arrayFromString.length; i++) {
             arrayFromString[i] = arrayFromString[i] * Integer.parseInt(a);
         }

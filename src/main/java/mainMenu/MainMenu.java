@@ -21,7 +21,7 @@ public class MainMenu {
     Calculation calc;
     boolean nextAction;
 
-    public void init() {
+    public void initMenu() {
         Value valueFromString;
         do {
             //First value
@@ -31,56 +31,52 @@ public class MainMenu {
             } while (valueFromString.equals(UNRECOGNIZED));
 
             //Calculation type
-            showPossibleCalcs(valueFromString);
-            calc = getAction(valueFromString);
+            showPossibleCalculations(valueFromString);
+            calc = getCalculation(valueFromString);
 
             //Second Value
             do {
                 value2 = input.getString("Enter second value:");
                 valueFromString = getValueFromString(value2);
                 if (!valueFromString.getDescription().equals(calc.getValue2())) {
-                    System.out.println("Wrong value, should be of type " + calc.getValue2());
+                    System.out.println("Should be type of " + calc.getValue2());
                     valueFromString = UNRECOGNIZED;
                 }
             } while (valueFromString.equals(UNRECOGNIZED));
 
-            //Result
-            System.out.println(value1 + " " + calc.getDescription() + " " + value2);
-            System.out.print("Result is: ");
-            doMatch(calc, value1, value2);
+            String result = doMatch(calc, value1, value2);
+            System.out.printf("%s %s %s = %s", value1, calc.getOperator(), value2, result);
 
             nextAction = nextAction();
         } while (nextAction);
     }
 
-    private Calculation getAction(Value value) {
-        int pickOption = input.getInt("Choose calculation", 1, value.getPossibleCalcs().length);
-        return value.getPossibleCalcs()[pickOption - 1];
+    private Calculation getCalculation(Value value) {
+        int pickOption = input.getInt("Choose calculation", 1, value.getPossibleCalculations().length);
+        return value.getPossibleCalculations()[pickOption - 1];
     }
 
-    private void doMatch(Calculation calc, String value1, String value2) {
+    private String doMatch(Calculation calc, String value1, String value2) {
         switch (calc.getValue1()) {
             case "Number":
                 NumberCalculations nc = new NumberCalculations();
-                nc.doCalc(calc, value1, value2);
-                break;
+                return nc.doCalc(calc, value1, value2);
             case "Vector":
                 VectorCalculations vc = new VectorCalculations();
-                vc.doCalc(calc, value1, value2);
-                break;
+                return vc.doCalc(calc, value1, value2);
             case "Matrix":
                 MatrixCalculations mc = new MatrixCalculations();
-                mc.doCalc(calc, value1, value2);
-                break;
+                return mc.doCalc(calc, value1, value2);
         }
+        return "Error. I do not know math...";
     }
 
     private boolean nextAction() {
-        String command = input.getString("Again?\nType: yes, exit or help");
-        System.out.println("");
+        String command = "";
         boolean badCommand = false;
         boolean choice = true;
         do {
+            command = input.getString("\nAgain? (yes, exit or help)");
             switch (command) {
                 case AGAIN_COMMAND:
                     choice = true;

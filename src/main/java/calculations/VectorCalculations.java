@@ -5,32 +5,32 @@ import enums.Calculation;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
-public class VectorCalculations implements calculations.Calculations {
+public class VectorCalculations implements Calculations {
 
     @Override
-    public void doCalc(Calculation calc, String a, String b) {
+    public String doCalc(Calculation calc, String a, String b) {
         switch (calc) {
             case VECTOR_ADD_VECTOR:
-                System.out.println(add(a, b));
-                break;
+                return add(a, b);
             case VECTOR_SUB_VECTOR:
-                System.out.println(sub(a, b));
-                break;
+                return sub(a, b);
             case VECTOR_MULTI_NUM:
-                System.out.println(vectorMultiNumber(a, b));
-                break;
+                return vectorMultiNumber(a, b);
         }
+        return "No suitable operation found.";
     }
 
     private String add(String a, String b) {
-        double[] vector1 = calculations.Calculations.super.getArrayFromString(a);
-        double[] vector2 = calculations.Calculations.super.getArrayFromString(b);
+        double[] vector1 = Calculations.super.getArrayFromString(a);
+        double[] vector2 = Calculations.super.getArrayFromString(b);
         double[] result;
+        BigDecimal tempValue;
 
         if (sameLength(vector1, vector2) && noEmptyVector(vector1, vector2)) {
             result = new double[vector1.length];
             for (int i = 0; i < result.length; i++) {
-                result[i] = vector1[i] + vector2[i];
+                tempValue = BigDecimal.valueOf(vector1[i]).add(BigDecimal.valueOf(vector2[i]));
+                result[i] = tempValue.doubleValue();
             }
             return Arrays.toString(result);
         } else {
@@ -39,15 +39,16 @@ public class VectorCalculations implements calculations.Calculations {
     }
 
     private String sub(String a, String b) {
-        double[] vector1 = calculations.Calculations.super.getArrayFromString(a);
-        double[] vector2 = calculations.Calculations.super.getArrayFromString(b);
+        double[] vector1 = Calculations.super.getArrayFromString(a);
+        double[] vector2 = Calculations.super.getArrayFromString(b);
         double[] result;
+        BigDecimal tempValue;
 
         if (sameLength(vector1, vector2) && noEmptyVector(vector1, vector2)) {
             result = new double[vector1.length];
             for (int i = 0; i < result.length; i++) {
-                BigDecimal x = BigDecimal.valueOf(vector1[i]).subtract(BigDecimal.valueOf(vector2[i]));
-                result[i] = x.doubleValue();
+                tempValue = BigDecimal.valueOf(vector1[i]).subtract(BigDecimal.valueOf(vector2[i]));
+                result[i] = tempValue.doubleValue();
             }
             return Arrays.toString(result);
         } else {
@@ -56,9 +57,11 @@ public class VectorCalculations implements calculations.Calculations {
     }
 
     private String vectorMultiNumber(String a, String b) {
-        double[] arrayFromString = calculations.Calculations.super.getArrayFromString(a);
+        double[] arrayFromString = Calculations.super.getArrayFromString(a);
+        BigDecimal tempValue;
         for (int i = 0; i < arrayFromString.length; i++) {
-            arrayFromString[i] = arrayFromString[i] * Integer.parseInt(b);
+            tempValue = BigDecimal.valueOf(arrayFromString[i]).multiply(BigDecimal.valueOf(Double.parseDouble(b)));
+            arrayFromString[i] = tempValue.doubleValue();
         }
         return Arrays.toString(arrayFromString);
     }

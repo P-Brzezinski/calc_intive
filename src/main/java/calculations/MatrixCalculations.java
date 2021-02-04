@@ -5,21 +5,18 @@ import enums.Calculation;
 public class MatrixCalculations implements calculations.Calculations {
 
     @Override
-    public void doCalc(Calculation calc, String a, String b) {
+    public String doCalc(Calculation calc, String a, String b) {
         switch (calc) {
             case MATRIX_ADD_MATRIX:
-                System.out.println(add(a, b));
-                break;
+                return add(a, b);
             case MATRIX_SUB_MATRIX:
-                System.out.println(sub(a, b));
-                break;
+                return sub(a, b);
             case MATRIX_MULTI_MATRIX:
-                System.out.println(matrixMultiMatrix(a, b));
-                break;
+                return matrixMultiMatrix(a, b);
             case MATRIX_MULTI_NUM:
-                System.out.println(matrixMultiNumber(a, b));
+                return matrixMultiNumber(a, b);
         }
-
+        return "No suitable operation found.";
     }
 
     private String add(String a, String b) {

@@ -17,18 +17,18 @@ public enum Value {
 
     String description;
     String pattern;
-    Calculation[] possibleCalcs;
+    Calculation[] possibleCalculations;
 
-    Value(String description, String pattern, Calculation[] possibleCalcs) {
+    Value(String description, String pattern, Calculation[] possibleCalculations) {
         this.description = description;
         this.pattern = pattern;
-        this.possibleCalcs = possibleCalcs;
+        this.possibleCalculations = possibleCalculations;
     }
 
-    public static void showPossibleCalcs(Value value) {
-        Calculation[] possibleCalcs = value.getPossibleCalcs();
-        for (int i = 0; i < possibleCalcs.length; i++) {
-            System.out.println(i + 1 + " - " + possibleCalcs[i].getDescription());
+    public static void showPossibleCalculations(Value value) {
+        Calculation[] possibleCalculations = value.getPossibleCalculations();
+        for (int i = 0; i < possibleCalculations.length; i++) {
+            System.out.println(i + 1 + " - " + possibleCalculations[i].getDescription());
         }
     }
 
@@ -51,7 +51,7 @@ public enum Value {
         return pattern;
     }
 
-    public Calculation[] getPossibleCalcs() {
-        return possibleCalcs;
+    public Calculation[] getPossibleCalculations() {
+        return possibleCalculations;
     }
 }
