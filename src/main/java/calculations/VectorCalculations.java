@@ -1,14 +1,14 @@
 package calculations;
 
-import enums.Calc;
+import enums.Calculation;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 
-public class VectorCalculations implements Calculations {
+public class VectorCalculations implements calculations.Calculations {
 
     @Override
-    public void doCalc(Calc calc, String a, String b) {
+    public void doCalc(Calculation calc, String a, String b) {
         switch (calc) {
             case VECTOR_ADD_VECTOR:
                 System.out.println(add(a, b));
@@ -17,14 +17,14 @@ public class VectorCalculations implements Calculations {
                 System.out.println(sub(a, b));
                 break;
             case VECTOR_MULTI_NUM:
-                System.out.println(multi(a, b));
+                System.out.println(vectorMultiNumber(a, b));
                 break;
         }
     }
 
     private String add(String a, String b) {
-        double[] vector1 = Calculations.super.getArrayFromString(a);
-        double[] vector2 = Calculations.super.getArrayFromString(b);
+        double[] vector1 = calculations.Calculations.super.getArrayFromString(a);
+        double[] vector2 = calculations.Calculations.super.getArrayFromString(b);
         double[] result;
 
         if (sameLength(vector1, vector2) && noEmptyVector(vector1, vector2)) {
@@ -39,8 +39,8 @@ public class VectorCalculations implements Calculations {
     }
 
     private String sub(String a, String b) {
-        double[] vector1 = Calculations.super.getArrayFromString(a);
-        double[] vector2 = Calculations.super.getArrayFromString(b);
+        double[] vector1 = calculations.Calculations.super.getArrayFromString(a);
+        double[] vector2 = calculations.Calculations.super.getArrayFromString(b);
         double[] result;
 
         if (sameLength(vector1, vector2) && noEmptyVector(vector1, vector2)) {
@@ -55,8 +55,8 @@ public class VectorCalculations implements Calculations {
         }
     }
 
-    private String multi(String a, String b) {
-        double[] arrayFromString = Calculations.super.getArrayFromString(a);
+    private String vectorMultiNumber(String a, String b) {
+        double[] arrayFromString = calculations.Calculations.super.getArrayFromString(a);
         for (int i = 0; i < arrayFromString.length; i++) {
             arrayFromString[i] = arrayFromString[i] * Integer.parseInt(b);
         }

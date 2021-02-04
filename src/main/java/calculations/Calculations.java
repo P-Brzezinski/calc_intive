@@ -1,12 +1,12 @@
 package calculations;
 
-import enums.Calc;
+import enums.Calculation;
 
 import java.math.BigDecimal;
 
 public interface Calculations {
 
-    void doCalc(Calc calc, String value1, String value2);
+    void doCalc(Calculation calc, String value1, String value2);
 
     default double[] getArrayFromString(String stringArray) {
         //take out square brackets

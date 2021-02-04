@@ -1,6 +1,6 @@
 package enums;
 
-public enum Calc {
+public enum Calculation {
 
     //Possible calculations for number
     NUM_ADD_NUM("Add number to number", "Number", "Number"),
@@ -22,13 +22,14 @@ public enum Calc {
     //not done
     MATRIX_ADD_MATRIX("Add matrix to matrix", "Matrix", "Matrix"),
     MATRIX_SUB_MATRIX("Subtract matrix from matrix", "Matrix", "Matrix"),
-    MATRIX_MULTI_NUM("Multiple matrix by number", "Matrix", "Number");
+    MATRIX_MULTI_NUM("Multiple matrix by number", "Matrix", "Number"),
+    MATRIX_MULTI_MATRIX("Matrix multiply by matrix", "Matrix", "Matrix");
 
     String description;
     String value1;
     String value2;
 
-    Calc(String description, String value1, String value2) {
+    Calculation(String description, String value1, String value2) {
         this.description = description;
         this.value1 = value1;
         this.value2 = value2;

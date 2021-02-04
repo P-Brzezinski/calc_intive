@@ -2,20 +2,24 @@ import input.Input;
 
 public class TestClass {
 
-    private static final int MAX_VECTOR_LENGTH = 1;
+    private static final int MAX_VECTOR_LENGTH = 4;
     private static String VECTOR_PATTERN = "";
+    private static String MATRIX_PATTERN = "";
+    private static final int MATRIX_X = 2;
+    private static final int MATRIX_Y = 2;
 
     static Input input = Input.getInstance();
 
     public static void main(String[] args) {
 
-        createVectorPattern();
-        double text = Double.parseDouble(".4");
-        System.out.println(text);
+        VECTOR_PATTERN = createVectorPattern(MAX_VECTOR_LENGTH);
+        MATRIX_PATTERN = createMatrixPattern(MATRIX_X, MATRIX_Y);
+
         System.out.println(VECTOR_PATTERN);
+        System.out.println(MATRIX_PATTERN);
         while (true) {
             String userInput = input.getString("Enter:");
-            if (userInput.matches(VECTOR_PATTERN)) {
+            if (userInput.matches(MATRIX_PATTERN)) {
                 System.out.println("Matches");
             } else {
                 System.out.println("not matches");
@@ -23,25 +27,45 @@ public class TestClass {
         }
     }
 
-    private static void createVectorPattern() {
+    private static String createMatrixPattern(int x, int y) {
+        String pattern = "";
+        String openParentheses = "\\[";
+        String singleVectorPattern = createVectorPattern(y);
+        String closeParentheses = "\\]";
+        String coma = "?,";
+
+        StringBuilder patternBuilder = new StringBuilder(pattern);
+        patternBuilder.append(openParentheses);
+
+        for (int i = 0; i < y; i++) {
+            patternBuilder.append(singleVectorPattern);
+            if ((i + 1) < y) {
+                patternBuilder.append(coma);
+            }
+        }
+        patternBuilder.append(closeParentheses);
+        return patternBuilder.toString();
+    }
+
+    private static String createVectorPattern(int maxVectorLength) {
         String pattern = "";
         String openParentheses = "\\[";
         String singleDigit = "[+-]?\\d*(\\.\\d*)?";
         String closeParentheses = "\\]";
         String coma = ",?";
 
-        StringBuilder buildPattern = new StringBuilder(pattern);
+        StringBuilder patternBuiler = new StringBuilder(pattern);
 
-        buildPattern.append(openParentheses);
+        patternBuiler.append(openParentheses);
 
-        for (int j = 0; j < MAX_VECTOR_LENGTH; j++) {
-            buildPattern.append(singleDigit);
-            if ((j + 1) < MAX_VECTOR_LENGTH) {
-                buildPattern.append(coma);
+        for (int i = 0; i < maxVectorLength; i++) {
+            patternBuiler.append(singleDigit);
+            if ((i + 1) < maxVectorLength) {
+                patternBuiler.append(coma);
             }
         }
-        buildPattern.append(closeParentheses);
-        VECTOR_PATTERN = buildPattern.toString();
+        patternBuiler.append(closeParentheses);
+        return patternBuiler.toString();
     }
 
 }

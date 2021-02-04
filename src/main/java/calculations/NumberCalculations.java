@@ -1,16 +1,16 @@
 package calculations;
 
 import config.Configuration;
-import enums.Calc;
+import enums.Calculation;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
 
-public class NumberCalculations implements Calculations {
+public class NumberCalculations implements calculations.Calculations {
 
     @Override
-    public void doCalc(Calc calc, String a, String b) {
+    public void doCalc(Calculation calc, String a, String b) {
         switch (calc) {
             case NUM_ADD_NUM:
                 System.out.println(add(a, b));
@@ -84,7 +84,7 @@ public class NumberCalculations implements Calculations {
 
     //TODO empty array as input
     private String multiVector(String a, String b) {
-        double[] arrayFromString = Calculations.super.getArrayFromString(b);
+        double[] arrayFromString = calculations.Calculations.super.getArrayFromString(b);
         for (int i = 0; i < arrayFromString.length; i++) {
             arrayFromString[i] = arrayFromString[i] * Integer.parseInt(a);
         }

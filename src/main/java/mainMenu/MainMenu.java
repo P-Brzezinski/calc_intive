@@ -3,7 +3,7 @@ package mainMenu;
 import calculations.MatrixCalculations;
 import calculations.NumberCalculations;
 import calculations.VectorCalculations;
-import enums.Calc;
+import enums.Calculation;
 import input.Input;
 import enums.Value;
 
@@ -18,7 +18,7 @@ public class MainMenu {
     Input input = Input.getInstance();
     String value1;
     String value2;
-    Calc calc;
+    Calculation calc;
     boolean nextAction;
 
     public void init() {
@@ -53,12 +53,12 @@ public class MainMenu {
         } while (nextAction);
     }
 
-    private Calc getAction(Value value) {
+    private Calculation getAction(Value value) {
         int pickOption = input.getInt("Choose calculation", 1, value.getPossibleCalcs().length);
         return value.getPossibleCalcs()[pickOption - 1];
     }
 
-    private void doMatch(Calc calc, String value1, String value2) {
+    private void doMatch(Calculation calc, String value1, String value2) {
         switch (calc.getValue1()) {
             case "Number":
                 NumberCalculations nc = new NumberCalculations();
