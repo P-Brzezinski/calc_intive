@@ -17,44 +17,31 @@ public class Configuration {
         MATRIX_PATTERN = createMatrixPattern(MATRIX_X, MATRIX_Y);
     }
 
-    private String createMatrixPattern(int x, int y) {
+    private String createVectorPattern(int maxVectorLength) {
         String pattern = "";
-        String openParentheses = "\\[";
-        String singleVectorPattern = createVectorPattern(x);
-        String closeParentheses = "\\]";
-        String coma = "?,";
-
         StringBuilder patternBuilder = new StringBuilder(pattern);
-        patternBuilder.append(openParentheses);
-
-        for (int i = 0; i < y; i++) {
-            patternBuilder.append(singleVectorPattern);
-            if ((i + 1) < y){
-                patternBuilder.append(coma);
+        patternBuilder.append("\\[");
+        for (int i = 0; i < maxVectorLength; i++) {
+            patternBuilder.append(NUMBER_PATTERN);
+            if ((i + 1) < maxVectorLength) {
+                patternBuilder.append(",?");
             }
         }
-        patternBuilder.append(closeParentheses);
+        patternBuilder.append("\\]");
         return patternBuilder.toString();
     }
 
-    private String createVectorPattern(int maxVectorLength) {
+    private String createMatrixPattern(int x, int y) {
         String pattern = "";
-        String openParentheses = "\\[";
-        String closeParentheses = "\\]";
-        String coma = ",?";
+        String singleVectorPattern = createVectorPattern(y);
+        StringBuilder patternBuilder = new StringBuilder(pattern);
+        patternBuilder.append("\\[");
 
-        StringBuilder patternBuiler = new StringBuilder(pattern);
-
-        patternBuiler.append(openParentheses);
-
-        for (int i = 0; i < maxVectorLength; i++) {
-            patternBuiler.append(NUMBER_PATTERN);
-            if ((i + 1) < maxVectorLength) {
-                patternBuiler.append(coma);
-            }
+        for (int i = 0; i < y; i++) {
+            patternBuilder.append(singleVectorPattern);
         }
-        patternBuiler.append(closeParentheses);
-        return patternBuiler.toString();
+        patternBuilder.append("\\]");
+        return patternBuilder.toString();
     }
 
     public static String getNumberPattern() {
@@ -75,5 +62,13 @@ public class Configuration {
 
     public static int getMaxPower() {
         return MAX_POWER;
+    }
+
+    public static int getMatrixX() {
+        return MATRIX_X;
+    }
+
+    public static int getMatrixY() {
+        return MATRIX_Y;
     }
 }

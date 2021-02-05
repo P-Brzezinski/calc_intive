@@ -1,8 +1,10 @@
 package calculations;
 
+import config.Configuration;
 import enums.Calculation;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public interface Calculations {
 
@@ -22,5 +24,21 @@ public interface Calculations {
             }
             return newArray;
         }
+    }
+
+    //TODO
+    default double[][] getMatrixFromString(String matrixArray) {
+        matrixArray = matrixArray.substring(1, matrixArray.length() - 1);
+        matrixArray = matrixArray.replace("][", "]|[");
+        String[] split = matrixArray.split("\\|");
+        double[][] result = new double[Configuration.getMatrixX()][Configuration.getMatrixY()];
+
+        for (int i = 0; i < result.length; i++) {
+            double[] innerTable = result[i];
+            for (int j = 0; j < innerTable.length; j++) {
+                innerTable[j] = Double.parseDouble(split[j]);
+            }
+        }
+        return result;
     }
 }

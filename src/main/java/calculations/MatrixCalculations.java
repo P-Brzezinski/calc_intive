@@ -2,7 +2,7 @@ package calculations;
 
 import enums.Calculation;
 
-public class MatrixCalculations implements calculations.Calculations {
+public class MatrixCalculations implements Calculations {
 
     @Override
     public String doCalc(Calculation calc, String a, String b) {
@@ -19,19 +19,20 @@ public class MatrixCalculations implements calculations.Calculations {
         return "No suitable operation found.";
     }
 
+    //TODO
     private String add(String a, String b) {
-        return null;
+        return "Iam sorry, this feature is not yet implemented...";
     }
 
     private String sub(String a, String b) {
-        return null;
+        return "Iam sorry, this feature is not yet implemented...";
     }
 
     private String matrixMultiMatrix(String a, String b) {
-        return null;
+        return "Iam sorry, this feature is not yet implemented...";
     }
 
     private String matrixMultiNumber(String a, String b) {
-        return null;
+        return "Iam sorry, this feature is not yet implemented...";
     }
 }
