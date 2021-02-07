@@ -1,6 +1,5 @@
 package calculations;
 
-import config.Configuration;
 import enums.Calculation;
 
 import java.math.BigDecimal;
@@ -26,22 +25,26 @@ public interface Calculations {
         }
     }
 
-    //TODO
-    default double[][] getMatrixFromString(String matrixArray) {
-        //take out (outer) square brackets
-        matrixArray = matrixArray.substring(1, matrixArray.length() - 1);
-        //get all number into array
-        matrixArray = matrixArray.replace("][", "]|[");
-        String[] split = matrixArray.split("\\|");
-        //assign all numbers from string to double array
-        double[][] result = new double[Configuration.getMatrixX()][Configuration.getMatrixY()];
+    default double[][] getMatrixFromString(String stringMatrix) {
+//    [[2,1][22,22][33,33]]
+        stringMatrix = stringMatrix.substring(2, stringMatrix.length() - 2);
+        System.out.println("1 step = " + stringMatrix);
+        String[] strings = stringMatrix.split("]\\[");
+        System.out.println("2 step = " + Arrays.toString(strings));
+
+        double[][] result = new double[strings.length][];
 
         for (int i = 0; i < result.length; i++) {
-            double[] innerTable = result[i];
-            for (int j = 0; j < innerTable.length; j++) {
-                innerTable[j] = Double.parseDouble(split[j]);
+            String[] tempStringArray = strings[i].split(",");
+            double[] singleVector = new double[tempStringArray.length];
+            for (int j = 0; j < singleVector.length; j++) {
+                singleVector[j] = Double.parseDouble(tempStringArray[j]);
             }
+            result[i] = singleVector;
         }
+
+        System.out.println("3 step");
+        System.out.println(Arrays.deepToString(result));
         return result;
     }
 }

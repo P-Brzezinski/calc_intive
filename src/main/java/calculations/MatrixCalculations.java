@@ -2,6 +2,8 @@ package calculations;
 
 import enums.Calculation;
 
+import java.util.Arrays;
+
 public class MatrixCalculations implements Calculations {
 
     @Override
@@ -21,7 +23,24 @@ public class MatrixCalculations implements Calculations {
 
     //TODO
     private String add(String a, String b) {
-        return "Iam sorry, this feature is not yet implemented...";
+        double[][] matrixA = Calculations.super.getMatrixFromString(a);
+        double[][] matrixB = Calculations.super.getMatrixFromString(b);
+
+        System.out.println("X " + matrixA.length);
+        System.out.println("Y " + matrixA[0].length);
+
+        double[][] result = new double[matrixA.length][matrixA[0].length];
+
+        for (int i = 0; i < matrixA.length; i++) {
+            if (i > matrixA[0].length) {
+                break;
+            } else {
+                for (int j = 0; j < matrixA[0].length; j++) {
+                    result[i][j] = matrixA[i][j] + matrixB[i][j];
+                }
+            }
+        }
+        return Arrays.deepToString(result);
     }
 
     private String sub(String a, String b) {

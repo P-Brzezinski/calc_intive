@@ -1,5 +1,6 @@
 package mainMenu;
 
+import calculations.Calculations;
 import calculations.MatrixCalculations;
 import calculations.NumberCalculations;
 import calculations.VectorCalculations;
@@ -23,7 +24,6 @@ public class MainMenu {
     boolean nextAction;
 
     public void initMenu() {
-        System.out.println(Configuration.getMatrixPattern());
         Value valueFromString;
         do {
             //First value
@@ -41,6 +41,7 @@ public class MainMenu {
                 value2 = input.getString("Enter second value:");
                 valueFromString = getValueFromString(value2);
                 if (!valueFromString.getDescription().equals(calc.getValue2())) {
+                    //TODO in case of vector and matrix, inform user of max length accepted (if failed)
                     System.out.println("Should be type of " + calc.getValue2());
                     valueFromString = UNRECOGNIZED;
                 }
@@ -89,6 +90,7 @@ public class MainMenu {
                 case HELP_COMMAND:
                     Help help = new Help();
                     help.showHelp();
+                    choice = false;
                     break;
                 default:
                     System.out.println("Unrecognized command, try again:");
