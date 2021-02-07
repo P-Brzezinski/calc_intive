@@ -11,7 +11,7 @@ public enum Value {
     VECTOR("Vector", Configuration.getVectorPattern(),
             new Calculation[]{VECTOR_ADD_VECTOR, VECTOR_SUB_VECTOR, VECTOR_MULTI_NUM}),
     MATRIX("Matrix", Configuration.getMatrixPattern(),
-            new Calculation[]{MATRIX_ADD_MATRIX, MATRIX_SUB_MATRIX, MATRIX_MULTI_NUM}),
+            new Calculation[]{MATRIX_ADD_MATRIX, MATRIX_SUB_MATRIX, MATRIX_MULTI_MATRIX, MATRIX_MULTI_NUM}),
     UNRECOGNIZED("Unrecognized value", "NULL",
             new Calculation[0]);
 

@@ -60,10 +60,37 @@ public class MatrixCalculations implements Calculations {
     }
 
     private String matrixMultiMatrix(String a, String b) {
-        return "Iam sorry, this feature is not yet implemented...";
+        double[][] matrixA = Calculations.super.getMatrixFromString(a);
+        double[][] matrixB = Calculations.super.getMatrixFromString(b);
+
+        double[][] result = new double[matrixA.length][matrixA[0].length];
+
+        for (int i = 0; i < matrixA.length; i++) {
+            if (i > matrixA[0].length) {
+                break;
+            } else {
+                for (int j = 0; j < matrixA[0].length; j++) {
+                    result[i][j] = matrixA[i][j] * matrixB[i][j];
+                }
+            }
+        }
+        return Arrays.deepToString(result);
     }
 
     private String matrixMultiNumber(String a, String b) {
-        return "Iam sorry, this feature is not yet implemented...";
+        double[][] matrixA = Calculations.super.getMatrixFromString(a);
+        double multiNum = Double.parseDouble(b);
+        double[][] result = new double[matrixA.length][matrixA[0].length];
+
+        for (int i = 0; i < matrixA.length; i++) {
+            if (i > matrixA[0].length) {
+                break;
+            } else {
+                for (int j = 0; j < matrixA[0].length; j++) {
+                    result[i][j] = matrixA[i][j] * multiNum;
+                }
+            }
+        }
+        return Arrays.deepToString(result);
     }
 }

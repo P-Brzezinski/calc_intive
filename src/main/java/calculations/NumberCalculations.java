@@ -26,6 +26,8 @@ public class NumberCalculations implements Calculations {
                 return square(a, b);
             case NUM_MULTI_VECTOR:
                 return multiVector(a, b);
+            case NUM_MULTI_MATRIX:
+                return numberMultiMatrix(a, b);
         }
         return "No suitable operation found.";
     }
@@ -70,7 +72,6 @@ public class NumberCalculations implements Calculations {
         return String.valueOf(Math.sqrt(Double.parseDouble(a)));
     }
 
-    //TODO empty array as input
     private String multiVector(String a, String b) {
         double[] arrayFromString = Calculations.super.getArrayFromString(b);
         for (int i = 0; i < arrayFromString.length; i++) {
@@ -79,5 +80,20 @@ public class NumberCalculations implements Calculations {
         return Arrays.toString(arrayFromString);
     }
 
-    //TODO NUM_MULTI_MATRIX
+    private String numberMultiMatrix(String a, String b) {
+        double multiNum = Double.parseDouble(a);
+        double[][] matrix = Calculations.super.getMatrixFromString(b);
+        double[][] result = new double[matrix.length][matrix[0].length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            if (i > matrix[0].length) {
+                break;
+            } else {
+                for (int j = 0; j < matrix[0].length; j++) {
+                    result[i][j] = matrix[i][j] * multiNum;
+                }
+            }
+        }
+        return Arrays.deepToString(result);
+    }
 }
