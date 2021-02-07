@@ -27,6 +27,9 @@ public class MatrixCalculations implements Calculations {
         double[][] matrixA = Calculations.super.getMatrixFromString(a);
         double[][] matrixB = Calculations.super.getMatrixFromString(b);
 
+        if (!hasSameDimensions(matrixA, matrixB))
+            return "Matrices must have same dimensions if you want to add them!";
+
         double[][] result = new double[matrixA.length][matrixA[0].length];
 
         for (int i = 0; i < matrixA.length; i++) {
@@ -45,6 +48,9 @@ public class MatrixCalculations implements Calculations {
         double[][] matrixA = Calculations.super.getMatrixFromString(a);
         double[][] matrixB = Calculations.super.getMatrixFromString(b);
 
+        if (!hasSameDimensions(matrixA, matrixB))
+            return "Matrices must have same dimensions if you want to subtract them!";
+
         double[][] result = new double[matrixA.length][matrixA[0].length];
 
         for (int i = 0; i < matrixA.length; i++) {
@@ -62,6 +68,9 @@ public class MatrixCalculations implements Calculations {
     private String matrixMultiMatrix(String a, String b) {
         double[][] matrixA = Calculations.super.getMatrixFromString(a);
         double[][] matrixB = Calculations.super.getMatrixFromString(b);
+
+        if (!hasSameDimensions(matrixA, matrixB))
+            return "Matrices must have same dimensions if you want to multiply them!";
 
         double[][] result = new double[matrixA.length][matrixA[0].length];
 
@@ -93,4 +102,20 @@ public class MatrixCalculations implements Calculations {
         }
         return Arrays.deepToString(result);
     }
+
+    private boolean hasSameDimensions(double[][] matrixA, double[][] matrixB) {
+        boolean hasSameDimensions = true;
+        if (matrixA.length == matrixB.length) {
+            for (int i = 0; i < matrixA.length; i++) {
+                if (matrixA[i].length != matrixB[i].length) {
+                    hasSameDimensions = false;
+                    break;
+                }
+            }
+        } else {
+            hasSameDimensions = false;
+        }
+        return hasSameDimensions;
+    }
+
 }
