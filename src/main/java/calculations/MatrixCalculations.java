@@ -21,13 +21,11 @@ public class MatrixCalculations implements Calculations {
         return "No suitable operation found.";
     }
 
-    //TODO
+    // example [[22,33,44][44,22,33][11,22,44]]
+
     private String add(String a, String b) {
         double[][] matrixA = Calculations.super.getMatrixFromString(a);
         double[][] matrixB = Calculations.super.getMatrixFromString(b);
-
-        System.out.println("X " + matrixA.length);
-        System.out.println("Y " + matrixA[0].length);
 
         double[][] result = new double[matrixA.length][matrixA[0].length];
 
@@ -44,7 +42,21 @@ public class MatrixCalculations implements Calculations {
     }
 
     private String sub(String a, String b) {
-        return "Iam sorry, this feature is not yet implemented...";
+        double[][] matrixA = Calculations.super.getMatrixFromString(a);
+        double[][] matrixB = Calculations.super.getMatrixFromString(b);
+
+        double[][] result = new double[matrixA.length][matrixA[0].length];
+
+        for (int i = 0; i < matrixA.length; i++) {
+            if (i > matrixA[0].length) {
+                break;
+            } else {
+                for (int j = 0; j < matrixA[0].length; j++) {
+                    result[i][j] = matrixA[i][j] - matrixB[i][j];
+                }
+            }
+        }
+        return Arrays.deepToString(result);
     }
 
     private String matrixMultiMatrix(String a, String b) {
