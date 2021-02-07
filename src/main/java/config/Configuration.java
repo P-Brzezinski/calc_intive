@@ -9,8 +9,8 @@ public class Configuration {
     private static final int MAX_VECTOR_LENGTH = 4;
     private static final int MAX_POWER = 128;
     private static String MATRIX_PATTERN = "";
-    private static final int MATRIX_X = 3;
-    private static final int MATRIX_Y = 3;
+    private static final int MATRIX_X = 4;
+    private static final int MATRIX_Y = 4;
 
     public void initConfig(){
         VECTOR_PATTERN = createVectorPattern(MAX_VECTOR_LENGTH);

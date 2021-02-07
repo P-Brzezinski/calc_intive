@@ -25,7 +25,7 @@ public class NumberCalculations implements Calculations {
             case NUM_SQUARE:
                 return square(a, b);
             case NUM_MULTI_VECTOR:
-                return multiVector(a, b);
+                return numberMultiVector(a, b);
             case NUM_MULTI_MATRIX:
                 return numberMultiMatrix(a, b);
         }
@@ -72,12 +72,15 @@ public class NumberCalculations implements Calculations {
         return String.valueOf(Math.sqrt(Double.parseDouble(a)));
     }
 
-    private String multiVector(String a, String b) {
-        double[] arrayFromString = Calculations.super.getArrayFromString(b);
-        for (int i = 0; i < arrayFromString.length; i++) {
-            arrayFromString[i] = arrayFromString[i] * Integer.parseInt(a);
+    private String numberMultiVector(String a, String b) {
+        double[] vector = Calculations.super.getVectorFromString(b);
+        BigDecimal multiplier = BigDecimal.valueOf(Double.parseDouble(a));
+        BigDecimal tempValue;
+        for (int i = 0; i < vector.length; i++) {
+            tempValue = BigDecimal.valueOf(vector[i]).multiply(multiplier);
+            vector[i] = tempValue.doubleValue();
         }
-        return Arrays.toString(arrayFromString);
+        return Arrays.toString(vector);
     }
 
     private String numberMultiMatrix(String a, String b) {

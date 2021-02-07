@@ -17,13 +17,15 @@ public enum Calculation {
     VECTOR_ADD_VECTOR("Add vector to vector", "+", "Vector", "Vector"),
     VECTOR_SUB_VECTOR("Subtract vector from vector", "-", "Vector", "Vector"),
     VECTOR_MULTI_NUM("Multiply vector by number", "*", "Vector", "Number"),
+    VECTOR_MULTI_MATRIX("Multiply vector by matrix", "*", "Vactor", "Matrix"),
 
     //    Possible calculations for matrix
     //not done
     MATRIX_ADD_MATRIX("Add matrix to matrix", "+", "Matrix", "Matrix"),
     MATRIX_SUB_MATRIX("Subtract matrix from matrix", "-", "Matrix", "Matrix"),
     MATRIX_MULTI_NUM("Multiple matrix by number", "*", "Matrix", "Number"),
-    MATRIX_MULTI_MATRIX("Matrix multiply by matrix", "*", "Matrix", "Matrix");
+    MATRIX_MULTI_MATRIX("Matrix multiply by matrix", "*", "Matrix", "Matrix"),
+    MATRIX_MULTI_VECTOR("Matrix multiply by vector", "*", "Matrix", "Vector");
 
     String description;
     String operator;

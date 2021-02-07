@@ -9,9 +9,9 @@ public enum Value {
     NUMBER("Number", Configuration.getNumberPattern(),
             new Calculation[]{NUM_ADD_NUM, NUM_SUB_NUM, NUM_MULTI_NUM, NUM_DIV_NUM, NUM_POWER_TO_NUM, NUM_SQUARE, NUM_MULTI_VECTOR, NUM_MULTI_MATRIX}),
     VECTOR("Vector", Configuration.getVectorPattern(),
-            new Calculation[]{VECTOR_ADD_VECTOR, VECTOR_SUB_VECTOR, VECTOR_MULTI_NUM}),
+            new Calculation[]{VECTOR_ADD_VECTOR, VECTOR_SUB_VECTOR, VECTOR_MULTI_NUM, VECTOR_MULTI_MATRIX}),
     MATRIX("Matrix", Configuration.getMatrixPattern(),
-            new Calculation[]{MATRIX_ADD_MATRIX, MATRIX_SUB_MATRIX, MATRIX_MULTI_MATRIX, MATRIX_MULTI_NUM}),
+            new Calculation[]{MATRIX_ADD_MATRIX, MATRIX_SUB_MATRIX, MATRIX_MULTI_MATRIX, MATRIX_MULTI_NUM, MATRIX_MULTI_VECTOR}),
     UNRECOGNIZED("Unrecognized value", "NULL",
             new Calculation[0]);
 
