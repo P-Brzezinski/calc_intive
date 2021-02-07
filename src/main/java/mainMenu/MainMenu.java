@@ -3,6 +3,7 @@ package mainMenu;
 import calculations.MatrixCalculations;
 import calculations.NumberCalculations;
 import calculations.VectorCalculations;
+import config.Configuration;
 import enums.Calculation;
 import input.Input;
 import enums.Value;
@@ -22,6 +23,7 @@ public class MainMenu {
     boolean nextAction;
 
     public void initMenu() {
+        System.out.println(Configuration.getMatrixPattern());
         Value valueFromString;
         do {
             //First value

@@ -28,9 +28,12 @@ public interface Calculations {
 
     //TODO
     default double[][] getMatrixFromString(String matrixArray) {
+        //take out (outer) square brackets
         matrixArray = matrixArray.substring(1, matrixArray.length() - 1);
+        //get all number into array
         matrixArray = matrixArray.replace("][", "]|[");
         String[] split = matrixArray.split("\\|");
+        //assign all numbers from string to double array
         double[][] result = new double[Configuration.getMatrixX()][Configuration.getMatrixY()];
 
         for (int i = 0; i < result.length; i++) {

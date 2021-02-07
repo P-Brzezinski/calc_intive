@@ -9,8 +9,8 @@ public class Configuration {
     private static final int MAX_VECTOR_LENGTH = 4;
     private static final int MAX_POWER = 128;
     private static String MATRIX_PATTERN = "";
-    private static final int MATRIX_X = 2;
-    private static final int MATRIX_Y = 2;
+    private static final int MATRIX_X = 3;
+    private static final int MATRIX_Y = 3;
 
     public void initConfig(){
         VECTOR_PATTERN = createVectorPattern(MAX_VECTOR_LENGTH);
@@ -37,8 +37,10 @@ public class Configuration {
         StringBuilder patternBuilder = new StringBuilder(pattern);
         patternBuilder.append("\\[");
 
-        for (int i = 0; i < y; i++) {
+        for (int i = 0; i < x; i++) {
+            patternBuilder.append("(");
             patternBuilder.append(singleVectorPattern);
+            patternBuilder.append(")?");
         }
         patternBuilder.append("\\]");
         return patternBuilder.toString();
