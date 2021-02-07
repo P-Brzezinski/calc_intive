@@ -80,7 +80,7 @@ public class VectorCalculations implements Calculations {
                 return "To multiply a row vector by a column vector, the row vector must have as many columns as the column vector has rows.";
             } else {
                 for (int j = 0; j < matrix.length; j++) {
-                    matrix[i][i] = matrix[i][j] * vector[i];
+                    matrix[i][j] = matrix[i][j] * vector[i];
                 }
             }
         }

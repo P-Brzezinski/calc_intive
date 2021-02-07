@@ -114,23 +114,16 @@ public class MatrixCalculations implements Calculations {
     private String matrixMultiVector(String a, String b) {
         double[][] matrix = Calculations.super.getMatrixFromString(a);
         double[] vector = Calculations.super.getVectorFromString(b);
-        String errorMessage = "To multiply a row vector by a column vector, the row vector must have as many columns as the column vector has rows.";
 
-        if (noEmptyMatrix(matrix)) {
-            for (double[] doubles : matrix) {
-                if (doubles.length != vector.length) {
-                    return errorMessage;
-                }
-                for (int i = 0; i < matrix.length; i++) {
-                    for (int j = 0; j < matrix.length; j++) {
-                        matrix[i][i] = matrix[i][j] * vector[i];
-                    }
+        for (int i = 0; i < matrix.length; i++) {
+            if (!(matrix[i].length == vector.length)) {
+                return "To multiply a row vector by a column vector, the row vector must have as many columns as the column vector has rows.";
+            } else {
+                for (int j = 0; j < matrix.length; j++) {
+                    matrix[i][j] = matrix[i][j] * vector[i];
                 }
             }
-        } else {
-            return errorMessage;
         }
-
         return Arrays.deepToString(matrix);
     }
 

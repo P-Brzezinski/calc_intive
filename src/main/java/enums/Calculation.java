@@ -17,7 +17,7 @@ public enum Calculation {
     VECTOR_ADD_VECTOR("Add vector to vector", "+", "Vector", "Vector"),
     VECTOR_SUB_VECTOR("Subtract vector from vector", "-", "Vector", "Vector"),
     VECTOR_MULTI_NUM("Multiply vector by number", "*", "Vector", "Number"),
-    VECTOR_MULTI_MATRIX("Multiply vector by matrix", "*", "Vactor", "Matrix"),
+    VECTOR_MULTI_MATRIX("Multiply vector by matrix", "*", "Vector", "Matrix"),
 
     //    Possible calculations for matrix
     //not done

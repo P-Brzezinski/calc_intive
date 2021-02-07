@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="calc_intive:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/calc_intive_jar</output-path>
+    <root id="archive" name="calc_intive.jar">
+      <element id="module-output" name="calc_intive" />
+    </root>
+  </artifact>
+</component>
