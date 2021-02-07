@@ -82,7 +82,6 @@ public class MainMenu {
             command = input.getString("\nAgain? (yes, exit or help)");
             switch (command) {
                 case AGAIN_COMMAND:
-                    choice = true;
                     break;
                 case EXIT_COMMAND:
                     choice = false;
@@ -90,7 +89,6 @@ public class MainMenu {
                 case HELP_COMMAND:
                     Help help = new Help();
                     help.showHelp();
-                    choice = false;
                     break;
                 default:
                     System.out.println("Unrecognized command, try again:");
