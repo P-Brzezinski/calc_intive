@@ -57,17 +57,17 @@ public class MainMenu {
         return value.getPossibleCalculations()[pickOption - 1];
     }
 
-    private String doMatch(Calculation calc, String value1, String value2) {
-        switch (calc.getValue1()) {
+    private String doMatch(Calculation calculation, String a, String b) {
+        switch (calculation.getValue1()) {
             case "Number":
                 NumberCalculations nc = new NumberCalculations();
-                return nc.doCalc(calc, value1, value2);
+                return nc.doCalc(calculation, a, b);
             case "Vector":
                 VectorCalculations vc = new VectorCalculations();
-                return vc.doCalc(calc, value1, value2);
+                return vc.doCalc(calculation, a, b);
             case "Matrix":
                 MatrixCalculations mc = new MatrixCalculations();
-                return mc.doCalc(calc, value1, value2);
+                return mc.doCalc(calculation, a, b);
         }
         return "Error. I do not know math...";
     }

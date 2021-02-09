@@ -1,13 +1,19 @@
 package pl.brzezinski.service;
 
+import pl.brzezinski.calculations.Calculations;
+import pl.brzezinski.calculations.MatrixCalculations;
 import pl.brzezinski.calculations.NumberCalculations;
+import pl.brzezinski.calculations.VectorCalculations;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.enums.Calculation;
 import pl.brzezinski.enums.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.brzezinski.exceptions.CalculationNotPossibleException;
 import pl.brzezinski.exceptions.OperatorNotFoundException;
 import pl.brzezinski.exceptions.UnrecognizedValueException;
+
+import java.util.List;
 
 @Service
 public class CalculationService {
@@ -19,39 +25,55 @@ public class CalculationService {
         this.numberCalculations = numberCalculations;
     }
 
-    public String makeCalc(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException {
-        String result;
-        Value a = getValue(request);
-        Value b = getValue(request);
+    public String makeCalc(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException {
+        Value a = getValue(request.getValueA());
+        Value b = getValue(request.getValueB());
+        String operator = getOperator(request.getOperator());
+        Calculation calculation = getCalculation(a, b, operator);
 
-        Calculation calculation = getCalculation(request);
-
-        Calculation[] possibleCalculationsForValue = Value.getPossibleCalculationsForValue(a);
-
-        for (Calculation calc : possibleCalculationsForValue) {
-            if (calc.equals(calculation) && calc.getValue2().equals(b.getDescription())){
-                result = numberCalculations.doCalc(calculation, request.getValueA(), request.getValueB());
-                return result;
-            }
+        switch (calculation.getValue1()) {
+            case "Number":
+                NumberCalculations nc = new NumberCalculations();
+                return nc.doCalc(calculation, request.getValueA(), request.getValueB());
+            case "Vector":
+                VectorCalculations vc = new VectorCalculations();
+                return vc.doCalc(calculation, request.getValueA(), request.getValueB());
+            case "Matrix":
+                MatrixCalculations mc = new MatrixCalculations();
+                return mc.doCalc(calculation, request.getValueA(), request.getValueB());
+            default:
+                return "Error. I do not know math...";
         }
-
-        return "ERROR";
     }
 
-    public Value getValue(CalculationRequest request) throws UnrecognizedValueException {
-        Value value = Value.getValueFromString(request.getValueA());
+    public Value getValue(String x) throws UnrecognizedValueException {
+        Value value = Value.getValueFromString(x);
         if (value.equals(Value.UNRECOGNIZED)) {
-            throw new UnrecognizedValueException(value.getDescription());
+            throw new UnrecognizedValueException(value.getDescription() + ": " + x);
         }
         return value;
     }
 
-    public Calculation getCalculation(CalculationRequest request) throws OperatorNotFoundException {
-        Calculation calculation = Calculation.getCalculationFromStringOperator(request.getOperator());
-        if (calculation.equals(Calculation.UNRECOGNIZED)){
-            throw new OperatorNotFoundException("Unrecognized operator");
+    private String getOperator(String operator) throws OperatorNotFoundException {
+        List<String> possibleOperators = Calculation.getPossibleOperators();
+        for (String possibleOperator : possibleOperators) {
+            if (possibleOperator.equals(operator)) {
+                return possibleOperator;
+            }
         }
-        return calculation;
+        throw new OperatorNotFoundException(Calculation.UNRECOGNIZED.getOperator() + ": " + operator);
     }
+
+    private Calculation getCalculation(Value a, Value b, String operator) throws CalculationNotPossibleException {
+        Calculation[] possibleCalculations = a.getPossibleCalculations();
+        for (Calculation possibleCalculation : possibleCalculations) {
+            if (possibleCalculation.getOperator().equals(operator) && b.getDescription().equals(possibleCalculation.getValue2())) {
+                return possibleCalculation;
+            }
+        }
+        throw new CalculationNotPossibleException(Calculation.UNRECOGNIZED.getDescription());
+    }
+
+
 }
 
