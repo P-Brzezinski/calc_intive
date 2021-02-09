@@ -1,16 +1,19 @@
 package pl.brzezinski.calculations;
 
+import org.springframework.stereotype.Service;
 import pl.brzezinski.enums.Calculation;
+import pl.brzezinski.exceptions.VectorException;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 
+@Service
 public class VectorCalculations implements Calculations {
 
     private static final String ERROR_MESSAGE = "Vectors must have same length and can not be empty if you want to";
 
     @Override
-    public String doCalculation(Calculation calc, String a, String b) {
+    public String doCalculation(Calculation calc, String a, String b) throws VectorException {
         switch (calc) {
             case VECTOR_ADD_VECTOR:
                 return add(a, b);
@@ -24,7 +27,7 @@ public class VectorCalculations implements Calculations {
         return "No suitable operation found.";
     }
 
-    private String add(String a, String b) {
+    private String add(String a, String b) throws VectorException {
         double[] vector1 = Calculations.super.getVectorFromString(a);
         double[] vector2 = Calculations.super.getVectorFromString(b);
         double[] result;
@@ -38,11 +41,11 @@ public class VectorCalculations implements Calculations {
             }
             return Arrays.toString(result);
         } else {
-            return String.format("%s %s", ERROR_MESSAGE, "add");
+            throw new VectorException(String.format("%s %s", ERROR_MESSAGE, "add"));
         }
     }
 
-    private String sub(String a, String b) {
+    private String sub(String a, String b) throws VectorException {
         double[] vector1 = Calculations.super.getVectorFromString(a);
         double[] vector2 = Calculations.super.getVectorFromString(b);
         double[] result;
@@ -56,7 +59,7 @@ public class VectorCalculations implements Calculations {
             }
             return Arrays.toString(result);
         } else {
-            return String.format("%s %s", ERROR_MESSAGE, "subtract");
+            throw new VectorException(String.format("%s %s", ERROR_MESSAGE, "subtract"));
         }
     }
 

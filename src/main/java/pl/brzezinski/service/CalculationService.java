@@ -6,6 +6,7 @@ import pl.brzezinski.calculations.NumberCalculations;
 import pl.brzezinski.calculations.VectorCalculations;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.PossibleCalculationsResponse;
+import pl.brzezinski.dto.Result;
 import pl.brzezinski.enums.Calculation;
 import pl.brzezinski.enums.Value;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import pl.brzezinski.exceptions.CalculationNotPossibleException;
 import pl.brzezinski.exceptions.OperatorNotFoundException;
 import pl.brzezinski.exceptions.UnrecognizedValueException;
+import pl.brzezinski.exceptions.VectorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +22,19 @@ import java.util.List;
 @Service
 public class CalculationService {
 
-    private Calculations calculations;
+    private final NumberCalculations numberCalculations;
+    private final VectorCalculations vectorCalculations;
+    private final MatrixCalculations matrixCalculations;
 
     @Autowired
-    public CalculationService(NumberCalculations calculations) {
-        this.calculations = calculations;
+    public CalculationService(NumberCalculations numberCalculations, VectorCalculations vectorCalculations, MatrixCalculations matrixCalculations) {
+        this.numberCalculations = numberCalculations;
+        this.vectorCalculations = vectorCalculations;
+        this.matrixCalculations = matrixCalculations;
     }
 
-    public String doCalculation(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException, ArithmeticException {
+    public Result doCalculation(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException, ArithmeticException, VectorException {
+        String result;
         Value a = getValue(request.getValueA());
         Value b = getValue(request.getValueB());
         String operator = getOperator(request.getOperator());
@@ -35,17 +42,18 @@ public class CalculationService {
 
         switch (calculation.getValueA()) {
             case "Number":
-                calculations = new NumberCalculations();
-                return calculations.doCalculation(calculation, request.getValueA(), request.getValueB());
+                result = numberCalculations.doCalculation(calculation, request.getValueA(), request.getValueB());
+                break;
             case "Vector":
-                calculations = new VectorCalculations();
-                return calculations.doCalculation(calculation, request.getValueA(), request.getValueB());
+                result = vectorCalculations.doCalculation(calculation, request.getValueA(), request.getValueB());
+                break;
             case "Matrix":
-                calculations = new MatrixCalculations();
-                return calculations.doCalculation(calculation, request.getValueA(), request.getValueB());
+                result = matrixCalculations.doCalculation(calculation, request.getValueA(), request.getValueB());
+                break;
             default:
-                return "Error. I do not know math...";
+                result = "Error. I do not know math...";
         }
+        return new Result(result, "Calculation result saved to file");
     }
 
     public Value getValue(String x) throws UnrecognizedValueException {

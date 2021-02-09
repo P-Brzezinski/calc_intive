@@ -1,9 +1,11 @@
 package pl.brzezinski.calculations;
 
+import org.springframework.stereotype.Service;
 import pl.brzezinski.enums.Calculation;
 
 import java.util.Arrays;
 
+@Service
 public class MatrixCalculations implements Calculations {
 
     private static final String ERROR_MESSAGE = "Matrices must have same dimensions and cannot be empty if you want to";
