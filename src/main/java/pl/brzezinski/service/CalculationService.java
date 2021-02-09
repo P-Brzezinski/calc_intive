@@ -1,12 +1,13 @@
 package pl.brzezinski.service;
 
-import pl.brzezinski.calculations.Calculations;
 import pl.brzezinski.calculations.NumberCalculations;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.enums.Calculation;
 import pl.brzezinski.enums.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.brzezinski.exceptions.OperatorNotFoundException;
+import pl.brzezinski.exceptions.UnrecognizedValueException;
 
 @Service
 public class CalculationService {
@@ -18,60 +19,39 @@ public class CalculationService {
         this.numberCalculations = numberCalculations;
     }
 
-    public String doMatch(CalculationRequest calculationRequest) {
-        String valueA = calculationRequest.getValueA();
-        String valueB = calculationRequest.getValueB();
-        String operator = calculationRequest.getOperator();
+    public String makeCalc(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException {
+        String result;
+        Value a = getValue(request);
+        Value b = getValue(request);
 
-        String result = null;
+        Calculation calculation = getCalculation(request);
 
-        Value a = null;
-        Value b = null;
-        Calculation calculation = null;
+        Calculation[] possibleCalculationsForValue = Value.getPossibleCalculationsForValue(a);
 
-        for (Value value : Value.values()) {
-            if (valueA.matches(value.getPattern())) {
-                a = value;
-                break;
-            } else {
-                a = Value.UNRECOGNIZED;
+        for (Calculation calc : possibleCalculationsForValue) {
+            if (calc.equals(calculation) && calc.getValue2().equals(b.getDescription())){
+                result = numberCalculations.doCalc(calculation, request.getValueA(), request.getValueB());
+                return result;
             }
         }
 
-        System.out.println("String A: " + valueA);
-        System.out.println("Value A " + a.getDescription());
+        return "ERROR";
+    }
 
-        Calculation[] possibleCalculations = a.getPossibleCalculations();
-        for (Calculation calc : possibleCalculations) {
-            if (calc.getOperator().equals(operator)) {
-                calculation = calc;
-                break;
-            }
+    public Value getValue(CalculationRequest request) throws UnrecognizedValueException {
+        Value value = Value.getValueFromString(request.getValueA());
+        if (value.equals(Value.UNRECOGNIZED)) {
+            throw new UnrecognizedValueException(value.getDescription());
         }
+        return value;
+    }
 
-        System.out.println("Operator : " + operator);
-        System.out.println("Calc " + calculation.getDescription());
-
-        for (Value value : Value.values()) {
-            if (valueB.matches(value.getPattern())) {
-                b = value;
-                break;
-            } else {
-                b = Value.UNRECOGNIZED;
-            }
+    public Calculation getCalculation(CalculationRequest request) throws OperatorNotFoundException {
+        Calculation calculation = Calculation.getCalculationFromStringOperator(request.getOperator());
+        if (calculation.equals(Calculation.UNRECOGNIZED)){
+            throw new OperatorNotFoundException("Unrecognized operator");
         }
-
-        System.out.println("String B: " + valueB);
-        System.out.println("Value B " + b.getDescription());
-
-
-        if (calculation.getValue2().equals(b.getDescription())) {
-
-            result = numberCalculations.doCalc(calculation, valueA, valueB);
-        }
-
-        System.out.println(result);
-        return result;
+        return calculation;
     }
 }
 

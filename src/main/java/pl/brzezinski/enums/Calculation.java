@@ -23,7 +23,9 @@ public enum Calculation {
     MATRIX_SUB_MATRIX("Subtract matrix from matrix", "-", "Matrix", "Matrix"),
     MATRIX_MULTI_NUM("Multiple matrix by number", "*", "Matrix", "Number"),
     MATRIX_MULTI_MATRIX("Matrix multiply by matrix", "*", "Matrix", "Matrix"),
-    MATRIX_MULTI_VECTOR("Matrix multiply by vector", "*", "Matrix", "Vector");
+    MATRIX_MULTI_VECTOR("Matrix multiply by vector", "*", "Matrix", "Vector"),
+
+    UNRECOGNIZED("Unrecognized calculation", "Unrecognized operator", "Unrecognized calculation - value 1 not possible", "Unrecognized calculation - value 2 not possible");
 
     String description;
     String operator;
@@ -35,6 +37,16 @@ public enum Calculation {
         this.operator = operator;
         this.value1 = value1;
         this.value2 = value2;
+    }
+
+    public static Calculation getCalculationFromStringOperator(String stringOperator){
+        Calculation[] values = Calculation.values();
+        for (Calculation calculation : values) {
+            if (calculation.getOperator().equals(stringOperator)){
+                return calculation;
+            }
+        }
+        return Calculation.UNRECOGNIZED;
     }
 
     public String getDescription() {

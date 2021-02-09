@@ -15,9 +15,9 @@ public enum Value {
     UNRECOGNIZED("Unrecognized value", "NULL",
             new Calculation[0]);
 
-    String description;
-    String pattern;
-    Calculation[] possibleCalculations;
+    private final String description;
+    private final String pattern;
+    private final Calculation[] possibleCalculations;
 
     Value(String description, String pattern, Calculation[] possibleCalculations) {
         this.description = description;
@@ -25,6 +25,7 @@ public enum Value {
         this.possibleCalculations = possibleCalculations;
     }
 
+    // console app feature
     public static void showPossibleCalculations(Value value) {
         Calculation[] possibleCalculations = value.getPossibleCalculations();
         for (int i = 0; i < possibleCalculations.length; i++) {
@@ -39,8 +40,18 @@ public enum Value {
                 return value;
             }
         }
-        System.out.println(UNRECOGNIZED.getDescription());
         return Value.UNRECOGNIZED;
+    }
+
+
+    public static Calculation[] getPossibleCalculationsForValue(Value value){
+        Value[] values = Value.values();
+        for (Value v : values) {
+            if (v.equals(v)){
+                return v.getPossibleCalculations();
+            }
+        }
+        return UNRECOGNIZED.getPossibleCalculations();
     }
 
     public String getDescription() {
