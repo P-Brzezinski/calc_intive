@@ -26,20 +26,20 @@ public enum Calculation {
     MATRIX_SUB_MATRIX("Subtract matrix from matrix", "-", "Matrix", "Matrix"),
     MATRIX_MULTI_NUM("Multiple matrix by number", "*", "Matrix", "Number"),
     MATRIX_MULTI_MATRIX("Matrix multiply by matrix", "*", "Matrix", "Matrix"),
-    MATRIX_MULTI_VECTOR("Matrix multiply by vector", "*", "Matrix", "Vector"),
+    MATRIX_MULTI_VECTOR("Matrix multiply by vector", "*", "Matrix", "Vector");
 
-    UNRECOGNIZED("Calculation not possible for given combination of values or operator. Please try again.", "Unrecognized operator", "Unrecognized calculation - value 1 not possible", "Unrecognized calculation - value 2 not possible");
+//    UNRECOGNIZED("Calculation not possible for given combination of values or operator. Please try again.", "Unrecognized operator", "Unrecognized calculation - value 1 not possible", "Unrecognized calculation - value 2 not possible");
 
     String description;
     String operator;
-    String value1;
-    String value2;
+    String valueA;
+    String valueB;
 
-    Calculation(String description, String operator, String value1, String value2) {
+    Calculation(String description, String operator, String valueA, String valueB) {
         this.description = description;
         this.operator = operator;
-        this.value1 = value1;
-        this.value2 = value2;
+        this.valueA = valueA;
+        this.valueB = valueB;
     }
 
     public static List<String> getPossibleOperators(){
@@ -55,12 +55,12 @@ public enum Calculation {
         return description;
     }
 
-    public String getValue1() {
-        return value1;
+    public String getValueA() {
+        return valueA;
     }
 
-    public String getValue2() {
-        return value2;
+    public String getValueB() {
+        return valueB;
     }
 
     public String getOperator() {

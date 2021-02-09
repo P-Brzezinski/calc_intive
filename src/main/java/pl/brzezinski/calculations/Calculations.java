@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public interface Calculations {
 
-    String doCalc(Calculation calc, String value1, String value2);
+    String doCalculation(Calculation calc, String value1, String value2);
 
     default double[] getVectorFromString(String stringArray) {
         stringArray = stringArray.substring(1, stringArray.length() - 1);

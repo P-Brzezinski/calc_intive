@@ -10,7 +10,7 @@ public class VectorCalculations implements Calculations {
     private static final String ERROR_MESSAGE = "Vectors must have same length and can not be empty if you want to";
 
     @Override
-    public String doCalc(Calculation calc, String a, String b) {
+    public String doCalculation(Calculation calc, String a, String b) {
         switch (calc) {
             case VECTOR_ADD_VECTOR:
                 return add(a, b);

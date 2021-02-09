@@ -38,9 +38,9 @@ public class MainMenu {
             do {
                 value2 = input.getString("Enter second value:");
                 valueFromString = getValueFromString(value2);
-                if (!valueFromString.getDescription().equals(calc.getValue2())) {
+                if (!valueFromString.getDescription().equals(calc.getValueB())) {
                     //TODO in case of vector and matrix, inform user of max length accepted (if failed)
-                    System.out.println("Should be type of " + calc.getValue2());
+                    System.out.println("Should be type of " + calc.getValueB());
                     valueFromString = UNRECOGNIZED;
                 }
             } while (valueFromString.equals(UNRECOGNIZED));
@@ -58,16 +58,16 @@ public class MainMenu {
     }
 
     private String doMatch(Calculation calculation, String a, String b) {
-        switch (calculation.getValue1()) {
+        switch (calculation.getValueA()) {
             case "Number":
                 NumberCalculations nc = new NumberCalculations();
-                return nc.doCalc(calculation, a, b);
+                return nc.doCalculation(calculation, a, b);
             case "Vector":
                 VectorCalculations vc = new VectorCalculations();
-                return vc.doCalc(calculation, a, b);
+                return vc.doCalculation(calculation, a, b);
             case "Matrix":
                 MatrixCalculations mc = new MatrixCalculations();
-                return mc.doCalc(calculation, a, b);
+                return mc.doCalculation(calculation, a, b);
         }
         return "Error. I do not know math...";
     }

@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class NumberCalculations implements Calculations {
 
     @Override
-    public String doCalc(Calculation calc, String a, String b) {
+    public String doCalculation(Calculation calc, String a, String b) throws ArithmeticException{
         switch (calc) {
             case NUM_ADD_NUM:
                 return add(a, b);
@@ -50,16 +50,12 @@ public class NumberCalculations implements Calculations {
         return result.toString();
     }
 
-    private String div(String a, String b) {
-        String result;
-        try {
-            BigDecimal divide = BigDecimal.valueOf(Double.parseDouble(a)).divide(BigDecimal.valueOf(Double.parseDouble(b)), RoundingMode.CEILING);
-            result = divide.toString();
-        } catch (ArithmeticException e) {
-            result = "Not possible";
-            System.out.println("Divide by zero operation is not possible");
+    private String div(String a, String b) throws ArithmeticException {
+        if (Integer.parseInt(b) == 0) {
+            throw new ArithmeticException("Divide by zero operation is not possible");
         }
-        return result;
+        BigDecimal divide = BigDecimal.valueOf(Double.parseDouble(a)).divide(BigDecimal.valueOf(Double.parseDouble(b)), RoundingMode.CEILING);
+        return divide.toString();
     }
 
     private String power(String a, String b) {

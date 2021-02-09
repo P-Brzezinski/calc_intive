@@ -9,7 +9,7 @@ public class MatrixCalculations implements Calculations {
     private static final String ERROR_MESSAGE = "Matrices must have same dimensions and cannot be empty if you want to";
 
     @Override
-    public String doCalc(Calculation calc, String a, String b) {
+    public String doCalculation(Calculation calc, String a, String b) {
         switch (calc) {
             case MATRIX_ADD_MATRIX:
                 return add(a, b);
