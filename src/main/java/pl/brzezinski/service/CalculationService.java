@@ -34,12 +34,15 @@ public class CalculationService {
     }
 
     public Result doCalculation(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException, ArithmeticException, VectorException {
+        String a = request.getValueA();
+        String b = request.getValueB();
+        String operator = request.getOperator();
         String result;
-        Value a = getValue(request.getValueA());
-        Value b = getValue(request.getValueB());
-        String operator = getOperator(request.getOperator());
-        Calculation calculation = getCalculation(a, b, operator);
 
+        //find proper calculation type based on given values and operator
+        Calculation calculation = getCalculation(getValue(a), getValue(b), getOperator(operator));
+
+        //basing on first value and calculation type, do calculation
         switch (calculation.getValueA()) {
             case "Number":
                 result = numberCalculations.doCalculation(calculation, request.getValueA(), request.getValueB());
@@ -55,7 +58,9 @@ public class CalculationService {
         }
 
         try {
-            fileWriterService.createHistoryFile();
+            fileWriterService.createNewHistoryFile();
+            fileWriterService.writeToFile(String.format("%s %s %s = %s)", a, operator, b, result));
+            fileWriterService.fileReader();
         } catch (IOException e) {
             System.out.println("Something went wrong");
             e.printStackTrace();
