@@ -15,6 +15,8 @@ import pl.brzezinski.exceptions.UnrecognizedValueException;
 import pl.brzezinski.exceptions.VectorException;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +61,8 @@ public class CalculationService {
 
         try {
             fileWriterService.createNewHistoryFile();
-            fileWriterService.writeToFile(String.format("%s %s %s = %s)", a, operator, b, result));
-            fileWriterService.fileReader();
+            String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            fileWriterService.writeToFile(String.format("%s %s %s %s = %s)", dateTime, a, operator, b, result));
         } catch (IOException e) {
             System.out.println("Something went wrong");
             e.printStackTrace();
