@@ -1,6 +1,5 @@
 package pl.brzezinski.service;
 
-import pl.brzezinski.calculations.Calculations;
 import pl.brzezinski.calculations.MatrixCalculations;
 import pl.brzezinski.calculations.NumberCalculations;
 import pl.brzezinski.calculations.VectorCalculations;
@@ -9,13 +8,13 @@ import pl.brzezinski.dto.PossibleCalculationsResponse;
 import pl.brzezinski.dto.Result;
 import pl.brzezinski.enums.Calculation;
 import pl.brzezinski.enums.Value;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.brzezinski.exceptions.CalculationNotPossibleException;
 import pl.brzezinski.exceptions.OperatorNotFoundException;
 import pl.brzezinski.exceptions.UnrecognizedValueException;
 import pl.brzezinski.exceptions.VectorException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +24,13 @@ public class CalculationService {
     private final NumberCalculations numberCalculations;
     private final VectorCalculations vectorCalculations;
     private final MatrixCalculations matrixCalculations;
+    private final FileWriterService fileWriterService;
 
-    @Autowired
-    public CalculationService(NumberCalculations numberCalculations, VectorCalculations vectorCalculations, MatrixCalculations matrixCalculations) {
+    public CalculationService(NumberCalculations numberCalculations, VectorCalculations vectorCalculations, MatrixCalculations matrixCalculations, FileWriterService fileWriterService) {
         this.numberCalculations = numberCalculations;
         this.vectorCalculations = vectorCalculations;
         this.matrixCalculations = matrixCalculations;
+        this.fileWriterService = fileWriterService;
     }
 
     public Result doCalculation(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException, ArithmeticException, VectorException {
@@ -53,6 +53,14 @@ public class CalculationService {
             default:
                 result = "Error. I do not know math...";
         }
+
+        try {
+            fileWriterService.createHistoryFile();
+        } catch (IOException e) {
+            System.out.println("Something went wrong");
+            e.printStackTrace();
+        }
+
         return new Result(result, "Calculation result saved to file");
     }
 

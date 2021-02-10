@@ -74,13 +74,13 @@ public class VectorCalculations implements Calculations {
         return Arrays.toString(vector);
     }
 
-    private String vectorMultiMatrix(String a, String b) {
+    private String vectorMultiMatrix(String a, String b) throws VectorException {
         double[] vector = Calculations.super.getVectorFromString(a);
         double[][] matrix = Calculations.super.getMatrixFromString(b);
 
         for (int i = 0; i < matrix.length; i++) {
             if (!(matrix[i].length == vector.length)) {
-                return "To multiply a row vector by a column vector, the row vector must have as many columns as the column vector has rows.";
+                throw new VectorException("To multiply a row vector by a column vector, the row vector must have as many columns as the column vector has rows.");
             } else {
                 for (int j = 0; j < matrix.length; j++) {
                     matrix[i][j] = matrix[i][j] * vector[i];
