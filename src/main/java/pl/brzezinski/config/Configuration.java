@@ -1,16 +1,15 @@
 package pl.brzezinski.config;
 
 public class Configuration {
-    // old pattern
-//    private static final String NUMBER_PATTERN = "^[+-]?([0-9]*[.])?[0-9]+$";
-    // new pattern
-    private static final String NUMBER_PATTERN = "[+-]?\\d*(\\.\\d*)?";
+
+    public static final long MAX_LINES_IN_FILE = 5;
+    public static final String NUMBER_PATTERN = "[+-]?\\d*(\\.\\d*)?";
     private static String VECTOR_PATTERN = "";
-    private static final int MAX_VECTOR_LENGTH = 4;
-    private static final int MAX_POWER = 128;
+    public static final int MAX_VECTOR_LENGTH = 4;
+    public static final int MAX_POWER = 128;
     private static String MATRIX_PATTERN = "";
-    private static final int MATRIX_X = 4;
-    private static final int MATRIX_Y = 4;
+    public static final int MATRIX_X = 4;
+    public static final int MATRIX_Y = 4;
 
     public void initConfig(){
         VECTOR_PATTERN = createVectorPattern(MAX_VECTOR_LENGTH);
@@ -46,31 +45,11 @@ public class Configuration {
         return patternBuilder.toString();
     }
 
-    public static String getNumberPattern() {
-        return NUMBER_PATTERN;
-    }
-
-    public static String getVectorPattern() {
-        return VECTOR_PATTERN;
-    }
-
     public static String getMatrixPattern() {
         return MATRIX_PATTERN;
     }
 
-    public static int getMaxVectorLength() {
-        return MAX_VECTOR_LENGTH;
-    }
-
-    public static int getMaxPower() {
-        return MAX_POWER;
-    }
-
-    public static int getMatrixX() {
-        return MATRIX_X;
-    }
-
-    public static int getMatrixY() {
-        return MATRIX_Y;
+    public static String getVectorPattern() {
+        return VECTOR_PATTERN;
     }
 }

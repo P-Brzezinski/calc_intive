@@ -16,16 +16,14 @@ public class MainMenu {
     private static final String HELP_COMMAND = "help";
     private static final String EXIT_COMMAND = "exit";
 
-    Input input = Input.getInstance();
-    String value1;
-    String value2;
-    Calculation calc;
-    boolean nextAction;
+    private final Input input = Input.getInstance();
 
     public void initMenu() {
         Value valueFromString;
+        boolean nextAction;
         do {
             //First value
+            String value1;
             do {
                 value1 = input.getString("Enter first value:");
                 valueFromString = getValueFromString(value1);
@@ -33,9 +31,10 @@ public class MainMenu {
 
             //Calculation type
             showPossibleCalculations(valueFromString);
-            calc = getCalculation(valueFromString);
+            Calculation calc = getCalculation(valueFromString);
 
             //Second Value
+            String value2;
             do {
                 value2 = input.getString("Enter second value:");
                 valueFromString = getValueFromString(value2);

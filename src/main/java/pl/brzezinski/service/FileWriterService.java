@@ -1,6 +1,7 @@
 package pl.brzezinski.service;
 
 import org.springframework.stereotype.Service;
+import pl.brzezinski.config.Configuration;
 
 import java.io.*;
 import java.util.Scanner;
@@ -8,38 +9,34 @@ import java.util.Scanner;
 @Service
 public class FileWriterService {
 
-    private static final String PATH = "./calculation_sheets/";
-    private static final String DEFAULT_FILE_NAME = "calculations_history.txt";
+    private static String PATH = "./calculation_sheets/";
+    private static String FILE_NAME = "calculations_history.txt";
 
-    public void createNewHistoryFile() throws IOException {
-        File file = new File(PATH + DEFAULT_FILE_NAME);
+    public void createNewHistoryFile(String fileName) throws IOException {
+        File file = new File(PATH + fileName);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-        if (file.createNewFile()) {
-            System.out.println("File created " + file.getName());
-        } else {
-            System.out.println("File already exists.");
-        }
+        file.createNewFile();
     }
 
-    public void writeToFile(String text) {
+    public void writeToFile(String text) throws IOException {
         try {
-            FileWriter fileWriter = new FileWriter(PATH + DEFAULT_FILE_NAME, true);
+            FileWriter fileWriter = new FileWriter(PATH + FILE_NAME, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(text);
             bufferedWriter.newLine();
             bufferedWriter.close();
-            System.out.println("Successfully wrote to the file");
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+
     }
 
     public void fileReader() {
         try {
-            FileReader fileReader = new FileReader(PATH + DEFAULT_FILE_NAME);
+            FileReader fileReader = new FileReader(PATH + FILE_NAME);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             Scanner reader = new Scanner(bufferedReader);
             while (reader.hasNextLine()) {
@@ -53,4 +50,13 @@ public class FileWriterService {
         }
     }
 
+    public boolean isFull() throws IOException {
+        int noOfLines = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(PATH + FILE_NAME))) {
+            while (reader.readLine() != null) {
+                noOfLines++;
+            }
+        }
+        return noOfLines >= Configuration.MAX_LINES_IN_FILE;
+    }
 }

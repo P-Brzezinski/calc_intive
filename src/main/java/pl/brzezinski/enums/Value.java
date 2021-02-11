@@ -6,7 +6,7 @@ import static pl.brzezinski.enums.Calculation.*;
 
 public enum Value {
 
-    NUMBER("Number", Configuration.getNumberPattern(),
+    NUMBER("Number", Configuration.NUMBER_PATTERN,
             new Calculation[]{NUM_ADD_NUM, NUM_SUB_NUM, NUM_MULTI_NUM, NUM_DIV_NUM, NUM_POWER_TO_NUM, NUM_SQUARE, NUM_MULTI_VECTOR, NUM_MULTI_MATRIX}),
     VECTOR("Vector", Configuration.getVectorPattern(),
             new Calculation[]{VECTOR_ADD_VECTOR, VECTOR_SUB_VECTOR, VECTOR_MULTI_NUM, VECTOR_MULTI_MATRIX}),
@@ -56,10 +56,6 @@ public enum Value {
 
     public String getDescription() {
         return description;
-    }
-
-    public String getPattern() {
-        return pattern;
     }
 
     public Calculation[] getPossibleCalculations() {

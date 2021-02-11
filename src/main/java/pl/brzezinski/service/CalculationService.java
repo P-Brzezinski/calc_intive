@@ -59,8 +59,8 @@ public class CalculationService {
                 result = "Error. I do not know math...";
         }
 
+        //save result to file
         try {
-            fileWriterService.createNewHistoryFile();
             String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             fileWriterService.writeToFile(String.format("%s %s %s %s = %s)", dateTime, a, operator, b, result));
         } catch (IOException e) {

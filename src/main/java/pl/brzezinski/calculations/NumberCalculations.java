@@ -1,6 +1,5 @@
 package pl.brzezinski.calculations;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import pl.brzezinski.config.Configuration;
 import pl.brzezinski.enums.Calculation;
@@ -59,8 +58,8 @@ public class NumberCalculations implements Calculations {
     }
 
     private String power(String a, String b) {
-        if (Double.parseDouble(b) > Configuration.getMaxPower()) {
-            return "Power cannot not be higher than " + Configuration.getMaxPower();
+        if (Double.parseDouble(b) > Configuration.MAX_POWER) {
+            return "Power cannot not be higher than " + Configuration.MAX_POWER;
         } else {
             return String.valueOf(Math.pow(Double.parseDouble(a), Double.parseDouble(b)));
         }
