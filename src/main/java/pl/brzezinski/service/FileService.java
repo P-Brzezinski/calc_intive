@@ -1,6 +1,8 @@
 package pl.brzezinski.service;
 
 import org.springframework.stereotype.Service;
+import pl.brzezinski.config.Configuration;
+import pl.brzezinski.dto.HistoryResponse;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -61,19 +63,29 @@ public class FileService {
         file.createNewFile();
     }
 
-    public List<String> fileReader() {
-        List<String> results = new ArrayList<>();
-        try {
-            FileReader fileReader = new FileReader(PATH + FILE_NAME);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            Scanner reader = new Scanner(bufferedReader);
-            while (reader.hasNextLine()) {
-                results.add(reader.nextLine());
-            }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
+    public List<HistoryResponse> results(String fileName) throws FileNotFoundException {
+        List<String> records = fileReader(Configuration.PATH + fileName);
+        List<HistoryResponse> response = new ArrayList<>();
+        for (String record : records) {
+            response.add(new HistoryResponse(
+                    record.substring(0, 19),
+                    record.substring(20)
+            ));
         }
+        return response;
+    }
+
+
+    private List<String> fileReader(String filename) throws FileNotFoundException {
+        List<String> results = new ArrayList<>();
+        FileReader fileReader = new FileReader(filename);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        Scanner reader = new Scanner(bufferedReader);
+        while (reader.hasNextLine()) {
+            results.add(reader.nextLine());
+        }
+        reader.close();
         return results;
     }
 }
