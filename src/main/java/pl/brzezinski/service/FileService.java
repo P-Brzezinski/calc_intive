@@ -1,13 +1,17 @@
 package pl.brzezinski.service;
 
 import org.springframework.stereotype.Service;
-import pl.brzezinski.config.Configuration;
 import pl.brzezinski.dto.HistoryResponse;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static pl.brzezinski.config.Configuration.*;
 
@@ -63,9 +67,8 @@ public class FileService {
         file.createNewFile();
     }
 
-
     public List<HistoryResponse> results(String fileName) throws FileNotFoundException {
-        List<String> records = fileReader(Configuration.PATH + fileName);
+        List<String> records = fileReader(PATH + fileName);
         List<HistoryResponse> response = new ArrayList<>();
         for (String record : records) {
             response.add(new HistoryResponse(
@@ -75,7 +78,6 @@ public class FileService {
         }
         return response;
     }
-
 
     private List<String> fileReader(String filename) throws FileNotFoundException {
         List<String> results = new ArrayList<>();
@@ -87,5 +89,16 @@ public class FileService {
         }
         reader.close();
         return results;
+    }
+
+    public List<String> allFiles(){
+        List<String> result = new ArrayList<>();
+        try (Stream<Path> walk = Files.walk(Paths.get(PATH))){
+           result = walk.filter(Files::isRegularFile)
+                    .map(Path::toString).collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

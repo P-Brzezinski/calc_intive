@@ -55,4 +55,9 @@ public class AppController {
             return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("files")
+    public ResponseEntity<List<String>> files() {
+        return ResponseEntity.status(HttpStatus.OK).body(fileService.allFiles());
+    }
 }
