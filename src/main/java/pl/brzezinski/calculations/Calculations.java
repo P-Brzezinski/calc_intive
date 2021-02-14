@@ -1,13 +1,13 @@
 package pl.brzezinski.calculations;
 
-import pl.brzezinski.enums.Calculation;
+import pl.brzezinski.enums.CalculationType;
 import pl.brzezinski.exceptions.VectorException;
 
 import java.math.BigDecimal;
 
 public interface Calculations {
 
-    String doCalculation(Calculation calc, String value1, String value2) throws VectorException;
+    String doCalculation(CalculationType calc, String value1, String value2) throws VectorException;
 
     default double[] getVectorFromString(String stringArray) {
         stringArray = stringArray.substring(1, stringArray.length() - 1);

@@ -2,34 +2,34 @@ package pl.brzezinski.enums;
 
 import pl.brzezinski.config.Configuration;
 
-import static pl.brzezinski.enums.Calculation.*;
+import static pl.brzezinski.enums.CalculationType.*;
 
 public enum Value {
 
     NUMBER("Number", Configuration.NUMBER_PATTERN,
-            new Calculation[]{NUM_ADD_NUM, NUM_SUB_NUM, NUM_MULTI_NUM, NUM_DIV_NUM, NUM_POWER_TO_NUM, NUM_SQUARE, NUM_MULTI_VECTOR, NUM_MULTI_MATRIX}),
+            new CalculationType[]{NUM_ADD_NUM, NUM_SUB_NUM, NUM_MULTI_NUM, NUM_DIV_NUM, NUM_POWER_TO_NUM, NUM_SQUARE, NUM_MULTI_VECTOR, NUM_MULTI_MATRIX}),
     VECTOR("Vector", Configuration.getVectorPattern(),
-            new Calculation[]{VECTOR_ADD_VECTOR, VECTOR_SUB_VECTOR, VECTOR_MULTI_NUM, VECTOR_MULTI_MATRIX}),
+            new CalculationType[]{VECTOR_ADD_VECTOR, VECTOR_SUB_VECTOR, VECTOR_MULTI_NUM, VECTOR_MULTI_MATRIX}),
     MATRIX("Matrix", Configuration.getMatrixPattern(),
-            new Calculation[]{MATRIX_ADD_MATRIX, MATRIX_SUB_MATRIX, MATRIX_MULTI_MATRIX, MATRIX_MULTI_NUM, MATRIX_MULTI_VECTOR}),
+            new CalculationType[]{MATRIX_ADD_MATRIX, MATRIX_SUB_MATRIX, MATRIX_MULTI_MATRIX, MATRIX_MULTI_NUM, MATRIX_MULTI_VECTOR}),
     UNRECOGNIZED("Unrecognized value", "NULL",
-            new Calculation[0]);
+            new CalculationType[0]);
 
     private final String description;
     private final String pattern;
-    private final Calculation[] possibleCalculations;
+    private final CalculationType[] possibleCalculationTypes;
 
-    Value(String description, String pattern, Calculation[] possibleCalculations) {
+    Value(String description, String pattern, CalculationType[] possibleCalculationTypes) {
         this.description = description;
         this.pattern = pattern;
-        this.possibleCalculations = possibleCalculations;
+        this.possibleCalculationTypes = possibleCalculationTypes;
     }
 
     // console app feature
     public static void showPossibleCalculations(Value value) {
-        Calculation[] possibleCalculations = value.getPossibleCalculations();
-        for (int i = 0; i < possibleCalculations.length; i++) {
-            System.out.println(i + 1 + " - " + possibleCalculations[i].getDescription());
+        CalculationType[] possibleCalculationTypes = value.getPossibleCalculations();
+        for (int i = 0; i < possibleCalculationTypes.length; i++) {
+            System.out.println(i + 1 + " - " + possibleCalculationTypes[i].getDescription());
         }
     }
 
@@ -44,7 +44,7 @@ public enum Value {
     }
 
 
-    public static Calculation[] getPossibleCalculationsForValue(Value value){
+    public static CalculationType[] getPossibleCalculationsForValue(Value value){
         Value[] values = Value.values();
         for (Value v : values) {
             if (v.equals(v)){
@@ -58,7 +58,7 @@ public enum Value {
         return description;
     }
 
-    public Calculation[] getPossibleCalculations() {
-        return possibleCalculations;
+    public CalculationType[] getPossibleCalculations() {
+        return possibleCalculationTypes;
     }
 }

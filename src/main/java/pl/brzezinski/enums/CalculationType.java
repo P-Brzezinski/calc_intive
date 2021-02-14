@@ -3,7 +3,7 @@ package pl.brzezinski.enums;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Calculation {
+public enum CalculationType {
 
     //Possible calculations for number
     NUM_ADD_NUM("Add number to number", "+","Number", "Number"),
@@ -35,7 +35,7 @@ public enum Calculation {
     String valueA;
     String valueB;
 
-    Calculation(String description, String operator, String valueA, String valueB) {
+    CalculationType(String description, String operator, String valueA, String valueB) {
         this.description = description;
         this.operator = operator;
         this.valueA = valueA;
@@ -44,8 +44,8 @@ public enum Calculation {
 
     public static List<String> getPossibleOperators(){
         List<String> operators = new ArrayList<>();
-        Calculation[] values = Calculation.values();
-        for (Calculation value : values) {
+        CalculationType[] values = CalculationType.values();
+        for (CalculationType value : values) {
             operators.add(value.getOperator());
         }
         return operators;

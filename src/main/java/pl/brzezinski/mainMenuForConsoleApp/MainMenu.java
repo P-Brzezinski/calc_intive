@@ -3,7 +3,7 @@ package pl.brzezinski.mainMenuForConsoleApp;
 import pl.brzezinski.calculations.MatrixCalculations;
 import pl.brzezinski.calculations.NumberCalculations;
 import pl.brzezinski.calculations.VectorCalculations;
-import pl.brzezinski.enums.Calculation;
+import pl.brzezinski.enums.CalculationType;
 import pl.brzezinski.exceptions.VectorException;
 import pl.brzezinski.input.Input;
 import pl.brzezinski.enums.Value;
@@ -31,7 +31,7 @@ public class MainMenu {
 
             //Calculation type
             showPossibleCalculations(valueFromString);
-            Calculation calc = getCalculation(valueFromString);
+            CalculationType calc = getCalculation(valueFromString);
 
             //Second Value
             String value2;
@@ -57,22 +57,22 @@ public class MainMenu {
         } while (nextAction);
     }
 
-    private Calculation getCalculation(Value value) {
+    private CalculationType getCalculation(Value value) {
         int pickOption = input.getInt("Choose calculation", 1, value.getPossibleCalculations().length);
         return value.getPossibleCalculations()[pickOption - 1];
     }
 
-    private String doMatch(Calculation calculation, String a, String b) throws VectorException {
-        switch (calculation.getValueA()) {
+    private String doMatch(CalculationType calculationType, String a, String b) throws VectorException {
+        switch (calculationType.getValueA()) {
             case "Number":
                 NumberCalculations nc = new NumberCalculations();
-                return nc.doCalculation(calculation, a, b);
+                return nc.doCalculation(calculationType, a, b);
             case "Vector":
                 VectorCalculations vc = new VectorCalculations();
-                return vc.doCalculation(calculation, a, b);
+                return vc.doCalculation(calculationType, a, b);
             case "Matrix":
                 MatrixCalculations mc = new MatrixCalculations();
-                return mc.doCalculation(calculation, a, b);
+                return mc.doCalculation(calculationType, a, b);
         }
         return "Error. I do not know math...";
     }

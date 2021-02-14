@@ -6,7 +6,7 @@ import pl.brzezinski.calculations.VectorCalculations;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.PossibleCalculationsResponse;
 import pl.brzezinski.dto.Result;
-import pl.brzezinski.enums.Calculation;
+import pl.brzezinski.enums.CalculationType;
 import pl.brzezinski.enums.Value;
 import org.springframework.stereotype.Service;
 import pl.brzezinski.exceptions.CalculationNotPossibleException;
@@ -42,18 +42,18 @@ public class CalculationService {
         String result;
 
         //find proper calculation type based on given values and operator
-        Calculation calculation = getCalculation(getValue(a), getValue(b), getOperator(operator));
+        CalculationType calculationType = getCalculation(getValue(a), getValue(b), getOperator(operator));
 
         //basing on first value and calculation type, do calculation
-        switch (calculation.getValueA()) {
+        switch (calculationType.getValueA()) {
             case "Number":
-                result = numberCalculations.doCalculation(calculation, request.getValueA(), request.getValueB());
+                result = numberCalculations.doCalculation(calculationType, request.getValueA(), request.getValueB());
                 break;
             case "Vector":
-                result = vectorCalculations.doCalculation(calculation, request.getValueA(), request.getValueB());
+                result = vectorCalculations.doCalculation(calculationType, request.getValueA(), request.getValueB());
                 break;
             case "Matrix":
-                result = matrixCalculations.doCalculation(calculation, request.getValueA(), request.getValueB());
+                result = matrixCalculations.doCalculation(calculationType, request.getValueA(), request.getValueB());
                 break;
             default:
                 result = "Error. I do not know math...";
@@ -62,7 +62,7 @@ public class CalculationService {
         //save result to file
         try {
             String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            fileWriterService.writeToFile(String.format("%s %s %s %s = %s)", dateTime, a, operator, b, result));
+            fileWriterService.writeToFile(String.format("%s %s %s %s = %s", dateTime, a, operator, b, result));
         } catch (IOException e) {
             System.out.println("Something went wrong");
             e.printStackTrace();
@@ -80,7 +80,7 @@ public class CalculationService {
     }
 
     private String getOperator(String operator) throws OperatorNotFoundException {
-        List<String> possibleOperators = Calculation.getPossibleOperators();
+        List<String> possibleOperators = CalculationType.getPossibleOperators();
         for (String possibleOperator : possibleOperators) {
             if (possibleOperator.equals(operator)) {
                 return possibleOperator;
@@ -89,11 +89,11 @@ public class CalculationService {
         throw new OperatorNotFoundException("Unrecognized operator: " + operator);
     }
 
-    private Calculation getCalculation(Value a, Value b, String operator) throws CalculationNotPossibleException {
-        Calculation[] possibleCalculations = a.getPossibleCalculations();
-        for (Calculation possibleCalculation : possibleCalculations) {
-            if (possibleCalculation.getOperator().equals(operator) && b.getDescription().equals(possibleCalculation.getValueB())) {
-                return possibleCalculation;
+    private CalculationType getCalculation(Value a, Value b, String operator) throws CalculationNotPossibleException {
+        CalculationType[] possibleCalculationTypes = a.getPossibleCalculations();
+        for (CalculationType possibleCalculationType : possibleCalculationTypes) {
+            if (possibleCalculationType.getOperator().equals(operator) && b.getDescription().equals(possibleCalculationType.getValueB())) {
+                return possibleCalculationType;
             }
         }
         throw new CalculationNotPossibleException("Calculation not possible for given combination of values or operator. Please try again.");
@@ -102,9 +102,9 @@ public class CalculationService {
 
     public List<PossibleCalculationsResponse> getListOfPossibleCalculations() {
         List<PossibleCalculationsResponse> response = new ArrayList<>();
-        Calculation[] values = Calculation.values();
+        CalculationType[] values = CalculationType.values();
 
-        for (Calculation value : values) {
+        for (CalculationType value : values) {
             response.add(new PossibleCalculationsResponse(
                     value.getDescription(),
                     value.getValueA(),

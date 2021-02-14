@@ -2,7 +2,7 @@ package pl.brzezinski.calculations;
 
 import org.springframework.stereotype.Service;
 import pl.brzezinski.config.Configuration;
-import pl.brzezinski.enums.Calculation;
+import pl.brzezinski.enums.CalculationType;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class NumberCalculations implements Calculations {
 
     @Override
-    public String doCalculation(Calculation calc, String a, String b) throws ArithmeticException{
+    public String doCalculation(CalculationType calc, String a, String b) throws ArithmeticException{
         switch (calc) {
             case NUM_ADD_NUM:
                 return add(a, b);

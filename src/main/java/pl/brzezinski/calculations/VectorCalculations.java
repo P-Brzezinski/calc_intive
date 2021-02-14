@@ -1,7 +1,7 @@
 package pl.brzezinski.calculations;
 
 import org.springframework.stereotype.Service;
-import pl.brzezinski.enums.Calculation;
+import pl.brzezinski.enums.CalculationType;
 import pl.brzezinski.exceptions.VectorException;
 
 import java.math.BigDecimal;
@@ -13,7 +13,7 @@ public class VectorCalculations implements Calculations {
     private static final String ERROR_MESSAGE = "Vectors must have same length and can not be empty if you want to";
 
     @Override
-    public String doCalculation(Calculation calc, String a, String b) throws VectorException {
+    public String doCalculation(CalculationType calc, String a, String b) throws VectorException {
         switch (calc) {
             case VECTOR_ADD_VECTOR:
                 return add(a, b);

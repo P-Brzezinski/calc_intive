@@ -2,7 +2,12 @@ package pl.brzezinski.config;
 
 public class Configuration {
 
+    //FileWriteService configuration
+    public static final String PATH = "./calculation_sheets/";
+    public static final String FILE_NAME = "calculations_history.txt";
     public static final long MAX_LINES_IN_FILE = 5;
+
+    //CalculationType, Value and Calculations configuration
     public static final String NUMBER_PATTERN = "[+-]?\\d*(\\.\\d*)?";
     private static String VECTOR_PATTERN = "";
     public static final int MAX_VECTOR_LENGTH = 4;
