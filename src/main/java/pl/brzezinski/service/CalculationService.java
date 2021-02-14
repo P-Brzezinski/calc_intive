@@ -5,7 +5,7 @@ import pl.brzezinski.calculations.NumberCalculations;
 import pl.brzezinski.calculations.VectorCalculations;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.PossibleCalculationsResponse;
-import pl.brzezinski.dto.Result;
+import pl.brzezinski.dto.ResultResponse;
 import pl.brzezinski.enums.CalculationType;
 import pl.brzezinski.enums.Value;
 import org.springframework.stereotype.Service;
@@ -26,16 +26,16 @@ public class CalculationService {
     private final NumberCalculations numberCalculations;
     private final VectorCalculations vectorCalculations;
     private final MatrixCalculations matrixCalculations;
-    private final FileWriterService fileWriterService;
+    private final FileService fileService;
 
-    public CalculationService(NumberCalculations numberCalculations, VectorCalculations vectorCalculations, MatrixCalculations matrixCalculations, FileWriterService fileWriterService) {
+    public CalculationService(NumberCalculations numberCalculations, VectorCalculations vectorCalculations, MatrixCalculations matrixCalculations, FileService fileService) {
         this.numberCalculations = numberCalculations;
         this.vectorCalculations = vectorCalculations;
         this.matrixCalculations = matrixCalculations;
-        this.fileWriterService = fileWriterService;
+        this.fileService = fileService;
     }
 
-    public Result doCalculation(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException, ArithmeticException, VectorException {
+    public ResultResponse doCalculation(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException, ArithmeticException, VectorException {
         String a = request.getValueA();
         String b = request.getValueB();
         String operator = request.getOperator();
@@ -62,13 +62,13 @@ public class CalculationService {
         //save result to file
         try {
             String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            fileWriterService.writeToFile(String.format("%s %s %s %s = %s", dateTime, a, operator, b, result));
+            fileService.fileWriter(String.format("%s %s %s %s = %s", dateTime, a, operator, b, result));
         } catch (IOException e) {
             System.out.println("Something went wrong");
             e.printStackTrace();
         }
 
-        return new Result(result, "Calculation result saved to file");
+        return new ResultResponse(result, "Calculation result saved to file");
     }
 
     public Value getValue(String x) throws UnrecognizedValueException {

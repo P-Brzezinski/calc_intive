@@ -1,11 +1,11 @@
 package pl.brzezinski.dto;
 
-public class Result {
+public class ResultResponse {
 
     private String result;
     private String message;
 
-    public Result(String result, String message) {
+    public ResultResponse(String result, String message) {
         this.result = result;
         this.message = message;
     }

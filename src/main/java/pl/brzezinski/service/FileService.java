@@ -3,14 +3,16 @@ package pl.brzezinski.service;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static pl.brzezinski.config.Configuration.*;
 
 @Service
-public class FileWriterService {
+public class FileService {
 
-    public void writeToFile(String text) throws IOException {
+    public void fileWriter(String text) throws IOException {
         File file = new File(PATH + FILE_NAME);
         if (!file.exists()) {
             createNewHistoryFile();
@@ -29,7 +31,7 @@ public class FileWriterService {
         } else {
             renameCurrentFile();
             createNewHistoryFile();
-            writeToFile(text);
+            fileWriter(text);
         }
     }
 
@@ -59,20 +61,19 @@ public class FileWriterService {
         file.createNewFile();
     }
 
-    //for console app
-    private void fileReader() {
+    public List<String> fileReader() {
+        List<String> results = new ArrayList<>();
         try {
             FileReader fileReader = new FileReader(PATH + FILE_NAME);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             Scanner reader = new Scanner(bufferedReader);
             while (reader.hasNextLine()) {
-                String data = reader.nextLine();
-                System.out.println(data);
+                results.add(reader.nextLine());
             }
             reader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        return results;
     }
 }
