@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-pl.brzezinski.Main-Class: pl.brzezinski.Main
-

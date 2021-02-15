@@ -16,6 +16,7 @@ public class Main {
         Configuration configuration = new Configuration();
         configuration.initConfig();
 
+//        starts console app
 //        MainMenu mainMenu = new MainMenu();
 //        mainMenu.initMenu();
     }
