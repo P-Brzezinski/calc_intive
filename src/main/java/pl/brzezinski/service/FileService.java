@@ -91,14 +91,26 @@ public class FileService {
         return results;
     }
 
-    public List<String> allFiles(){
+    public List<String> allFiles() {
         List<String> result = new ArrayList<>();
-        try (Stream<Path> walk = Files.walk(Paths.get(PATH))){
-           result = walk.filter(Files::isRegularFile)
+        try (Stream<Path> walk = Files.walk(Paths.get(PATH))) {
+            result = walk.filter(Files::isRegularFile)
                     .map(Path::toString).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public void deleteHistory() throws FileNotFoundException {
+        File directory = new File(PATH);
+        File[] files = directory.listFiles();
+        if (files.length > 0){
+            for (File file : files) {
+                file.delete();
+            }
+        }else {
+         throw new FileNotFoundException();
+        }
     }
 }

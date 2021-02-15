@@ -56,8 +56,18 @@ public class AppController {
         }
     }
 
-    @GetMapping("files")
+    @GetMapping("/files")
     public ResponseEntity<List<String>> files() {
         return ResponseEntity.status(HttpStatus.OK).body(fileService.allFiles());
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteHistory() {
+        try {
+            fileService.deleteHistory();
+        } catch (FileNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No history files to delete");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("All history files deleted");
     }
 }

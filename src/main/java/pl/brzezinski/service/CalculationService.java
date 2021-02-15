@@ -99,7 +99,6 @@ public class CalculationService {
         throw new CalculationNotPossibleException("Calculation not possible for given combination of values or operator. Please try again.");
     }
 
-
     public List<PossibleCalculationsResponse> getListOfPossibleCalculations() {
         List<PossibleCalculationsResponse> response = new ArrayList<>();
         CalculationType[] values = CalculationType.values();
