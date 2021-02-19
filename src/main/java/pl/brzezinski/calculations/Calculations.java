@@ -21,7 +21,6 @@ public interface Calculations {
             newArray[i] = x.doubleValue();
         }
         return newArray;
-
     }
 
     default double[][] getMatrixFromString(String stringMatrix) {

@@ -42,7 +42,7 @@ public class CalculationService {
         String result;
 
         //find proper calculation type based on given values and operator
-        CalculationType calculationType = getCalculation(getValue(a), getValue(b), getOperator(operator));
+        CalculationType calculationType = getCalculation(getValueFromString(a), getValueFromString(b), getOperatorFromString(operator));
 
         //basing on first value and calculation type, do calculation
         switch (calculationType.getValueA()) {
@@ -71,7 +71,7 @@ public class CalculationService {
         return new ResultResponse(result, "Calculation result saved to file");
     }
 
-    public Value getValue(String x) throws UnrecognizedValueException {
+    public Value getValueFromString(String x) throws UnrecognizedValueException {
         Value value = Value.getValueFromString(x);
         if (value.equals(Value.UNRECOGNIZED)) {
             throw new UnrecognizedValueException(value.getDescription() + ": " + x);
@@ -79,7 +79,7 @@ public class CalculationService {
         return value;
     }
 
-    private String getOperator(String operator) throws OperatorNotFoundException {
+    private String getOperatorFromString(String operator) throws OperatorNotFoundException {
         List<String> possibleOperators = CalculationType.getPossibleOperators();
         for (String possibleOperator : possibleOperators) {
             if (possibleOperator.equals(operator)) {
