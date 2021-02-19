@@ -13,15 +13,19 @@ public class Result {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String valueA;
+    private String operator;
+    private String valueB;
     private String result;
-
     private LocalDateTime completedAt;
 
     public Result() {
     }
 
-    public Result(Long id, String result, LocalDateTime completedAt) {
-        this.id = id;
+    public Result(String valueA, String operator, String valueB, String result, LocalDateTime completedAt) {
+        this.valueA = valueA;
+        this.operator = operator;
+        this.valueB = valueB;
         this.result = result;
         this.completedAt = completedAt;
     }
@@ -48,5 +52,29 @@ public class Result {
 
     public void setCompletedAt(LocalDateTime completedAt) {
         this.completedAt = completedAt;
+    }
+
+    public String getValueA() {
+        return valueA;
+    }
+
+    public void setValueA(String valueA) {
+        this.valueA = valueA;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getValueB() {
+        return valueB;
+    }
+
+    public void setValueB(String valueB) {
+        this.valueB = valueB;
     }
 }

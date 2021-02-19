@@ -1,8 +1,10 @@
 package pl.brzezinski.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import pl.brzezinski.calculations.MatrixCalculations;
 import pl.brzezinski.calculations.NumberCalculations;
 import pl.brzezinski.calculations.VectorCalculations;
+import pl.brzezinski.db.ResultRepository;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.PossibleCalculationsResponse;
 import pl.brzezinski.dto.ResultResponse;
@@ -13,6 +15,7 @@ import pl.brzezinski.exceptions.CalculationNotPossibleException;
 import pl.brzezinski.exceptions.OperatorNotFoundException;
 import pl.brzezinski.exceptions.UnrecognizedValueException;
 import pl.brzezinski.exceptions.VectorException;
+import pl.brzezinski.model.Result;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -27,12 +30,15 @@ public class CalculationService {
     private final VectorCalculations vectorCalculations;
     private final MatrixCalculations matrixCalculations;
     private final FileService fileService;
+    private final H2DBService dbService;
 
-    public CalculationService(NumberCalculations numberCalculations, VectorCalculations vectorCalculations, MatrixCalculations matrixCalculations, FileService fileService) {
+    @Autowired
+    public CalculationService(NumberCalculations numberCalculations, VectorCalculations vectorCalculations, MatrixCalculations matrixCalculations, FileService fileService, H2DBService dbService) {
         this.numberCalculations = numberCalculations;
         this.vectorCalculations = vectorCalculations;
         this.matrixCalculations = matrixCalculations;
         this.fileService = fileService;
+        this.dbService = dbService;
     }
 
     public ResultResponse doCalculation(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException, ArithmeticException, VectorException {
@@ -58,6 +64,9 @@ public class CalculationService {
             default:
                 result = "Error. I do not know math...";
         }
+
+        // save result to db
+        dbService.save(request, result);
 
         //save result to file
         try {
