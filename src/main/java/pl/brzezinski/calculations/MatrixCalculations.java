@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.brzezinski.enums.CalculationType;
 import pl.brzezinski.exceptions.MatrixException;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 @Service
@@ -32,15 +33,17 @@ public class MatrixCalculations implements Calculations {
         double[][] matrixA = Calculations.super.getMatrixFromString(a);
         double[][] matrixB = Calculations.super.getMatrixFromString(b);
         double[][] result;
-        
-        if (sameLength(matrixA, matrixB) && noEmptyMatrices(matrixA, matrixB)) {
+        BigDecimal tempValue;
+
+        if (sameLength(matrixA, matrixB) && noEmptyMatrix(matrixA, matrixB)) {
             result = new double[matrixA.length][matrixA[0].length];
             for (int i = 0; i < matrixA.length; i++) {
                 if (i > matrixA[0].length) {
                     break;
                 } else {
                     for (int j = 0; j < matrixA[0].length; j++) {
-                        result[i][j] = matrixA[i][j] + matrixB[i][j];
+                        tempValue = BigDecimal.valueOf(matrixA[i][j]).add(BigDecimal.valueOf(matrixB[i][j]));
+                        result[i][j] = tempValue.doubleValue();
                     }
                 }
             }
@@ -50,80 +53,93 @@ public class MatrixCalculations implements Calculations {
         }
     }
 
-    private String sub(String a, String b) {
+    private String sub(String a, String b) throws MatrixException {
         double[][] matrixA = Calculations.super.getMatrixFromString(a);
         double[][] matrixB = Calculations.super.getMatrixFromString(b);
+        double[][] result;
+        BigDecimal tempValue;
 
-        if (sameLength(matrixA, matrixB) && noEmptyMatrices(matrixA, matrixB))
-            return String.format("%s %s", ERROR_MESSAGE, "subtract");
-
-        double[][] result = new double[matrixA.length][matrixA[0].length];
-
-        for (int i = 0; i < matrixA.length; i++) {
-            if (i > matrixA[0].length) {
-                break;
-            } else {
-                for (int j = 0; j < matrixA[0].length; j++) {
-                    result[i][j] = matrixA[i][j] - matrixB[i][j];
+        if (sameLength(matrixA, matrixB) && noEmptyMatrix(matrixA, matrixB)) {
+            result = new double[matrixA.length][matrixA[0].length];
+            for (int i = 0; i < matrixA.length; i++) {
+                if (i > matrixA[0].length) {
+                    break;
+                } else {
+                    for (int j = 0; j < matrixA[0].length; j++) {
+                        tempValue = BigDecimal.valueOf(matrixA[i][j]).subtract(BigDecimal.valueOf(matrixB[i][j]));
+                        result[i][j] = tempValue.doubleValue();
+                    }
                 }
             }
+        } else {
+            throw new MatrixException(String.format("%s %s", ERROR_MESSAGE, "subtract"));
         }
         return Arrays.deepToString(result);
     }
 
-    private String matrixMultiMatrix(String a, String b) {
+    private String matrixMultiMatrix(String a, String b) throws MatrixException {
         double[][] matrixA = Calculations.super.getMatrixFromString(a);
         double[][] matrixB = Calculations.super.getMatrixFromString(b);
+        double[][] result;
+        BigDecimal tempValue;
 
-        if (sameLength(matrixA, matrixB) && noEmptyMatrices(matrixA, matrixB))
-            return String.format("%s %s", ERROR_MESSAGE, "multiply");
-
-        double[][] result = new double[matrixA.length][matrixA[0].length];
-
-        for (int i = 0; i < matrixA.length; i++) {
-            if (i > matrixA[0].length) {
-                break;
-            } else {
-                for (int j = 0; j < matrixA[0].length; j++) {
-                    result[i][j] = matrixA[i][j] * matrixB[i][j];
+        if (sameLength(matrixA, matrixB) && noEmptyMatrix(matrixA, matrixB)) {
+            System.out.println(sameLength(matrixA, matrixB));
+            System.out.println(noEmptyMatrix(matrixA, matrixB));
+            result = new double[matrixA.length][matrixA[0].length];
+            for (int i = 0; i < matrixA.length; i++) {
+                if (i > matrixA[0].length) {
+                    break;
+                } else {
+                    for (int j = 0; j < matrixA[0].length; j++) {
+                        tempValue = BigDecimal.valueOf(matrixA[i][j]).multiply(BigDecimal.valueOf(matrixB[i][j]));
+                        result[i][j] = tempValue.doubleValue();
+                    }
                 }
             }
+        } else {
+            throw new MatrixException(String.format("%s %s", ERROR_MESSAGE, "multiply"));
         }
         return Arrays.deepToString(result);
     }
 
-    private String matrixMultiNumber(String a, String b) {
+    private String matrixMultiNumber(String a, String b) throws MatrixException {
         double[][] matrixA = Calculations.super.getMatrixFromString(a);
         double multiNum = Double.parseDouble(b);
-        double[][] result = new double[matrixA.length][matrixA[0].length];
+        double[][] result;
+        BigDecimal tempValue;
 
-        if (noEmptyMatrices(matrixA) && multiNum != 0) {
-            return "Matrix can not be empty and multiplier can not be 0, check your values.";
-        }
-
-        for (int i = 0; i < matrixA.length; i++) {
-            if (i > matrixA[0].length) {
-                break;
-            } else {
-                for (int j = 0; j < matrixA[0].length; j++) {
-                    result[i][j] = matrixA[i][j] * multiNum;
+        if (noEmptyMatrix(matrixA)) {
+            result = new double[matrixA.length][matrixA[0].length];
+            for (int i = 0; i < matrixA.length; i++) {
+                if (i > matrixA[0].length) {
+                    break;
+                } else {
+                    for (int j = 0; j < matrixA[0].length; j++) {
+                        tempValue = BigDecimal.valueOf(matrixA[i][j]).multiply(BigDecimal.valueOf(multiNum));
+                        result[i][j] = tempValue.doubleValue();
+                    }
                 }
             }
+        } else {
+            throw new MatrixException(String.format("%s %s", ERROR_MESSAGE, "multiply by number"));
         }
         return Arrays.deepToString(result);
     }
 
-    private String matrixMultiVector(String a, String b) {
+    private String matrixMultiVector(String a, String b) throws MatrixException {
         double[][] matrix = Calculations.super.getMatrixFromString(a);
         double[] vector = Calculations.super.getVectorFromString(b);
+        BigDecimal tempValue;
 
         for (int i = 0; i < matrix.length; i++) {
-            if (!(matrix[i].length == vector.length)) {
-                return "To multiply a row vector by a column vector, the row vector must have as many columns as the column vector has rows.";
-            } else {
-                for (int j = 0; j < matrix.length; j++) {
-                    matrix[i][j] = matrix[i][j] * vector[i];
+            if (noEmptyMatrix(matrix) && (matrix[i].length == vector.length)) {
+                for (int j = 0; j < vector.length; j++) {
+                    tempValue = BigDecimal.valueOf(matrix[i][j]).multiply(BigDecimal.valueOf(vector[i]));
+                    matrix[i][j] = tempValue.doubleValue();
                 }
+            } else {
+                throw new MatrixException("To multiply a row vector by a column vector, the row vector must have as many columns as the column vector has rows.");
             }
         }
         return Arrays.deepToString(matrix);
@@ -144,9 +160,11 @@ public class MatrixCalculations implements Calculations {
         return sameDimensions;
     }
 
-    private boolean noEmptyMatrices(double[][] matrixA, double[][] matrixB) {
+    private boolean noEmptyMatrix(double[][] matrixA, double[][] matrixB) {
         boolean noEmpty = true;
-        if (matrixA.length != 0 && matrixB.length != 0) {
+        if (matrixA.length == 0 && matrixB.length == 0) {
+            noEmpty = false;
+        } else {
             for (int i = 0; i < matrixA.length; i++) {
                 if (matrixA[i].length == 0) {
                     noEmpty = false;
@@ -160,7 +178,7 @@ public class MatrixCalculations implements Calculations {
         return noEmpty;
     }
 
-    private boolean noEmptyMatrices(double[][] matrix) {
+    private boolean noEmptyMatrix(double[][] matrix) {
         boolean noEmpty = true;
         if (matrix.length != 0) {
             for (int i = 0; i < matrix.length; i++) {
