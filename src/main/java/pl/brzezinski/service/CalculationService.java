@@ -11,10 +11,7 @@ import pl.brzezinski.dto.ResultResponse;
 import pl.brzezinski.enums.CalculationType;
 import pl.brzezinski.enums.Value;
 import org.springframework.stereotype.Service;
-import pl.brzezinski.exceptions.CalculationNotPossibleException;
-import pl.brzezinski.exceptions.OperatorNotFoundException;
-import pl.brzezinski.exceptions.UnrecognizedValueException;
-import pl.brzezinski.exceptions.VectorException;
+import pl.brzezinski.exceptions.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -40,7 +37,7 @@ public class CalculationService {
         this.dbService = dbService;
     }
 
-    public String doCalculation(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException, ArithmeticException, VectorException {
+    public String doCalculation(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException, ArithmeticException, VectorException, MatrixException {
         String a = request.getValueA();
         String b = request.getValueB();
         String operator = request.getOperator();
@@ -63,19 +60,6 @@ public class CalculationService {
             default:
                 result = "Error. I do not know math...";
         }
-
-        // save result to db
-//        dbService.save(request, result);
-
-        //save result to file
-//        try {
-//            String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-//            fileService.save(String.format("%s %s %s %s = %s", dateTime, a, operator, b, result));
-//        } catch (IOException e) {
-//            System.out.println("Something went wrong");
-//            e.printStackTrace();
-//        }
-
         return result;
     }
 

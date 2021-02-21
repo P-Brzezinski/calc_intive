@@ -2,6 +2,7 @@ package pl.brzezinski.calculations;
 
 import org.springframework.stereotype.Service;
 import pl.brzezinski.enums.CalculationType;
+import pl.brzezinski.exceptions.MatrixException;
 
 import java.util.Arrays;
 
@@ -11,7 +12,7 @@ public class MatrixCalculations implements Calculations {
     private static final String ERROR_MESSAGE = "Matrices must have same dimensions and cannot be empty if you want to";
 
     @Override
-    public String doCalculation(CalculationType calc, String a, String b) {
+    public String doCalculation(CalculationType calc, String a, String b) throws MatrixException {
         switch (calc) {
             case MATRIX_ADD_MATRIX:
                 return add(a, b);
@@ -27,34 +28,33 @@ public class MatrixCalculations implements Calculations {
         return "No suitable operation found.";
     }
 
-    // example [[22,33,44][44,22,33][11,22,44]]
-
-    private String add(String a, String b) {
+    private String add(String a, String b) throws MatrixException {
         double[][] matrixA = Calculations.super.getMatrixFromString(a);
         double[][] matrixB = Calculations.super.getMatrixFromString(b);
-
-        if (hasNotSameDimensions(matrixA, matrixB) && noEmptyMatrix(matrixA, matrixB))
-            return String.format("%s %s", ERROR_MESSAGE, "add");
-
-        double[][] result = new double[matrixA.length][matrixA[0].length];
-
-        for (int i = 0; i < matrixA.length; i++) {
-            if (i > matrixA[0].length) {
-                break;
-            } else {
-                for (int j = 0; j < matrixA[0].length; j++) {
-                    result[i][j] = matrixA[i][j] + matrixB[i][j];
+        double[][] result;
+        
+        if (sameLength(matrixA, matrixB) && noEmptyMatrices(matrixA, matrixB)) {
+            result = new double[matrixA.length][matrixA[0].length];
+            for (int i = 0; i < matrixA.length; i++) {
+                if (i > matrixA[0].length) {
+                    break;
+                } else {
+                    for (int j = 0; j < matrixA[0].length; j++) {
+                        result[i][j] = matrixA[i][j] + matrixB[i][j];
+                    }
                 }
             }
+            return Arrays.deepToString(result);
+        } else {
+            throw new MatrixException(String.format("%s %s", ERROR_MESSAGE, "add"));
         }
-        return Arrays.deepToString(result);
     }
 
     private String sub(String a, String b) {
         double[][] matrixA = Calculations.super.getMatrixFromString(a);
         double[][] matrixB = Calculations.super.getMatrixFromString(b);
 
-        if (hasNotSameDimensions(matrixA, matrixB) && noEmptyMatrix(matrixA, matrixB))
+        if (sameLength(matrixA, matrixB) && noEmptyMatrices(matrixA, matrixB))
             return String.format("%s %s", ERROR_MESSAGE, "subtract");
 
         double[][] result = new double[matrixA.length][matrixA[0].length];
@@ -75,7 +75,7 @@ public class MatrixCalculations implements Calculations {
         double[][] matrixA = Calculations.super.getMatrixFromString(a);
         double[][] matrixB = Calculations.super.getMatrixFromString(b);
 
-        if (hasNotSameDimensions(matrixA, matrixB) && noEmptyMatrix(matrixA, matrixB))
+        if (sameLength(matrixA, matrixB) && noEmptyMatrices(matrixA, matrixB))
             return String.format("%s %s", ERROR_MESSAGE, "multiply");
 
         double[][] result = new double[matrixA.length][matrixA[0].length];
@@ -97,7 +97,7 @@ public class MatrixCalculations implements Calculations {
         double multiNum = Double.parseDouble(b);
         double[][] result = new double[matrixA.length][matrixA[0].length];
 
-        if (noEmptyMatrix(matrixA) && multiNum != 0) {
+        if (noEmptyMatrices(matrixA) && multiNum != 0) {
             return "Matrix can not be empty and multiplier can not be 0, check your values.";
         }
 
@@ -129,22 +129,22 @@ public class MatrixCalculations implements Calculations {
         return Arrays.deepToString(matrix);
     }
 
-    private boolean hasNotSameDimensions(double[][] matrixA, double[][] matrixB) {
-        boolean hasSameDimensions = true;
+    private boolean sameLength(double[][] matrixA, double[][] matrixB) {
+        boolean sameDimensions = true;
         if (matrixA.length == matrixB.length) {
             for (int i = 0; i < matrixA.length; i++) {
                 if (matrixA[i].length != matrixB[i].length) {
-                    hasSameDimensions = false;
+                    sameDimensions = false;
                     break;
                 }
             }
         } else {
-            hasSameDimensions = false;
+            sameDimensions = false;
         }
-        return !hasSameDimensions;
+        return sameDimensions;
     }
 
-    private boolean noEmptyMatrix(double[][] matrixA, double[][] matrixB) {
+    private boolean noEmptyMatrices(double[][] matrixA, double[][] matrixB) {
         boolean noEmpty = true;
         if (matrixA.length != 0 && matrixB.length != 0) {
             for (int i = 0; i < matrixA.length; i++) {
@@ -160,7 +160,7 @@ public class MatrixCalculations implements Calculations {
         return noEmpty;
     }
 
-    private boolean noEmptyMatrix(double[][] matrix) {
+    private boolean noEmptyMatrices(double[][] matrix) {
         boolean noEmpty = true;
         if (matrix.length != 0) {
             for (int i = 0; i < matrix.length; i++) {

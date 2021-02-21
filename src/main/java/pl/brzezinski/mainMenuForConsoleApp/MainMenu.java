@@ -4,6 +4,7 @@ import pl.brzezinski.calculations.MatrixCalculations;
 import pl.brzezinski.calculations.NumberCalculations;
 import pl.brzezinski.calculations.VectorCalculations;
 import pl.brzezinski.enums.CalculationType;
+import pl.brzezinski.exceptions.MatrixException;
 import pl.brzezinski.exceptions.VectorException;
 import pl.brzezinski.input.Input;
 import pl.brzezinski.enums.Value;
@@ -48,7 +49,7 @@ public class MainMenu {
             String result = null;
             try {
                 result = doMatch(calc, value1, value2);
-            } catch (VectorException e) {
+            } catch (VectorException | MatrixException e) {
                 e.printStackTrace();
             }
             System.out.printf("%s %s %s = %s", value1, calc.getOperator(), value2, result);
@@ -62,7 +63,7 @@ public class MainMenu {
         return value.getPossibleCalculations()[pickOption - 1];
     }
 
-    private String doMatch(CalculationType calculationType, String a, String b) throws VectorException {
+    private String doMatch(CalculationType calculationType, String a, String b) throws VectorException, MatrixException {
         switch (calculationType.getValueA()) {
             case "Number":
                 NumberCalculations nc = new NumberCalculations();

@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.brzezinski.dto.HistoryResponse;
 import pl.brzezinski.dto.PossibleCalculationsResponse;
 import pl.brzezinski.dto.ResultResponse;
-import pl.brzezinski.exceptions.CalculationNotPossibleException;
-import pl.brzezinski.exceptions.OperatorNotFoundException;
-import pl.brzezinski.exceptions.UnrecognizedValueException;
-import pl.brzezinski.exceptions.VectorException;
+import pl.brzezinski.exceptions.*;
 import pl.brzezinski.service.CalculationService;
 import pl.brzezinski.service.DBService;
 
@@ -42,7 +39,7 @@ public class AppController {
         String result;
         try {
             result = calculationService.doCalculation(request);
-        } catch (UnrecognizedValueException | OperatorNotFoundException | CalculationNotPossibleException | ArithmeticException | VectorException e) {
+        } catch (UnrecognizedValueException | OperatorNotFoundException | CalculationNotPossibleException | ArithmeticException | VectorException | MatrixException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResultResponse("No result", e.getMessage()));
         }
         dbService.save(request, result);

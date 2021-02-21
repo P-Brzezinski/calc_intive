@@ -1,5 +1,6 @@
 package pl.brzezinski.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.HistoryResponse;
@@ -18,7 +19,8 @@ import java.util.stream.Stream;
 
 import static pl.brzezinski.config.Configuration.*;
 
-@Component("fileService")
+@Component
+@Qualifier("fileService")
 public class FileService implements DBService{
 
     public void save(CalculationRequest request, String result) throws IOException {

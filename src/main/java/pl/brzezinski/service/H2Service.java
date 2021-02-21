@@ -1,6 +1,7 @@
 package pl.brzezinski.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.brzezinski.db.ResultRepository;
 import pl.brzezinski.dto.CalculationRequest;
@@ -11,7 +12,8 @@ import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Component("H2Service")
+@Component
+@Qualifier("H2Service")
 public class H2Service implements DBService{
 
     private final ResultRepository resultRepository;
