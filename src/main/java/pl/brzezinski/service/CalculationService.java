@@ -1,10 +1,10 @@
 package pl.brzezinski.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.brzezinski.calculations.MatrixCalculations;
 import pl.brzezinski.calculations.NumberCalculations;
 import pl.brzezinski.calculations.VectorCalculations;
-import pl.brzezinski.db.ResultRepository;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.PossibleCalculationsResponse;
 import pl.brzezinski.dto.ResultResponse;
@@ -15,7 +15,6 @@ import pl.brzezinski.exceptions.CalculationNotPossibleException;
 import pl.brzezinski.exceptions.OperatorNotFoundException;
 import pl.brzezinski.exceptions.UnrecognizedValueException;
 import pl.brzezinski.exceptions.VectorException;
-import pl.brzezinski.model.Result;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -23,17 +22,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Component
 public class CalculationService {
 
     private final NumberCalculations numberCalculations;
     private final VectorCalculations vectorCalculations;
     private final MatrixCalculations matrixCalculations;
     private final FileService fileService;
-    private final H2DBService dbService;
+    private final H2Service dbService;
 
     @Autowired
-    public CalculationService(NumberCalculations numberCalculations, VectorCalculations vectorCalculations, MatrixCalculations matrixCalculations, FileService fileService, H2DBService dbService) {
+    public CalculationService(NumberCalculations numberCalculations, VectorCalculations vectorCalculations, MatrixCalculations matrixCalculations, FileService fileService, H2Service dbService) {
         this.numberCalculations = numberCalculations;
         this.vectorCalculations = vectorCalculations;
         this.matrixCalculations = matrixCalculations;
@@ -41,7 +40,7 @@ public class CalculationService {
         this.dbService = dbService;
     }
 
-    public ResultResponse doCalculation(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException, ArithmeticException, VectorException {
+    public String doCalculation(CalculationRequest request) throws UnrecognizedValueException, OperatorNotFoundException, CalculationNotPossibleException, ArithmeticException, VectorException {
         String a = request.getValueA();
         String b = request.getValueB();
         String operator = request.getOperator();
@@ -66,18 +65,18 @@ public class CalculationService {
         }
 
         // save result to db
-        dbService.save(request, result);
+//        dbService.save(request, result);
 
         //save result to file
-        try {
-            String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            fileService.fileWriter(String.format("%s %s %s %s = %s", dateTime, a, operator, b, result));
-        } catch (IOException e) {
-            System.out.println("Something went wrong");
-            e.printStackTrace();
-        }
+//        try {
+//            String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//            fileService.save(String.format("%s %s %s %s = %s", dateTime, a, operator, b, result));
+//        } catch (IOException e) {
+//            System.out.println("Something went wrong");
+//            e.printStackTrace();
+//        }
 
-        return new ResultResponse(result, "Calculation result saved to file");
+        return result;
     }
 
     public Value getValueFromString(String x) throws UnrecognizedValueException {

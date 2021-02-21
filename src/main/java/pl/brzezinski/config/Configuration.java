@@ -2,6 +2,11 @@ package pl.brzezinski.config;
 
 public class Configuration {
 
+    //Database configuration
+    public static final String FILE_SERVICE = "fileService";
+    public static final String H2_SERVICE = "H2Service";
+    public static final String DB = FILE_SERVICE;
+
     //FileWriteService configuration
     public static final String PATH = "./calculation_sheets/";
     public static final String FILE_NAME = "calculations_history.txt";
@@ -16,6 +21,7 @@ public class Configuration {
     public static final int MATRIX_X = 4;
     public static final int MATRIX_Y = 4;
 
+    //config init
     public void initConfig(){
         VECTOR_PATTERN = createVectorPattern(MAX_VECTOR_LENGTH);
         MATRIX_PATTERN = createMatrixPattern(MATRIX_X, MATRIX_Y);
@@ -56,5 +62,9 @@ public class Configuration {
 
     public static String getVectorPattern() {
         return VECTOR_PATTERN;
+    }
+
+    public static String getDB() {
+        return DB;
     }
 }

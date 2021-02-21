@@ -1,20 +1,23 @@
 package pl.brzezinski.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import pl.brzezinski.db.ResultRepository;
 import pl.brzezinski.dto.CalculationRequest;
+import pl.brzezinski.dto.HistoryResponse;
 import pl.brzezinski.model.Result;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Service
-public class H2DBService {
+@Component("H2Service")
+public class H2Service implements DBService{
 
-    private ResultRepository resultRepository;
+    private final ResultRepository resultRepository;
 
     @Autowired
-    public H2DBService(ResultRepository resultRepository) {
+    public H2Service(ResultRepository resultRepository) {
         this.resultRepository = resultRepository;
     }
 
@@ -31,5 +34,20 @@ public class H2DBService {
         entity.setResult(result);
         entity.setCompletedAt(LocalDateTime.now());
         return entity;
+    }
+
+    @Override
+    public List<HistoryResponse> results(String fileName) throws FileNotFoundException {
+        return null;
+    }
+
+    @Override
+    public List<String> allFiles() {
+        return null;
+    }
+
+    @Override
+    public void deleteHistory() throws FileNotFoundException {
+
     }
 }
