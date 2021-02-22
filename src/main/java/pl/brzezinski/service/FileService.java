@@ -73,6 +73,10 @@ public class FileService implements DBService{
         file.createNewFile();
     }
 
+    public List<HistoryResponse> results(){
+        return null;
+    }
+
     public List<HistoryResponse> results(String fileName) throws FileNotFoundException {
         List<String> records = fileReader(PATH + fileName);
         List<HistoryResponse> response = new ArrayList<>();

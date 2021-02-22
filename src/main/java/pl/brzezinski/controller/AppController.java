@@ -40,7 +40,7 @@ public class AppController {
         try {
             result = calculationService.doCalculation(request);
         } catch (UnrecognizedValueException | OperatorNotFoundException | CalculationNotPossibleException | ArithmeticException | VectorException | MatrixException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResultResponse("No result", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResultResponse("Calculation not saved", e.getMessage()));
         }
         dbService.save(request, result);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResultResponse("Result saved", result));
@@ -52,7 +52,9 @@ public class AppController {
     }
 
     @GetMapping("/results")
-    public ResponseEntity<List<HistoryResponse>> results(@RequestParam(defaultValue = Configuration.FILE_NAME) String fileName) {
+    public ResponseEntity<List<HistoryResponse>> results(@RequestParam(defaultValue = Configuration.FILE_NAME) String fileName,
+                                                         @RequestParam(defaultValue = "0") Integer pageNo,
+                                                         @RequestParam(defaultValue = "5") Integer pageSize) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(dbService.results(fileName));
         } catch (FileNotFoundException e) {
@@ -72,6 +74,6 @@ public class AppController {
         } catch (FileNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No history files to delete");
         }
-        return ResponseEntity.status(HttpStatus.OK).body("All history files deleted");
+        return ResponseEntity.status(HttpStatus.OK).body("History deleted");
     }
 }

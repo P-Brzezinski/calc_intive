@@ -1,7 +1,6 @@
 package pl.brzezinski;
 
 import pl.brzezinski.config.Configuration;
-import pl.brzezinski.mainMenuForConsoleApp.MainMenu;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -14,7 +13,7 @@ public class Main {
         SpringApplication.run(Main.class, args);
 
         Configuration configuration = new Configuration();
-        configuration.initConfig();
+        configuration.initPatterns();
 
 //        starts console app
 //        MainMenu mainMenu = new MainMenu();

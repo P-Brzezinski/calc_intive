@@ -84,8 +84,6 @@ public class MatrixCalculations implements Calculations {
         BigDecimal tempValue;
 
         if (sameLength(matrixA, matrixB) && noEmptyMatrix(matrixA, matrixB)) {
-            System.out.println(sameLength(matrixA, matrixB));
-            System.out.println(noEmptyMatrix(matrixA, matrixB));
             result = new double[matrixA.length][matrixA[0].length];
             for (int i = 0; i < matrixA.length; i++) {
                 if (i > matrixA[0].length) {

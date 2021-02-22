@@ -5,7 +5,7 @@ public class Configuration {
     //Database configuration
     public static final String FILE_SERVICE = "fileService";
     public static final String H2_SERVICE = "H2Service";
-    public static final String DB = FILE_SERVICE;
+    public static final String DB = H2_SERVICE;
 
     //FileWriteService configuration
     public static final String PATH = "./calculation_sheets/";
@@ -21,8 +21,8 @@ public class Configuration {
     public static final int MATRIX_X = 4;
     public static final int MATRIX_Y = 4;
 
-    //config init
-    public void initConfig(){
+    //patterns init
+    public void initPatterns(){
         VECTOR_PATTERN = createVectorPattern(MAX_VECTOR_LENGTH);
         MATRIX_PATTERN = createMatrixPattern(MATRIX_X, MATRIX_Y);
     }

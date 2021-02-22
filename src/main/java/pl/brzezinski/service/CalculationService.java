@@ -7,15 +7,10 @@ import pl.brzezinski.calculations.NumberCalculations;
 import pl.brzezinski.calculations.VectorCalculations;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.PossibleCalculationsResponse;
-import pl.brzezinski.dto.ResultResponse;
 import pl.brzezinski.enums.CalculationType;
 import pl.brzezinski.enums.Value;
-import org.springframework.stereotype.Service;
 import pl.brzezinski.exceptions.*;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
