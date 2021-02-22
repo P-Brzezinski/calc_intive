@@ -17,17 +17,17 @@ public class Result {
     private String operator;
     private String valueB;
     private String result;
-    private LocalDateTime completedAt;
+    private LocalDateTime dateTime;
 
     public Result() {
     }
 
-    public Result(String valueA, String operator, String valueB, String result, LocalDateTime completedAt) {
+    public Result(String valueA, String operator, String valueB, String result, LocalDateTime dateTime) {
         this.valueA = valueA;
         this.operator = operator;
         this.valueB = valueB;
         this.result = result;
-        this.completedAt = completedAt;
+        this.dateTime = dateTime;
     }
 
     public Long getId() {
@@ -46,12 +46,12 @@ public class Result {
         this.result = result;
     }
 
-    public LocalDateTime getCompletedAt() {
-        return completedAt;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setCompletedAt(LocalDateTime completedAt) {
-        this.completedAt = completedAt;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getValueA() {

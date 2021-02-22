@@ -13,7 +13,7 @@ public interface DBService {
 
     void save(CalculationRequest request, String result) throws IOException;
 
-    List<HistoryResponse> results(String fileName) throws FileNotFoundException;
+    List<HistoryResponse> results(String fileName, Integer pageNo, Integer pageSize) throws FileNotFoundException;
 
     List<String> allFiles();
 
