@@ -1,4 +1,3 @@
-pl/brzezinski/config/Configuration.class
 pl/brzezinski/mainMenuForConsoleApp/MainMenu.class
 pl/brzezinski/calculations/Calculations.class
 pl/brzezinski/exceptions/CalculationNotPossibleException.class

@@ -3,7 +3,7 @@
 Calculator project made for Intive Patronage program (2021 edition).
 
 ## Technologies
-Java 11 + Spring Boot, Maven
+Java 11 + Spring Boot, Maven, H2
 
 ## Installation
 
@@ -41,10 +41,15 @@ Application works with:
 2. Vectors (e.g. [2,3,.4])
 3. Matrix (e.g. [[2,3.4][3,2,4]]
 
-Maximum lengths for vectors and matrix are defined in Configuration.class file from config package.
-Application saves results to files, you can define default destination and file name also in Configuration.class file.
-
+Maximum lengths for vectors and matrix are defined in Configuration.class file from configuration package.
 Depending on given values, you can make different calculations, you can check them all typing endpoint /possibleCalculations.
+
+## Database
+
+Application saves results:
+- files - you can define default destination and file name in Configuration.class file
+- H2 database - you can access H2 console on http://localhost:8080/h2-console, username: sa, no password
+
 
 ## Author
 Paweł Brzeziński
