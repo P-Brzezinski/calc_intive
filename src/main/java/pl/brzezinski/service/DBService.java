@@ -14,9 +14,7 @@ public interface DBService {
 
     void save(CalculationRequest request, String result) throws IOException;
 
-    List<HistoryResponse> fileResults(String fileName) throws FileNotFoundException;
-
-    List<HistoryResponse> h2Results(Integer pageNo, Integer pageSize, LocalDateTime after, LocalDateTime before);
+    List<HistoryResponse> results(String fileName, int pageNo, int pageSize, LocalDateTime after, LocalDateTime before) throws FileNotFoundException;
 
     List<String> allFiles();
 

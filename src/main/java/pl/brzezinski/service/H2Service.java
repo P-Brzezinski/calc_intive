@@ -2,8 +2,8 @@ package pl.brzezinski.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.brzezinski.repository.ResultRepository;
@@ -13,10 +13,8 @@ import pl.brzezinski.model.Result;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
-import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,8 +47,7 @@ public class H2Service implements DBService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<HistoryResponse> h2Results(Integer pageNo, Integer pageSize, LocalDateTime after, LocalDateTime before) {
+    public List<HistoryResponse> results(String fileName, int pageNo, int pageSize, LocalDateTime after, LocalDateTime before) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by("dateTime"));
         return resultRepository.findAllByDateTimeAfterAndDateTimeBefore(after, before, paging)
                 .stream()
@@ -67,11 +64,6 @@ public class H2Service implements DBService {
                 result.getValueB(),
                 result.getResult()));
         return response;
-    }
-
-    @Override
-    public List<HistoryResponse> fileResults(String fileName) {
-        throw new UnsupportedOperationException("Operation unsupported for H2 Database");
     }
 
     @Override

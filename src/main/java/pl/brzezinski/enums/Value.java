@@ -1,6 +1,6 @@
 package pl.brzezinski.enums;
 
-import pl.brzezinski.config.Configuration;
+import pl.brzezinski.configuration.Configuration;
 
 import static pl.brzezinski.enums.CalculationType.*;
 
@@ -42,7 +42,6 @@ public enum Value {
         }
         return Value.UNRECOGNIZED;
     }
-
 
     public static CalculationType[] getPossibleCalculationsForValue(Value value){
         Value[] values = Value.values();

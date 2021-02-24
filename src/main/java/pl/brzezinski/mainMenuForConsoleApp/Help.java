@@ -1,6 +1,6 @@
 package pl.brzezinski.mainMenuForConsoleApp;
 
-import pl.brzezinski.config.Configuration;
+import pl.brzezinski.configuration.Configuration;
 
 public class Help {
 

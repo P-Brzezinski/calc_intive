@@ -17,11 +17,11 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static pl.brzezinski.config.Configuration.*;
+import static pl.brzezinski.configuration.Configuration.*;
 
 @Component
 @Qualifier("fileService")
-public class FileService implements DBService{
+public class FileService implements DBService {
 
     @Override
     public void save(CalculationRequest request, String result) throws IOException {
@@ -75,7 +75,7 @@ public class FileService implements DBService{
     }
 
     @Override
-    public List<HistoryResponse> fileResults(String fileName) throws FileNotFoundException {
+    public List<HistoryResponse> results(String fileName, int pageNo, int pageSize, LocalDateTime after, LocalDateTime before) throws FileNotFoundException {
         List<String> records = fileReader(PATH + fileName);
         List<HistoryResponse> response = new ArrayList<>();
         for (String record : records) {
@@ -100,11 +100,6 @@ public class FileService implements DBService{
     }
 
     @Override
-    public List<HistoryResponse> h2Results(Integer pageNo, Integer pageSize, LocalDateTime dateTime, LocalDateTime before) {
-        throw new UnsupportedOperationException("Operation can not be processed on file");
-    }
-
-    @Override
     public List<String> allFiles() {
         List<String> result = new ArrayList<>();
         try (Stream<Path> walk = Files.walk(Paths.get(PATH))) {
@@ -120,12 +115,12 @@ public class FileService implements DBService{
     public void deleteHistory() throws FileNotFoundException {
         File directory = new File(PATH);
         File[] files = directory.listFiles();
-        if (files.length > 0){
+        if (files.length > 0) {
             for (File file : files) {
                 file.delete();
             }
-        }else {
-         throw new FileNotFoundException();
+        } else {
+            throw new FileNotFoundException("No files to delete");
         }
     }
 }

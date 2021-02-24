@@ -1,7 +1,7 @@
 package pl.brzezinski.calculations;
 
 import org.springframework.stereotype.Service;
-import pl.brzezinski.config.Configuration;
+import pl.brzezinski.configuration.Configuration;
 import pl.brzezinski.enums.CalculationType;
 
 import java.math.BigDecimal;

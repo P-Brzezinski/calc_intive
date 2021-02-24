@@ -1,13 +1,13 @@
-package pl.brzezinski.config;
+package pl.brzezinski.configuration;
 
 public class Configuration {
 
     //Database configuration
     public static final String FILE_SERVICE = "fileService";
     public static final String H2_SERVICE = "H2Service";
-    public static final String DB = H2_SERVICE;
+    public static final String DB = FILE_SERVICE;
 
-    //FileWriteService configuration
+    //FileService configuration
     public static final String PATH = "./calculation_sheets/";
     public static final String FILE_NAME = "calculations_history.txt";
     public static final long MAX_LINES_IN_FILE = 5;
@@ -62,9 +62,5 @@ public class Configuration {
 
     public static String getVectorPattern() {
         return VECTOR_PATTERN;
-    }
-
-    public static String getDB() {
-        return DB;
     }
 }

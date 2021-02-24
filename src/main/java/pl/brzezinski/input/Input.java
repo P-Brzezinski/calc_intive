@@ -21,16 +21,16 @@ public final class Input {
     public String getString(String askForString) {
         System.out.println(askForString);
         String input = scanner.next();
-        scanner.nextLine(); //clear bad pl.brzezinski.input data from keyboard
+        scanner.nextLine(); //clear bad input data from keyboard
         return input;
     }
 
     public int getInt(String askForInt) {
         System.out.println(askForInt);
         while (!scanner.hasNextInt()) {
-            System.out.println("Number is required pl.brzezinski.input.");
+            System.out.println("Number is required input.");
             System.out.println(askForInt);
-            scanner.nextLine(); //clear bad pl.brzezinski.input data from keyboard
+            scanner.nextLine();
         }
         return scanner.nextInt();
     }
@@ -40,15 +40,15 @@ public final class Input {
         do {
             System.out.printf("%s (%d-%d): ", sPrompt, nLow, nHigh);
             while (!scanner.hasNextInt()) {
-                System.out.println("Number is required pl.brzezinski.input.");
+                System.out.println("Number is required input.");
                 System.out.printf("%s (%d-%d): ", sPrompt, nLow, nHigh);
-                scanner.nextLine(); //clear bad pl.brzezinski.input data from keyboard
+                scanner.nextLine();
             }
             nInput = scanner.nextInt();
             if (nInput >= nLow && nInput <= nHigh)
                 break;
             System.out.println("Value out of range.");
-            scanner.nextLine(); //clear bad pl.brzezinski.input data from keyboard
+            scanner.nextLine();
         } while (true);
         return nInput;
     }

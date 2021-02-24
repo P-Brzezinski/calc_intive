@@ -1,6 +1,6 @@
 package pl.brzezinski;
 
-import pl.brzezinski.config.Configuration;
+import pl.brzezinski.configuration.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
