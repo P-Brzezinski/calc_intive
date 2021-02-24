@@ -2,18 +2,23 @@ package pl.brzezinski.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.brzezinski.repository.ResultRepository;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.HistoryResponse;
 import pl.brzezinski.model.Result;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @Qualifier("H2Service")
@@ -26,6 +31,7 @@ public class H2Service implements DBService {
         this.resultRepository = resultRepository;
     }
 
+    @Override
     @Transactional
     public void save(CalculationRequest request, String result) {
         Result resultEntity = mapToResultEntity(request, result);
@@ -43,16 +49,16 @@ public class H2Service implements DBService {
     }
 
     @Override
-    public List<HistoryResponse> results(String fileName, Integer pageNo, Integer pageSize) {
-        List<Result> all = resultRepository.findAll();
-        List<HistoryResponse> historyResponses = new ArrayList<>();
-        for (Result result : all) {
-            historyResponses.add(mapToHistoryResponse(result));
-        }
-        return historyResponses;
+    @Transactional(readOnly = true)
+    public List<HistoryResponse> h2Results(Integer pageNo, Integer pageSize, LocalDateTime after, LocalDateTime before) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by("dateTime"));
+        return resultRepository.findAllByDateTimeAfterAndDateTimeBefore(after, before, paging)
+                .stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
     }
 
-    private HistoryResponse mapToHistoryResponse(Result result) {
+    private HistoryResponse mapToDto(Result result) {
         HistoryResponse response = new HistoryResponse();
         response.setDate(result.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         response.setCalculation(String.format("%s %s %s = %s",
@@ -64,11 +70,17 @@ public class H2Service implements DBService {
     }
 
     @Override
-    public List<String> allFiles() throws UnsupportedOperationException{
+    public List<HistoryResponse> fileResults(String fileName) {
         throw new UnsupportedOperationException("Operation unsupported for H2 Database");
     }
 
     @Override
+    public List<String> allFiles() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Operation unsupported for H2 Database");
+    }
+
+    @Override
+    @Transactional
     public void deleteHistory() {
         resultRepository.deleteAll();
     }

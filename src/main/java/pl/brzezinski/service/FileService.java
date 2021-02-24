@@ -23,6 +23,7 @@ import static pl.brzezinski.config.Configuration.*;
 @Qualifier("fileService")
 public class FileService implements DBService{
 
+    @Override
     public void save(CalculationRequest request, String result) throws IOException {
         String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         File file = new File(PATH + FILE_NAME);
@@ -73,7 +74,8 @@ public class FileService implements DBService{
         file.createNewFile();
     }
 
-    public List<HistoryResponse> results(String fileName, Integer pageNo, Integer pageSize) throws FileNotFoundException {
+    @Override
+    public List<HistoryResponse> fileResults(String fileName) throws FileNotFoundException {
         List<String> records = fileReader(PATH + fileName);
         List<HistoryResponse> response = new ArrayList<>();
         for (String record : records) {
@@ -97,6 +99,12 @@ public class FileService implements DBService{
         return results;
     }
 
+    @Override
+    public List<HistoryResponse> h2Results(Integer pageNo, Integer pageSize, LocalDateTime dateTime, LocalDateTime before) {
+        throw new UnsupportedOperationException("Operation can not be processed on file");
+    }
+
+    @Override
     public List<String> allFiles() {
         List<String> result = new ArrayList<>();
         try (Stream<Path> walk = Files.walk(Paths.get(PATH))) {
@@ -108,6 +116,7 @@ public class FileService implements DBService{
         return result;
     }
 
+    @Override
     public void deleteHistory() throws FileNotFoundException {
         File directory = new File(PATH);
         File[] files = directory.listFiles();

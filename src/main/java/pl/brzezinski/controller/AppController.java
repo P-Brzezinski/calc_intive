@@ -2,12 +2,12 @@ package pl.brzezinski.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.brzezinski.config.Configuration;
 import pl.brzezinski.dto.CalculationRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.brzezinski.dto.HistoryResponse;
 import pl.brzezinski.dto.PossibleCalculationsResponse;
 import pl.brzezinski.dto.ResultResponse;
 import pl.brzezinski.exceptions.*;
@@ -18,8 +18,7 @@ import pl.brzezinski.service.H2Service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Collections;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -54,22 +53,31 @@ public class AppController {
         return ResponseEntity.status(HttpStatus.OK).body(calculationService.getListOfPossibleCalculations());
     }
 
+
     @GetMapping("/results")
     public ResponseEntity<?> results(@RequestParam(defaultValue = Configuration.FILE_NAME) String fileName,
                                      @RequestParam(defaultValue = "0") Integer pageNo,
-                                     @RequestParam(defaultValue = "5") Integer pageSize) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(dbService.results(fileName, pageNo, pageSize));
-        } catch (FileNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+                                     @RequestParam(defaultValue = "5") Integer pageSize,
+                                     @RequestParam(defaultValue = "#{T(java.time.LocalDateTime).of(2020,1,1,12,0,0)}") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime after,
+                                     @RequestParam(defaultValue = "#{T(java.time.LocalDateTime).now}") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime before) {
+
+        if (dbService instanceof FileService) {
+            try {
+                return ResponseEntity.status(HttpStatus.OK).body(dbService.fileResults(fileName));
+            } catch (FileNotFoundException e) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            }
+        } else if (dbService instanceof H2Service) {
+            return ResponseEntity.status(HttpStatus.OK).body(dbService.h2Results(pageNo, pageSize, after, before));
         }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Something is wrong");
     }
 
     @GetMapping("/files")
     public ResponseEntity<?> files() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(dbService.allFiles());
-        }catch (UnsupportedOperationException e){
+        } catch (UnsupportedOperationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }

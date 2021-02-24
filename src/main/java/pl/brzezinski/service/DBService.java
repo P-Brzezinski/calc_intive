@@ -6,6 +6,7 @@ import pl.brzezinski.dto.HistoryResponse;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -13,7 +14,9 @@ public interface DBService {
 
     void save(CalculationRequest request, String result) throws IOException;
 
-    List<HistoryResponse> results(String fileName, Integer pageNo, Integer pageSize) throws FileNotFoundException;
+    List<HistoryResponse> fileResults(String fileName) throws FileNotFoundException;
+
+    List<HistoryResponse> h2Results(Integer pageNo, Integer pageSize, LocalDateTime after, LocalDateTime before);
 
     List<String> allFiles();
 

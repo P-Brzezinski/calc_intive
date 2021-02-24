@@ -1,9 +1,6 @@
 package pl.brzezinski.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,6 +14,7 @@ public class Result {
     private String operator;
     private String valueB;
     private String result;
+    @Column(name = "dateTime")
     private LocalDateTime dateTime;
 
     public Result() {
