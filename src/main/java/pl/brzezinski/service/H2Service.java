@@ -47,9 +47,8 @@ public class H2Service implements DBService {
     }
 
     @Override
-    public List<HistoryResponse> results(String fileName, int pageNo, int pageSize, LocalDateTime after, LocalDateTime before) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by("dateTime"));
-        return resultRepository.findAllByDateTimeAfterAndDateTimeBefore(after, before, paging)
+    public List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) {
+        return resultRepository.findAllByDateTimeAfterAndDateTimeBefore(after, before)
                 .stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());

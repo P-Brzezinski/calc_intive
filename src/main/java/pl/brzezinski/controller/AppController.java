@@ -54,13 +54,11 @@ public class AppController {
 
     @GetMapping("/results")
     public ResponseEntity<List<HistoryResponse>> results(@RequestParam(defaultValue = Configuration.FILE_NAME) String fileName,
-                                                         @RequestParam(defaultValue = "0") Integer pageNo,
-                                                         @RequestParam(defaultValue = "5") Integer pageSize,
                                                          @RequestParam(defaultValue = "#{T(java.time.LocalDateTime).of(2020,1,1,12,0,0)}") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime after,
                                                          @RequestParam(defaultValue = "#{T(java.time.LocalDateTime).now}") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime before) {
         List<HistoryResponse> results;
         try {
-            results = dbService.results(fileName, pageNo, pageSize, after, before);
+            results = dbService.results(fileName, after, before);
             if (results.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
