@@ -16,6 +16,7 @@ import pl.brzezinski.exceptions.*;
 import pl.brzezinski.service.CalculationService;
 import pl.brzezinski.service.DBService;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -72,6 +73,8 @@ public class AppController {
     public ResponseEntity<List<String>> files() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(dbService.allFiles());
+        } catch (FileNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (UnsupportedOperationException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -80,10 +83,9 @@ public class AppController {
     @DeleteMapping
     public ResponseEntity<String> deleteHistory() {
         try {
-            dbService.deleteHistory();
+            return ResponseEntity.status(HttpStatus.OK).body(dbService.deleteHistory());
         } catch (FileNotFoundException | NoContentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.OK).body("History deleted");
     }
 }

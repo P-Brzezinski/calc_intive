@@ -105,7 +105,7 @@ public class FileService implements DBService {
     }
 
     @Override
-    public List<String> allFiles() {
+    public List<String> allFiles() throws FileNotFoundException {
         List<String> result = new ArrayList<>();
         try (Stream<Path> walk = Files.walk(Paths.get(PATH))) {
             result = walk.filter(Files::isRegularFile)
@@ -113,11 +113,14 @@ public class FileService implements DBService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (result.isEmpty()) {
+            throw new FileNotFoundException("No history files found");
+        }
         return result;
     }
 
     @Override
-    public void deleteHistory() throws FileNotFoundException {
+    public String deleteHistory() throws FileNotFoundException {
         File directory = new File(PATH);
         File[] files = directory.listFiles();
         if (files.length > 0) {
@@ -127,5 +130,6 @@ public class FileService implements DBService {
         } else {
             throw new FileNotFoundException("No files to delete");
         }
+        return "History deleted";
     }
 }

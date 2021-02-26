@@ -77,11 +77,12 @@ public class H2Service implements DBService {
 
     @Override
     @Transactional
-    public void deleteHistory() throws NoContentException {
+    public String deleteHistory() throws NoContentException {
         List<Result> all = resultRepository.findAll();
         if (all.isEmpty()) {
             throw new NoContentException("No content to delete");
         }
         resultRepository.deleteAll();
+        return "History deleted";
     }
 }

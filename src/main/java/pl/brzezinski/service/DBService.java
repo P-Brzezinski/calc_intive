@@ -17,7 +17,7 @@ public interface DBService {
 
     List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) throws FileNotFoundException, NoContentException;
 
-    List<String> allFiles();
+    List<String> allFiles() throws FileNotFoundException;
 
-    void deleteHistory() throws FileNotFoundException, NoContentException;
+    String deleteHistory() throws FileNotFoundException, NoContentException;
 }
