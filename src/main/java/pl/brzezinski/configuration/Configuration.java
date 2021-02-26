@@ -5,7 +5,7 @@ public class Configuration {
     //Database configuration
     public static final String FILE_SERVICE = "fileService";
     public static final String H2_SERVICE = "H2Service";
-    public static final String DB = H2_SERVICE;
+    public static final String DB = FILE_SERVICE;
 
     //FileService configuration
     public static final String PATH = "./calculation_sheets/";

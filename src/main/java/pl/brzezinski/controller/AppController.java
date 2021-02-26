@@ -3,6 +3,7 @@ package pl.brzezinski.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.server.ResponseStatusException;
 import pl.brzezinski.configuration.Configuration;
 import pl.brzezinski.dto.CalculationRequest;
 import org.springframework.http.HttpStatus;
@@ -59,21 +60,20 @@ public class AppController {
         List<HistoryResponse> results;
         try {
             results = dbService.results(fileName, after, before);
-            if (results.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
         } catch (FileNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (NoContentException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 
     @GetMapping("/files")
-    public ResponseEntity<?> files() {
+    public ResponseEntity<List<String>> files() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(dbService.allFiles());
         } catch (UnsupportedOperationException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ public class AppController {
     public ResponseEntity<String> deleteHistory() {
         try {
             dbService.deleteHistory();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | NoContentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.OK).body("History deleted");

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import pl.brzezinski.exceptions.NoContentException;
 import pl.brzezinski.repository.ResultRepository;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.HistoryResponse;
@@ -47,11 +48,15 @@ public class H2Service implements DBService {
     }
 
     @Override
-    public List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) {
-        return resultRepository.findAllByDateTimeAfterAndDateTimeBefore(after, before)
+    public List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) throws NoContentException {
+        List<HistoryResponse> historyResponses = resultRepository.findAllByDateTimeAfterAndDateTimeBefore(after, before)
                 .stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
+        if (historyResponses.isEmpty()) {
+            throw new NoContentException("No content to delete");
+        }
+        return historyResponses;
     }
 
     private HistoryResponse mapToDto(Result result) {
@@ -72,7 +77,11 @@ public class H2Service implements DBService {
 
     @Override
     @Transactional
-    public void deleteHistory() {
+    public void deleteHistory() throws NoContentException {
+        List<Result> all = resultRepository.findAll();
+        if (all.isEmpty()) {
+            throw new NoContentException("No content to delete");
+        }
         resultRepository.deleteAll();
     }
 }

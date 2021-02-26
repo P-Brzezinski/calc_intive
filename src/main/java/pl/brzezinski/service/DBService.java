@@ -3,6 +3,7 @@ package pl.brzezinski.service;
 import org.springframework.stereotype.Component;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.HistoryResponse;
+import pl.brzezinski.exceptions.NoContentException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,9 +15,9 @@ public interface DBService {
 
     void save(CalculationRequest request, String result) throws IOException;
 
-    List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) throws FileNotFoundException;
+    List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) throws FileNotFoundException, NoContentException;
 
     List<String> allFiles();
 
-    void deleteHistory() throws FileNotFoundException;
+    void deleteHistory() throws FileNotFoundException, NoContentException;
 }

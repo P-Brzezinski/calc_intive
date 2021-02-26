@@ -76,7 +76,12 @@ public class FileService implements DBService {
 
     @Override
     public List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) throws FileNotFoundException {
-        List<String> records = fileReader(PATH + fileName);
+        List<String> records;
+        try {
+            records = fileReader(PATH + fileName);
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("File name " + fileName + " not found");
+        }
         List<HistoryResponse> response = new ArrayList<>();
         for (String record : records) {
             response.add(new HistoryResponse(
