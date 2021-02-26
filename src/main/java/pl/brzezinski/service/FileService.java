@@ -2,6 +2,7 @@ package pl.brzezinski.service;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import pl.brzezinski.configuration.Configuration;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.HistoryResponse;
 import pl.brzezinski.exceptions.NoContentException;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,7 +28,7 @@ public class FileService implements DBService {
 
     @Override
     public void save(CalculationRequest request, String result) throws IOException {
-        String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_TIME_PATTERN));
         File file = new File(PATH + FILE_NAME);
         if (!file.exists())
             createNewHistoryFile();
@@ -76,14 +78,17 @@ public class FileService implements DBService {
     }
 
     @Override
-    public List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) throws FileNotFoundException, NoContentException {
+    public List<HistoryResponse> results(Optional<String> fileName, LocalDateTime after, LocalDateTime before) throws FileNotFoundException, NoContentException {
+        if (fileName.isEmpty())
+            fileName = Optional.of(FILE_NAME);
+
         List<String> records;
         try {
-            records = fileReader(PATH + fileName);
+            records = fileReader(PATH + fileName.get());
         } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File name " + fileName + " not found");
+            throw new FileNotFoundException("File name " + fileName.get() + " not found");
         }
-        if (records.isEmpty()) throw new NoContentException("No content found in file " + fileName);
+        if (records.isEmpty()) throw new NoContentException("No content found in file " + fileName.get());
         List<HistoryResponse> historyResponses = filterWithDates(records, after, before);
         if (historyResponses.isEmpty()) throw new NoContentException("No content for given dates and times");
         return historyResponses;
@@ -92,7 +97,7 @@ public class FileService implements DBService {
     private List<HistoryResponse> filterWithDates(List<String> records, LocalDateTime after, LocalDateTime before) {
         List<HistoryResponse> response = new ArrayList<>();
         for (String record : records) {
-            LocalDateTime recordDate = LocalDateTime.parse(record.substring(0, 19), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            LocalDateTime recordDate = LocalDateTime.parse(record.substring(0, 19), DateTimeFormatter.ofPattern(DATE_TIME_PATTERN));
             if (recordDate.isAfter(after) && recordDate.isBefore(before)) {
                 response.add(new HistoryResponse(
                         record.substring(0, 19),

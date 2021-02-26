@@ -9,13 +9,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public interface DBService {
 
     void save(CalculationRequest request, String result) throws IOException;
 
-    List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) throws FileNotFoundException, NoContentException;
+    List<HistoryResponse> results(Optional<String> fileName, LocalDateTime after, LocalDateTime before) throws FileNotFoundException, NoContentException;
 
     List<String> allFiles() throws FileNotFoundException;
 

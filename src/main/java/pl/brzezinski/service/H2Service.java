@@ -2,21 +2,19 @@ package pl.brzezinski.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import pl.brzezinski.configuration.Configuration;
 import pl.brzezinski.exceptions.NoContentException;
 import pl.brzezinski.repository.ResultRepository;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.HistoryResponse;
 import pl.brzezinski.model.Result;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -48,20 +46,23 @@ public class H2Service implements DBService {
     }
 
     @Override
-    public List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) throws NoContentException {
+    public List<HistoryResponse> results(Optional<String> fileName, LocalDateTime after, LocalDateTime before) throws NoContentException {
+        if (fileName.isPresent())
+            throw new UnsupportedOperationException("Parameter " + fileName.get() + " not supported for H2 database");
+
         List<HistoryResponse> historyResponses = resultRepository.findAllByDateTimeAfterAndDateTimeBefore(after, before)
                 .stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
-        if (historyResponses.isEmpty()) {
+        if (historyResponses.isEmpty())
             throw new NoContentException("No content found in H2 database");
-        }
+
         return historyResponses;
     }
 
     private HistoryResponse mapToDto(Result result) {
         HistoryResponse response = new HistoryResponse();
-        response.setDate(result.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        response.setDate(result.getDateTime().format(DateTimeFormatter.ofPattern(Configuration.DATE_TIME_PATTERN)));
         response.setCalculation(String.format("%s %s %s = %s",
                 result.getValueA(),
                 result.getOperator(),

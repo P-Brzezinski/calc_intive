@@ -16,11 +16,11 @@ import pl.brzezinski.exceptions.*;
 import pl.brzezinski.service.CalculationService;
 import pl.brzezinski.service.DBService;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -55,13 +55,15 @@ public class AppController {
     }
 
     @GetMapping("/results")
-    public ResponseEntity<List<HistoryResponse>> results(@RequestParam(defaultValue = Configuration.FILE_NAME) String fileName,
-                                                         @RequestParam(defaultValue = "#{T(java.time.LocalDateTime).of(2020,1,1,12,0,0)}") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime after,
-                                                         @RequestParam(defaultValue = "#{T(java.time.LocalDateTime).now}") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime before) {
+    public ResponseEntity<List<HistoryResponse>> results(@RequestParam Optional<String> fileName,
+                                                         @RequestParam(defaultValue = "#{T(java.time.LocalDateTime).of(2020,1,1,12,0,0)}") @DateTimeFormat(pattern = Configuration.DATE_TIME_PATTERN) LocalDateTime after,
+                                                         @RequestParam(defaultValue = "#{T(java.time.LocalDateTime).now}") @DateTimeFormat(pattern = Configuration.DATE_TIME_PATTERN) LocalDateTime before) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(dbService.results(fileName, after, before));
         } catch (FileNotFoundException | NoContentException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (UnsupportedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 

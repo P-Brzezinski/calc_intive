@@ -5,7 +5,7 @@ public class Configuration {
     //Database configuration
     public static final String FILE_SERVICE = "fileService";
     public static final String H2_SERVICE = "H2Service";
-    public static final String DB = H2_SERVICE;
+    public static final String DB = FILE_SERVICE;
 
     //FileService configuration
     public static final String PATH = "./calculation_sheets/";
@@ -20,6 +20,9 @@ public class Configuration {
     private static String MATRIX_PATTERN = "";
     public static final int MATRIX_X = 4;
     public static final int MATRIX_Y = 4;
+
+    //DateTimePattern
+    public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     //patterns init
     public void initPatterns(){
