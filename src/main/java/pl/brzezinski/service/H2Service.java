@@ -54,7 +54,7 @@ public class H2Service implements DBService {
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
         if (historyResponses.isEmpty()) {
-            throw new NoContentException("No content to delete");
+            throw new NoContentException("No content found in H2 database");
         }
         return historyResponses;
     }

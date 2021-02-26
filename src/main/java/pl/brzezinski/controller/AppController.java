@@ -43,7 +43,7 @@ public class AppController {
         try {
             result = calculationService.doCalculation(request);
         } catch (UnrecognizedValueException | OperatorNotFoundException | CalculationNotPossibleException | ArithmeticException | VectorException | MatrixException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResultResponse("Calculation not saved", e.getMessage()));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad request: " + e.getMessage());
         }
         dbService.save(request, result);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResultResponse("Result saved", result));
@@ -58,13 +58,11 @@ public class AppController {
     public ResponseEntity<List<HistoryResponse>> results(@RequestParam(defaultValue = Configuration.FILE_NAME) String fileName,
                                                          @RequestParam(defaultValue = "#{T(java.time.LocalDateTime).of(2020,1,1,12,0,0)}") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime after,
                                                          @RequestParam(defaultValue = "#{T(java.time.LocalDateTime).now}") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime before) {
-        List<HistoryResponse> results;
         try {
-            results = dbService.results(fileName, after, before);
+            return ResponseEntity.status(HttpStatus.OK).body(dbService.results(fileName, after, before));
         } catch (FileNotFoundException | NoContentException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 
     @GetMapping("/files")
