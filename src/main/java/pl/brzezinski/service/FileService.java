@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.brzezinski.dto.CalculationRequest;
 import pl.brzezinski.dto.HistoryResponse;
+import pl.brzezinski.exceptions.NoContentException;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -27,9 +28,9 @@ public class FileService implements DBService {
     public void save(CalculationRequest request, String result) throws IOException {
         String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         File file = new File(PATH + FILE_NAME);
-        if (!file.exists()) {
+        if (!file.exists())
             createNewHistoryFile();
-        }
+
         if (!isFull()) {
             try {
                 FileWriter fileWriter = new FileWriter(PATH + FILE_NAME, true);
@@ -68,26 +69,36 @@ public class FileService implements DBService {
 
     private void createNewHistoryFile() throws IOException {
         File file = new File(PATH + FILE_NAME);
-        if (!file.getParentFile().exists()) {
+        if (!file.getParentFile().exists())
             file.getParentFile().mkdirs();
-        }
+
         file.createNewFile();
     }
 
     @Override
-    public List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) throws FileNotFoundException {
+    public List<HistoryResponse> results(String fileName, LocalDateTime after, LocalDateTime before) throws FileNotFoundException, NoContentException {
         List<String> records;
         try {
             records = fileReader(PATH + fileName);
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("File name " + fileName + " not found");
         }
+        if (records.isEmpty()) throw new NoContentException("No content found in file " + fileName);
+        List<HistoryResponse> historyResponses = filterWithDates(records, after, before);
+        if (historyResponses.isEmpty()) throw new NoContentException("No content for given dates and times");
+        return historyResponses;
+    }
+
+    private List<HistoryResponse> filterWithDates(List<String> records, LocalDateTime after, LocalDateTime before) {
         List<HistoryResponse> response = new ArrayList<>();
         for (String record : records) {
-            response.add(new HistoryResponse(
-                    record.substring(0, 19),
-                    record.substring(20)
-            ));
+            LocalDateTime recordDate = LocalDateTime.parse(record.substring(0, 19), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            if (recordDate.isAfter(after) && recordDate.isBefore(before)) {
+                response.add(new HistoryResponse(
+                        record.substring(0, 19),
+                        record.substring(20)
+                ));
+            }
         }
         return response;
     }
@@ -113,9 +124,7 @@ public class FileService implements DBService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (result.isEmpty()) {
-            throw new FileNotFoundException("No history files found");
-        }
+        if (result.isEmpty()) throw new FileNotFoundException("No history files found");
         return result;
     }
 
@@ -123,13 +132,11 @@ public class FileService implements DBService {
     public String deleteHistory() throws FileNotFoundException {
         File directory = new File(PATH);
         File[] files = directory.listFiles();
-        if (files.length > 0) {
+        if (files.length > 0)
             for (File file : files) {
                 file.delete();
             }
-        } else {
-            throw new FileNotFoundException("No files to delete");
-        }
+        else throw new FileNotFoundException("No files to delete");
         return "History deleted";
     }
 }

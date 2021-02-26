@@ -61,10 +61,8 @@ public class AppController {
         List<HistoryResponse> results;
         try {
             results = dbService.results(fileName, after, before);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | NoContentException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (NoContentException e) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
