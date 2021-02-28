@@ -28,8 +28,8 @@ public class VectorCalculations implements Calculations {
     }
 
     private String add(String a, String b) throws VectorException {
-        double[] vector1 = Calculations.super.getVectorFromString(a);
-        double[] vector2 = Calculations.super.getVectorFromString(b);
+        double[] vector1 = getVectorFromString(a);
+        double[] vector2 = getVectorFromString(b);
         double[] result;
         BigDecimal tempValue;
 
@@ -46,8 +46,8 @@ public class VectorCalculations implements Calculations {
     }
 
     private String sub(String a, String b) throws VectorException {
-        double[] vector1 = Calculations.super.getVectorFromString(a);
-        double[] vector2 = Calculations.super.getVectorFromString(b);
+        double[] vector1 = getVectorFromString(a);
+        double[] vector2 = getVectorFromString(b);
         double[] result;
         BigDecimal tempValue;
 
@@ -64,7 +64,7 @@ public class VectorCalculations implements Calculations {
     }
 
     private String vectorMultiNumber(String a, String b) {
-        double[] vector = Calculations.super.getVectorFromString(a);
+        double[] vector = getVectorFromString(a);
         BigDecimal multiplier = BigDecimal.valueOf(Double.parseDouble(b));
         BigDecimal tempValue;
         for (int i = 0; i < vector.length; i++) {
@@ -75,8 +75,8 @@ public class VectorCalculations implements Calculations {
     }
 
     private String vectorMultiMatrix(String a, String b) throws VectorException {
-        double[] vector = Calculations.super.getVectorFromString(a);
-        double[][] matrix = Calculations.super.getMatrixFromString(b);
+        double[] vector = getVectorFromString(a);
+        double[][] matrix = getMatrixFromString(b);
 
         for (int i = 0; i < matrix.length; i++) {
             if (!(matrix[i].length == vector.length)) {

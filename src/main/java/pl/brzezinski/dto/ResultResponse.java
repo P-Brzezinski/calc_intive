@@ -5,9 +5,6 @@ public class ResultResponse {
     private String message;
     private String result;
 
-    public ResultResponse() {
-    }
-
     public ResultResponse(String message, String result) {
         this.message = message;
         this.result = result;

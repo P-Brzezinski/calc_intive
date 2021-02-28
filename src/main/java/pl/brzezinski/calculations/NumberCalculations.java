@@ -3,6 +3,7 @@ package pl.brzezinski.calculations;
 import org.springframework.stereotype.Service;
 import pl.brzezinski.configuration.Configuration;
 import pl.brzezinski.enums.CalculationType;
+import pl.brzezinski.exceptions.MatrixException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 public class NumberCalculations implements Calculations {
 
     @Override
-    public String doCalculation(CalculationType calc, String a, String b) throws ArithmeticException{
+    public String doCalculation(CalculationType calc, String a, String b) throws ArithmeticException, MatrixException {
         switch (calc) {
             case NUM_ADD_NUM:
                 return add(a, b);
@@ -71,7 +72,7 @@ public class NumberCalculations implements Calculations {
     }
 
     private String numberMultiVector(String a, String b) {
-        double[] vector = Calculations.super.getVectorFromString(b);
+        double[] vector = getVectorFromString(b);
         BigDecimal multiplier = BigDecimal.valueOf(Double.parseDouble(a));
         BigDecimal tempValue;
         for (int i = 0; i < vector.length; i++) {
@@ -81,20 +82,29 @@ public class NumberCalculations implements Calculations {
         return Arrays.toString(vector);
     }
 
-    private String numberMultiMatrix(String a, String b) {
+    private String numberMultiMatrix(String a, String b) throws MatrixException {
         double multiNum = Double.parseDouble(a);
-        double[][] matrix = Calculations.super.getMatrixFromString(b);
-        double[][] result = new double[matrix.length][matrix[0].length];
+        double[][] matrix = getMatrixFromString(b);
+        double[][] result;
+        BigDecimal tempValue;
 
-        for (int i = 0; i < matrix.length; i++) {
-            if (i > matrix[0].length) {
-                break;
-            } else {
-                for (int j = 0; j < matrix[0].length; j++) {
-                    result[i][j] = matrix[i][j] * multiNum;
+        if (noEmptyMatrix(matrix)) {
+            result = new double[matrix.length][matrix[0].length];
+            for (int i = 0; i < matrix.length; i++) {
+                if (i > matrix[0].length) {
+                    break;
+                } else {
+                    for (int j = 0; j < matrix[0].length; j++) {
+                        tempValue = BigDecimal.valueOf(matrix[i][j]).multiply(BigDecimal.valueOf(multiNum));
+                        result[i][j] = tempValue.doubleValue();
+                    }
                 }
             }
+        }else {
+            throw new MatrixException("Matrix can not be empty if you want multiply by number");
         }
         return Arrays.deepToString(result);
     }
+
+
 }

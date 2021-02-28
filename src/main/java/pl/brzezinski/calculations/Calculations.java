@@ -41,4 +41,19 @@ public interface Calculations {
         }
         return result;
     }
+
+    default boolean noEmptyMatrix(double[][] matrix) {
+        boolean noEmpty = true;
+        if (matrix.length != 0) {
+            for (int i = 0; i < matrix.length; i++) {
+                if (matrix[i].length == 0) {
+                    noEmpty = false;
+                    break;
+                }
+            }
+        }else {
+            noEmpty = false;
+        }
+        return noEmpty;
+    }
 }
