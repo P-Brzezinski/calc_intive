@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 
 @Service
-public class VectorCalculations implements Calculations {
+public class VectorCalculations extends CommonCalculations implements Calculations {
 
     private static final String ERROR_MESSAGE = "Vectors must have same length and can not be empty if you want to";
 
@@ -63,18 +63,8 @@ public class VectorCalculations implements Calculations {
         }
     }
 
-    private String vectorMultiNumber(String a, String b) throws VectorException {
-        double[] vector = getVectorFromString(a);
-        if (vector.length == 0){
-            throw new VectorException("Vector can not be empty if you want to multiply by number");
-        }
-        BigDecimal multiplier = BigDecimal.valueOf(Double.parseDouble(b));
-        BigDecimal tempValue;
-        for (int i = 0; i < vector.length; i++) {
-            tempValue = BigDecimal.valueOf(vector[i]).multiply(multiplier);
-            vector[i] = tempValue.doubleValue();
-        }
-        return Arrays.toString(vector);
+    private String vectorMultiNumber(String vector, String number) throws VectorException {
+        return nMultiV(vector, number);
     }
 
     private String vectorMultiMatrix(String a, String b) throws VectorException {

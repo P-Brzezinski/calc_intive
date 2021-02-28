@@ -11,7 +11,7 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 
 @Service
-public class NumberCalculations implements Calculations {
+public class NumberCalculations extends CommonCalculations implements Calculations {
 
     @Override
     public String doCalculation(CalculationType calc, String a, String b) throws ArithmeticException, MatrixException, VectorException {
@@ -73,17 +73,7 @@ public class NumberCalculations implements Calculations {
     }
 
     private String numberMultiVector(String a, String b) throws VectorException {
-        double[] vector = getVectorFromString(b);
-        if (vector.length == 0){
-            throw new VectorException("Vector can not be empty if you want to multiply by number");
-        }
-        BigDecimal multiplier = BigDecimal.valueOf(Double.parseDouble(a));
-        BigDecimal tempValue;
-        for (int i = 0; i < vector.length; i++) {
-            tempValue = BigDecimal.valueOf(vector[i]).multiply(multiplier);
-            vector[i] = tempValue.doubleValue();
-        }
-        return Arrays.toString(vector);
+        return nMultiV(b, a);
     }
 
     private String numberMultiMatrix(String a, String b) throws MatrixException {
@@ -104,7 +94,7 @@ public class NumberCalculations implements Calculations {
                     }
                 }
             }
-        }else {
+        } else {
             throw new MatrixException("Matrix can not be empty if you want multiply by number");
         }
         return Arrays.deepToString(result);

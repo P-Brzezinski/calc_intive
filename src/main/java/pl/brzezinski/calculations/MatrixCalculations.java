@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 
 @Service
-public class MatrixCalculations implements Calculations {
+public class MatrixCalculations extends CommonCalculations implements Calculations {
 
     private static final String ERROR_MESSAGE = "Matrices must have same dimensions and cannot be empty if you want to";
 
