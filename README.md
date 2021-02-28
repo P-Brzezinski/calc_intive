@@ -31,6 +31,12 @@ For possible endpoints go to:
 localhost:8080/swagger-ui.html
 ```
 
+For basic info about application name and version go to:
+
+```bash
+http://localhost:8081/actuator/info
+```
+
 Application can be started as a console app as well, please refer to Main.class in project structure. 
 
 

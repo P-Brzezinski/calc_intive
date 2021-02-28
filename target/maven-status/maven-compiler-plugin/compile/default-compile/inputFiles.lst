@@ -19,9 +19,11 @@
 /home/p-brzezinski/IdeaProjects/MojeProjekty/calc_intive/src/main/java/pl/brzezinski/calculations/MatrixCalculations.java
 /home/p-brzezinski/IdeaProjects/MojeProjekty/calc_intive/src/main/java/pl/brzezinski/mainMenuForConsoleApp/Help.java
 /home/p-brzezinski/IdeaProjects/MojeProjekty/calc_intive/src/main/java/pl/brzezinski/model/Result.java
+/home/p-brzezinski/IdeaProjects/MojeProjekty/calc_intive/src/main/java/pl/brzezinski/calculations/CommonCalculations.java
 /home/p-brzezinski/IdeaProjects/MojeProjekty/calc_intive/src/main/java/pl/brzezinski/calculations/Calculations.java
 /home/p-brzezinski/IdeaProjects/MojeProjekty/calc_intive/src/main/java/pl/brzezinski/dto/PossibleCalculationsResponse.java
 /home/p-brzezinski/IdeaProjects/MojeProjekty/calc_intive/src/main/java/pl/brzezinski/repository/ResultRepository.java
 /home/p-brzezinski/IdeaProjects/MojeProjekty/calc_intive/src/main/java/pl/brzezinski/service/H2Service.java
 /home/p-brzezinski/IdeaProjects/MojeProjekty/calc_intive/src/main/java/pl/brzezinski/dto/HistoryResponse.java
 /home/p-brzezinski/IdeaProjects/MojeProjekty/calc_intive/src/main/java/pl/brzezinski/input/Input.java
+/home/p-brzezinski/IdeaProjects/MojeProjekty/calc_intive/src/main/java/pl/brzezinski/exceptions/NoContentException.java
