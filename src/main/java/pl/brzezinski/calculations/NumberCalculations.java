@@ -73,31 +73,11 @@ public class NumberCalculations extends CommonCalculations implements Calculatio
     }
 
     private String numberMultiVector(String a, String b) throws VectorException {
-        return nMultiV(b, a);
+        return vMultiN(b, a);
     }
 
     private String numberMultiMatrix(String a, String b) throws MatrixException {
-        double multiNum = Double.parseDouble(a);
-        double[][] matrix = getMatrixFromString(b);
-        double[][] result;
-        BigDecimal tempValue;
-
-        if (noEmptyMatrix(matrix)) {
-            result = new double[matrix.length][matrix[0].length];
-            for (int i = 0; i < matrix.length; i++) {
-                if (i > matrix[0].length) {
-                    break;
-                } else {
-                    for (int j = 0; j < matrix[0].length; j++) {
-                        tempValue = BigDecimal.valueOf(matrix[i][j]).multiply(BigDecimal.valueOf(multiNum));
-                        result[i][j] = tempValue.doubleValue();
-                    }
-                }
-            }
-        } else {
-            throw new MatrixException("Matrix can not be empty if you want multiply by number");
-        }
-        return Arrays.deepToString(result);
+        return mMultiN(b, a);
     }
 
 

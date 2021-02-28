@@ -3,6 +3,7 @@ package pl.brzezinski.calculations;
 import org.springframework.stereotype.Service;
 import pl.brzezinski.enums.CalculationType;
 import pl.brzezinski.exceptions.MatrixException;
+import pl.brzezinski.exceptions.VectorException;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -13,7 +14,7 @@ public class MatrixCalculations extends CommonCalculations implements Calculatio
     private static final String ERROR_MESSAGE = "Matrices must have same dimensions and cannot be empty if you want to";
 
     @Override
-    public String doCalculation(CalculationType calc, String a, String b) throws MatrixException {
+    public String doCalculation(CalculationType calc, String a, String b) throws MatrixException, VectorException {
         switch (calc) {
             case MATRIX_ADD_MATRIX:
                 return add(a, b);
@@ -102,45 +103,11 @@ public class MatrixCalculations extends CommonCalculations implements Calculatio
     }
 
     private String matrixMultiNumber(String a, String b) throws MatrixException {
-        double multiNum = Double.parseDouble(b);
-        double[][] matrix = getMatrixFromString(a);
-        double[][] result;
-        BigDecimal tempValue;
-
-        if (noEmptyMatrix(matrix)) {
-            result = new double[matrix.length][matrix[0].length];
-            for (int i = 0; i < matrix.length; i++) {
-                if (i > matrix[0].length) {
-                    break;
-                } else {
-                    for (int j = 0; j < matrix[0].length; j++) {
-                        tempValue = BigDecimal.valueOf(matrix[i][j]).multiply(BigDecimal.valueOf(multiNum));
-                        result[i][j] = tempValue.doubleValue();
-                    }
-                }
-            }
-        } else {
-            throw new MatrixException("Matrix can not be empty if you want multiply by number");
-        }
-        return Arrays.deepToString(result);
+        return mMultiN(a, b);
     }
 
-    private String matrixMultiVector(String a, String b) throws MatrixException {
-        double[][] matrix = getMatrixFromString(a);
-        double[] vector = getVectorFromString(b);
-        BigDecimal tempValue;
-
-        for (int i = 0; i < matrix.length; i++) {
-            if (noEmptyMatrix(matrix) && (matrix[i].length == vector.length)) {
-                for (int j = 0; j < vector.length; j++) {
-                    tempValue = BigDecimal.valueOf(matrix[i][j]).multiply(BigDecimal.valueOf(vector[i]));
-                    matrix[i][j] = tempValue.doubleValue();
-                }
-            } else {
-                throw new MatrixException("To multiply a row vector by a column vector, the row vector must have as many columns as the column vector has rows.");
-            }
-        }
-        return Arrays.deepToString(matrix);
+    private String matrixMultiVector(String a, String b) throws MatrixException, VectorException {
+        return vMultiM(b, a);
     }
 
     private boolean sameLength(double[][] matrixA, double[][] matrixB) {

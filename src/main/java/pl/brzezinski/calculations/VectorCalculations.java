@@ -2,6 +2,7 @@ package pl.brzezinski.calculations;
 
 import org.springframework.stereotype.Service;
 import pl.brzezinski.enums.CalculationType;
+import pl.brzezinski.exceptions.MatrixException;
 import pl.brzezinski.exceptions.VectorException;
 
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ public class VectorCalculations extends CommonCalculations implements Calculatio
     private static final String ERROR_MESSAGE = "Vectors must have same length and can not be empty if you want to";
 
     @Override
-    public String doCalculation(CalculationType calc, String a, String b) throws VectorException {
+    public String doCalculation(CalculationType calc, String a, String b) throws VectorException, MatrixException {
         switch (calc) {
             case VECTOR_ADD_VECTOR:
                 return add(a, b);
@@ -33,7 +34,7 @@ public class VectorCalculations extends CommonCalculations implements Calculatio
         double[] result;
         BigDecimal tempValue;
 
-        if (sameLength(vector1, vector2) && noEmptyVector(vector1, vector2)) {
+        if (sameLength(vector1, vector2) && noEmptyVectors(vector1, vector2)) {
             result = new double[vector1.length];
             for (int i = 0; i < result.length; i++) {
                 tempValue = BigDecimal.valueOf(vector1[i]).add(BigDecimal.valueOf(vector2[i]));
@@ -51,7 +52,7 @@ public class VectorCalculations extends CommonCalculations implements Calculatio
         double[] result;
         BigDecimal tempValue;
 
-        if (sameLength(vector1, vector2) && noEmptyVector(vector1, vector2)) {
+        if (sameLength(vector1, vector2) && noEmptyVectors(vector1, vector2)) {
             result = new double[vector1.length];
             for (int i = 0; i < result.length; i++) {
                 tempValue = BigDecimal.valueOf(vector1[i]).subtract(BigDecimal.valueOf(vector2[i]));
@@ -63,31 +64,19 @@ public class VectorCalculations extends CommonCalculations implements Calculatio
         }
     }
 
-    private String vectorMultiNumber(String vector, String number) throws VectorException {
-        return nMultiV(vector, number);
+    private String vectorMultiNumber(String a, String b) throws VectorException {
+        return vMultiN(a, b);
     }
 
-    private String vectorMultiMatrix(String a, String b) throws VectorException {
-        double[] vector = getVectorFromString(a);
-        double[][] matrix = getMatrixFromString(b);
-
-        for (int i = 0; i < matrix.length; i++) {
-            if (!(matrix[i].length == vector.length)) {
-                throw new VectorException("To multiply a row vector by a column vector, the row vector must have as many columns as the column vector has rows.");
-            } else {
-                for (int j = 0; j < matrix.length; j++) {
-                    matrix[i][j] = matrix[i][j] * vector[i];
-                }
-            }
-        }
-        return Arrays.deepToString(matrix);
+    private String vectorMultiMatrix(String a, String b) throws VectorException, MatrixException {
+        return vMultiM(a,b);
     }
 
     private boolean sameLength(double[] vector1, double[] vector2) {
         return vector1.length == vector2.length;
     }
 
-    private boolean noEmptyVector(double[] vector1, double[] vector2) {
+    private boolean noEmptyVectors(double[] vector1, double[] vector2) {
         return vector1.length != 0 && vector2.length != 0;
     }
 }
