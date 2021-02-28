@@ -63,8 +63,11 @@ public class VectorCalculations implements Calculations {
         }
     }
 
-    private String vectorMultiNumber(String a, String b) {
+    private String vectorMultiNumber(String a, String b) throws VectorException {
         double[] vector = getVectorFromString(a);
+        if (vector.length == 0){
+            throw new VectorException("Vector can not be empty if you want to multiply by number");
+        }
         BigDecimal multiplier = BigDecimal.valueOf(Double.parseDouble(b));
         BigDecimal tempValue;
         for (int i = 0; i < vector.length; i++) {

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.brzezinski.configuration.Configuration;
 import pl.brzezinski.enums.CalculationType;
 import pl.brzezinski.exceptions.MatrixException;
+import pl.brzezinski.exceptions.VectorException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,7 +14,7 @@ import java.util.Arrays;
 public class NumberCalculations implements Calculations {
 
     @Override
-    public String doCalculation(CalculationType calc, String a, String b) throws ArithmeticException, MatrixException {
+    public String doCalculation(CalculationType calc, String a, String b) throws ArithmeticException, MatrixException, VectorException {
         switch (calc) {
             case NUM_ADD_NUM:
                 return add(a, b);
@@ -71,8 +72,11 @@ public class NumberCalculations implements Calculations {
         return String.valueOf(Math.sqrt(Double.parseDouble(a)));
     }
 
-    private String numberMultiVector(String a, String b) {
+    private String numberMultiVector(String a, String b) throws VectorException {
         double[] vector = getVectorFromString(b);
+        if (vector.length == 0){
+            throw new VectorException("Vector can not be empty if you want to multiply by number");
+        }
         BigDecimal multiplier = BigDecimal.valueOf(Double.parseDouble(a));
         BigDecimal tempValue;
         for (int i = 0; i < vector.length; i++) {
