@@ -2,19 +2,14 @@ package pl.brzezinski.dto;
 
 public class ResultResponse {
 
-    private String result;
     private String message;
+    private String result;
 
-    public ResultResponse(String result, String message) {
-        this.result = result;
+    public ResultResponse() {
+    }
+
+    public ResultResponse(String message, String result) {
         this.message = message;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
         this.result = result;
     }
 
@@ -24,5 +19,13 @@ public class ResultResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }
